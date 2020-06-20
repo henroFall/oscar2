@@ -1,0 +1,8 @@
+0.0.1 - Final? release by danslimmon
+0.1.2 - First public release by henrofall
+      - Moved apt-gets from py to sh, due to repeated failure to complete in py
+	  - Merged update to danslimmon Issue #56, use of an EOL node version caused installer to fail.
+	  - Merged update to danslimmon Issue #57, ASCII encode issue. Found and fixed by roopkeed. 
+	  - Moved web server default port away from 80 (to 8543) & allow user to specify. 
+      - Added a routine to the installer to try to help detect the barcode device ID.
+        Event0 is not a good default for Ubuntu.
