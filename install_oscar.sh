@@ -201,7 +201,7 @@ if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
 #git clone https://github.com/henroFall/oscar2.git oscar
 git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
 check_exit_status
-cd/var/oscar
+cd /var/oscar
 git clone https://github.com/henroFall/mergetrelloboards.git
 check_exit_status
 
