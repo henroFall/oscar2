@@ -194,6 +194,8 @@ fi
 check_exit_status
 pip install PyYAML --no-cache-dir trello==0.9.1 twilio
 check_exit_status
+pip install requests --no-cache-dir
+check_exit_status
 
 ######################################## Oscar itself
 cd /var
@@ -234,8 +236,6 @@ rm -f ~/after.txt
 #if [[ $desktopYN == "y" ]]; then
 echo "Installing Oscar Desktop components..."
 echo
-pip install requests
-check_exit_status
 trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
 trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
