@@ -69,11 +69,17 @@ echo "desktop widget to display your Grocery list(s)."
 echo
 read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
 if [[ $desktopYN  == "" ]]; then $desktopYN = "y"
+fi
 if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
+fi
 if [[ $desktopYN  == "YES" ]]; then $desktopYN = "y"
+fi
 if [[ $desktopYN  == "yES" ]]; then $desktopYN = "y"
+fi
 if [[ $desktopYN  == "Y" ]]; then $desktopYN = "y"
+fi
 if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
+fi
 ########################################  Branch Choice
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
