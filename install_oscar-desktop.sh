@@ -61,20 +61,7 @@ echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
 echo
 read -p "Press <enter> to begin!"
 echo
-######################################## Desktop Choice
-echo "Oscar2 can install as a service to manage the scanner"
-echo "with no user interface, or I can optionally install"
-echo "the Oscar Desktop components, which creates a Conky"
-echo "desktop widget to display your Grocery list(s)."
-echo
-read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
-if [[ $desktopYN  == "" ]]; then $desktopYN = "y"
-if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
-if [[ $desktopYN  == "YES" ]]; then $desktopYN = "y"
-if [[ $desktopYN  == "yES" ]]; then $desktopYN = "y"
-if [[ $desktopYN  == "Y" ]]; then $desktopYN = "y"
-if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
-########################################  Branch Choice
+######################################## Branch Choice
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
@@ -195,10 +182,6 @@ if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
 #git clone https://github.com/henroFall/oscar2.git oscar
 git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
 check_exit_status
-cd/var/oscar
-git clone https://github.com/henroFall/mergetrelloboards.git
-check_exit_status
-
 cd /var/oscar/web
 ######################################## Web
 sed -i "s/80/$webport/g" /var/oscar/web/app.js
@@ -211,41 +194,13 @@ check_exit_status
 supervisorctl reload
 check_exit_status
 chmod +x ./build.py
-
 if [[ $(lsb_release -rs) == "20.04" ]]; then 
 python2 ./build.py $usbPlace
 else python ./build.py $usbPlace
 fi
-
 cd /var/oscar/web
 sed -i "s/79/$webport/g" /etc/oscar.yaml
 supervisorctl reload
 check_exit_status
 rm -f ~/before.txt
 rm -f ~/after.txt
-
-######################################## Oscar Desktop
-if [[ $desktopYN == "y" ]]; then
-echo "Installing Oscar Desktop components..."
-echo
-pip install requests
-check_exit_status
-trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
-trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
-trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
-trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
-rm -f /var/oscar/mergetrelloboards/tapp.txt
-rm -f /var/oscar/mergetrelloboards/ttoken.txt
-rm -f /var/oscar/mergetrelloboards/tgb.txt
-rm -f /var/oscar/mergetrelloboards/tgl.txt
-echo Trello api key: $trelloappkey
-echo Trello token: $trellotoken
-echo Trello grocery board: $trellogroceryb
-echo Trello grocery list:  $trellogroceryl
-sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-fi
