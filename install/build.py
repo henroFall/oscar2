@@ -254,7 +254,7 @@ sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgb.txt', 'w+')
 sup_oscar_scan.write({trello_grocery_board})
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgl.txt', 'w+')
-sup_oscar_scan.write(trello_grocery_list})
+sup_oscar_scan.write({trello_grocery_list})
 sup_oscar_scan.close()
 
 print 'Files closed.'
