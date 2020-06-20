@@ -55,15 +55,23 @@ echo "    || | | | | | | | | | | | |"
 echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
 echo "    |                        |"
 echo
-echo "Hello! Let's set up Oscar!"
+echo "Hello! Let's set up Oscar2!"
 echo
 echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
 echo
 read -p "Press <enter> to begin!"
 echo
-
+######################################## Branch Choice
+echo "Oscar2 is going to pull a fresh copy from Github once we get started."
+echo "You should, unless you know better, pull from the master branch."
+echo "Push <enter> here to do that, or optionally type in the name of a branch"
+echo "to pull from."
+echo "Valid entries: master"
+echo "               dev"
+echo
+read -p "Type in a branch name, or press <enter> for the default [master]:" gitbranch
 ######################################## Web port
-echo "Oscar3 needs a TCP port for a web server. I can use port 80, but"
+echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
 echo "that is some pretty prime real estate for a TRASH sCANer. You"
 echo "can enter any valid TCP port number here, or press <enter> to"
 echo "use 8543, the default."
@@ -171,7 +179,8 @@ check_exit_status
 ######################################## Oscar itself
 cd /var
 if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
-git clone https://github.com/henroFall/oscar.git
+#git clone https://github.com/henroFall/oscar2.git oscar
+git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
 check_exit_status
 cd /var/oscar/web
 ######################################## Web
