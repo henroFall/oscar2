@@ -245,16 +245,16 @@ trello_db_board: '{trello_db_board}'
 sup_oscar_web.close()
 
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tapp.txt', 'w+')
-sup_oscar_scan.write(''''{trello_app_key}' ''')
+sup_oscar_scan.write({trello_app_key})
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/ttoken.txt', 'w+')
-sup_oscar_scan.write(''''{trello_token}' ''')
+sup_oscar_scan.write({trello_token})
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgb.txt', 'w+')
-sup_oscar_scan.write(''''{trello_grocery_board}' ''')
+sup_oscar_scan.write({trello_grocery_board})
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgl.txt', 'w+')
-sup_oscar_scan.write(''''trello_grocery_list}' ''')
+sup_oscar_scan.write(trello_grocery_list})
 sup_oscar_scan.close()
 
 print 'Files closed.'
