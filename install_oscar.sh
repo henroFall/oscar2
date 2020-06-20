@@ -230,7 +230,7 @@ rm -f ~/before.txt
 rm -f ~/after.txt
 
 ######################################## Oscar Desktop
-if [[ $desktopYN == "y" ]]; then
+#if [[ $desktopYN == "y" ]]; then
 echo "Installing Oscar Desktop components..."
 echo
 pip install requests
@@ -253,4 +253,4 @@ sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trel
 check_exit_status
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-fi
+#fi

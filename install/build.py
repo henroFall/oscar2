@@ -236,14 +236,27 @@ redirect_stderr=true''')
 sup_oscar_scan.close()
 
 sup_oscar_web = open('/etc/supervisor/conf.d/oscar_web.conf', 'w+')
-sup_oscar_web.write('''[program:oscar_web]
-
-command=/usr/local/bin/node --inspect /var/oscar/web/app.js
-directory=/var/oscar/web
-stdout_logfile=/var/log/supervisor/oscar_web.log
-redirect_stderr=true''')
+sup_oscar_web.write('''trello_app_key: '{trello_app_key}'
+trello_token: '{trello_token}'
+trello_grocery_board: '{trello_grocery_board}'
+trello_grocery_list: '{trello_grocery_list}'
+trello_db_board: '{trello_db_board}'''')
 sup_oscar_web.close()
-print 'File closed.'
+
+sup_oscar_scan = open('/var/oscar/mergetrelloboards/tapp.txt', 'w+')
+sup_oscar_scan.write(''''{trello_app_key}'''')
+sup_oscar_scan.close()
+sup_oscar_scan = open('/var/oscar/mergetrelloboards/ttoken.txt', 'w+')
+sup_oscar_scan.write(''''{trello_token}'''')
+sup_oscar_scan.close()
+sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgb.txt', 'w+')
+sup_oscar_scan.write(''''{trello_grocery_board}'''')
+sup_oscar_scan.close()
+sup_oscar_scan = open('/var/oscar/mergetrelloboards/tgl.txt', 'w+')
+sup_oscar_scan.write(''''trello_grocery_list}'''')
+sup_oscar_scan.close()
+
+print 'Files closed.'
 print
 print '############################################################'
 print
