@@ -240,7 +240,8 @@ sup_oscar_web.write('''trello_app_key: '{trello_app_key}'
 trello_token: '{trello_token}'
 trello_grocery_board: '{trello_grocery_board}'
 trello_grocery_list: '{trello_grocery_list}'
-trello_db_board: '{trello_db_board}'''')
+trello_db_board: '{trello_db_board}'
+''')
 sup_oscar_web.close()
 
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tapp.txt', 'w+')
