@@ -19,7 +19,7 @@ Install Oscar
 -------------
 To install this version of Oscar, use this command line:
 
-`wget -N https://raw.githubusercontent.com/henroFall/oscar2/dev/install_oscar.sh && && sudo chmod +x install_oscar.sh && sudo ./install_oscar.sh`
+`wget -N https://raw.githubusercontent.com/henroFall/oscar2/dev/install_oscar.sh && sudo chmod +x install_oscar.sh && sudo ./install_oscar.sh`
 
 From the author:
 ----------------
