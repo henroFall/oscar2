@@ -52,6 +52,14 @@ print "You'll be shown a 'token'; enter it below."
 print
 trello_token = raw_input('Token: ')
 print
+print "Now, you'll need your personal app key. Go to this URL:"
+print
+print "    https://trello.com/app-key"
+print
+print "You'll be shown a 'key'; enter it below."
+print
+trellopersonalkey = raw_input('Key: ')
+print
 print "Alright, now, we haven't yet found a way to create boards via the Trello"
 print "API, so would you go ahead and create two Trello boards?"
 print
@@ -68,6 +76,9 @@ trello_grocery_board = m.group(1)
 m = re.search('/b/([^/]+)', trello_db_board_url)
 trello_db_board = m.group(1)
 trello_grocery_list = 'Groceries'
+print "And now create a board called 'Housewares', but you do not have to enter the URL."
+print
+pressenter= raw_input('Press <enter>.')
 
 ######################################## Communication
 print
@@ -245,7 +256,7 @@ trello_db_board: '{trello_db_board}'
 sup_oscar_web.close()
 
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tapp.txt', 'w+')
-sup_oscar_scan.write(trello_app_key)
+sup_oscar_scan.write(trellopersonalkey)
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/ttoken.txt', 'w+')
 sup_oscar_scan.write(trello_token)

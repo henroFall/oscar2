@@ -68,17 +68,17 @@ echo "the Oscar Desktop components, which creates a Conky"
 echo "desktop widget to display your Grocery list(s)."
 echo
 read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
-if [[ $desktopYN  == "" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "" ]]; then $desktopYN='y'
 fi
-if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "Yes" ]]; then $desktopYN='y'
 fi
-if [[ $desktopYN  == "YES" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "YES" ]]; then $desktopYN='y'
 fi
-if [[ $desktopYN  == "yES" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "yES" ]]; then $desktopYN='y'
 fi
-if [[ $desktopYN  == "Y" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "Y" ]]; then $desktopYN='y'
 fi
-if [[ $desktopYN  == "Yes" ]]; then $desktopYN = "y"
+if [[ $desktopYN  == "Yes" ]]; then $desktopYN='y'
 fi
 ########################################  Branch Choice
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
@@ -254,4 +254,10 @@ sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trel
 check_exit_status
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
+mt=''
+gword='Groceries'
+hword='Housewares'
+sed -i "s_    \"Q1: Important / Urgent / En attente\" : \"BY_COLOR\",_$mt_g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s_    \"Q2: Important / Pas urgent\": \"BY_COLOR\",_$gword_g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/Calendrier/$mt/$hword/g" /var/oscar/mergetrelloboards/conf.json
 #fi
