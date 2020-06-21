@@ -195,6 +195,8 @@ pip install PyYAML --no-cache-dir trello==0.9.1 twilio
 check_exit_status
 pip install requests --no-cache-dir
 check_exit_status
+pip install jsmin --no-cache-dir
+check_exit_status
 
 ######################################## Oscar itself
 cd /var
