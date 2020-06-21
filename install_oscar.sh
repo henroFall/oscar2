@@ -252,9 +252,6 @@ sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trel
 check_exit_status
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-mt=''
-gword='"Groceries" : "BY_COLOR"'
-hword='Housewares'
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
