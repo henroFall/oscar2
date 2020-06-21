@@ -78,7 +78,7 @@ trello_db_board = m.group(1)
 trello_grocery_list = 'Groceries'
 print "And now create a board called 'Housewares', but you do not have to enter the URL."
 print
-pressenter= raw_input('Press <enter>.')
+pressenter= raw_input('Press <enter> ')
 
 ######################################## Communication
 print

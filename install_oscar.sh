@@ -247,22 +247,19 @@ echo Trello api key: $trelloappkey
 echo Trello token: $trellotoken
 echo Trello grocery board: $trellogroceryb
 echo Trello grocery list:  $trellogroceryl
-echo Setting app key...
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Setting Token...
 sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Setting Grocery board...
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 mt=''
 gword='"Groceries" : "BY_COLOR"'
 hword='Housewares'
-echo Setting Empty 1st...
-sed -i 's_    "Q1: Important / Urgent / En attente" : "BY_COLOR",_$mt_g' /var/oscar/mergetrelloboards/conf.json
-echo Setting $gword 2nd...
-sed -i 's_    "Q2: Important / Pas urgent": "BY_COLOR",_$gword_g' /var/oscar/mergetrelloboards/conf.json
-echo Setting $hword 3rd...
-sed -i 's/Calendrier/$hword/g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
+check_exit_status
+sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|Groceries|g' /var/oscar/mergetrelloboards/conf.json
+check_exit_status
+sed -i 's/Calendrier/Housewares/g' /var/oscar/mergetrelloboards/conf.json
+check_exit_status
 #fi
