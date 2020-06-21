@@ -233,7 +233,6 @@ rm -f ~/before.txt
 rm -f ~/after.txt
 
 ######################################## Oscar Desktop
-#if [[ $desktopYN == "y" ]]; then
 echo "Installing Oscar Desktop components..."
 echo
 trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
@@ -259,8 +258,10 @@ gword='"Groceries" : "BY_COLOR"'
 hword='Housewares'
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|Groceries|g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i 's/Calendrier/Housewares/g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
+#if [[ $desktopYN == "y" ]]; then
+
 #fi
