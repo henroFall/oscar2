@@ -255,9 +255,9 @@ check_exit_status
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 mt=''
-gword='Groceries'
+gword='"Groceries" : "BY_COLOR"'
 hword='Housewares'
-sed -i "s_    \"Q1: Important / Urgent / En attente\" : \"BY_COLOR\",_$mt_g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s_    \"Q2: Important / Pas urgent\": \"BY_COLOR\",_$gword_g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/Calendrier/$mt/$hword/g" /var/oscar/mergetrelloboards/conf.json
+sed -i 's_    "Q1: Important / Urgent / En attente" : "BY_COLOR",_$mt_g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's_    "Q2: Important / Pas urgent": "BY_COLOR",_$gword_g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's/Calendrier/$hword/g' /var/oscar/mergetrelloboards/conf.json
 #fi
