@@ -135,13 +135,14 @@ echo "Set device to: $usbPlace"
 ######################################## Dependencies
 echo
 echo "We need to install some dependencies and stitch together all the magic."
-echo "This can take upwards of anhour on a Raspberry Pi, since it involves"
-echo "compiling stuff. It only takes about a minute on a decent x86."
-echo "Press <enter> when you're ready. Press 'Ctrl+C' to cancel."
-read 
 echo
-echo "You should almost for sure strip nodejs and node from the system before"
-read -ep "installing Oscar. Is that OK to do now [yes]?" yesno
+echo "Before we start, you should almost for sure let me strip nodejs and node"
+echo "from the system. But, if you have something else using node on this machine,"
+echo "I'm going to break it now. If you aren't sure, you're fine. Go ahead and hit <enter>."
+echo "There is probably no good reason to say No here... But if you can think of one,"
+echo "feel free..."
+echo
+read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously) [yes]?" yesno
 if [[ $yesno == "" ]]; then
        yesno='yes'
 	   check_exit_status
@@ -158,6 +159,11 @@ fi
 if [[ $yesno == "yES" ]]; then
        yesno='yes'
 fi
+echo
+echo "This can take upwards of an hour on a Raspberry Pi, since it involves"
+echo "compiling stuff. It only takes about a minute on a decent x86."
+echo "Press <enter> when you're ready. Press 'Ctrl+C' to cancel."
+read 
 apt update
 if [[ $yesno == "yes" ]]; then
        echo "Stripping nodejs & npm from system and reinstalling with other dependencies..."
@@ -198,6 +204,10 @@ pip install requests --no-cache-dir
 check_exit_status
 pip install jsmin --no-cache-dir
 check_exit_status
+pip3 install requests --no-cache-dir
+check_exit_status
+pip3 install jsmin --no-cache-dir
+check_exit_status
 
 ######################################## Oscar itself
 cd /var
@@ -215,13 +225,13 @@ sed -i "s/80/$webport/g" /var/oscar/web/app.js
 check_exit_status
 npm install
 check_exit_status
-echo
-cd /var/oscar/install
-check_exit_status
 supervisorctl reload
+check_exit_status
+cd /var/oscar/install
 check_exit_status
 chmod +x ./build.py
 
+######################################## Call Build.py
 if [[ $(lsb_release -rs) == "20.04" ]]; then 
 python2 ./build.py $usbPlace
 else python ./build.py $usbPlace
@@ -246,16 +256,17 @@ rm -f /var/oscar/mergetrelloboards/tapp.txt
 rm -f /var/oscar/mergetrelloboards/ttoken.txt
 rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
+
 echo Trello desktop api key: $trellodesktopkey
-echo Trello token: $trellotoken
-echo Trello grocery board: $trellogroceryb
-echo Trello grocery list:  $trellogroceryl
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
+echo Trello token: $trellotoken
 sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
+echo Trello grocery board: $trellogroceryb
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
+echo Trello grocery list:  $trellogroceryl
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Housewares\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
