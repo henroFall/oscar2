@@ -60,6 +60,11 @@ print "You'll be shown a 'key'; enter it below."
 print
 trellopersonalkey = raw_input('Key: ')
 print
+print "OK - One more token! CLick this, copy, paste... you know the drill by now."
+print
+print "    https://trello.com/1/authorize?key={0}&name=oscarDesktop&expiration=never&response_type=token&scope=read,write".format(trellopersonalkey)
+trello_token_desktop = raw_input('Token: ')
+print
 print "Alright, now, we haven't yet found a way to create boards via the Trello"
 print "API, so would you go ahead and create two Trello boards?"
 print
@@ -257,6 +262,9 @@ sup_oscar_web.close()
 
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/tapp.txt', 'w+')
 sup_oscar_scan.write(trellopersonalkey)
+sup_oscar_scan.close()
+sup_oscar_scan = open('/var/oscar/mergetrelloboards/ttd.txt', 'w+')
+sup_oscar_scan.write(trello_token_desktop)
 sup_oscar_scan.close()
 sup_oscar_scan = open('/var/oscar/mergetrelloboards/ttoken.txt', 'w+')
 sup_oscar_scan.write(trello_token)

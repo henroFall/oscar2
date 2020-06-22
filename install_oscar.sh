@@ -238,6 +238,7 @@ rm -f ~/after.txt
 echo "Installing Oscar Desktop components..."
 echo
 trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
+trellodesktopkey=$(cat /var/oscar/mergetrelloboards/ttd.txt)
 trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
 trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
@@ -245,11 +246,11 @@ rm -f /var/oscar/mergetrelloboards/tapp.txt
 rm -f /var/oscar/mergetrelloboards/ttoken.txt
 rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
-echo Trello api key: $trelloappkey
+echo Trello desktop api key: $trellodesktopkey
 echo Trello token: $trellotoken
 echo Trello grocery board: $trellogroceryb
 echo Trello grocery list:  $trellogroceryl
-sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
