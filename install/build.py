@@ -23,17 +23,21 @@ if os.getuid() != 0:
     print "This script should be run as root on the target device. Aborting."
     print
     sys.exit(1)
+	
+print
 ######################################## Digit-Eyes
 print "You need accounts with a few APIs to use Oscar. First of all,"
 print "go to"
 print
 print "    http://www.digit-eyes.com"
 print
-print "and sign up for an account there. This is the database that Oscar uses to"
-print "match barcodes with names of products. When you're ready, enter your"
-print "API credentials. They can be found on the \"My Account\" page."
+print "and sign up for an account there. This is the database that"
+print "Oscar uses to match barcodes with names of products. When"
+print "you're ready, enter your API credentials. They can be"
+print "found on the \"My Account\" page."
 print 
-print "Want to use openfoodfacts.org? Customise /etc/oscar.yaml to set the barcode_api to 'openfoodfacts'"
+print "Want to use openfoodfacts.org? Customise /etc/oscar.yaml to"
+print "set the barcode_api to 'openfoodfacts'"
 print
 digiteyes_app_key = raw_input('App Key ("K" Code): ')
 digiteyes_auth_key = raw_input('Authorization Key ("M" Code): ')
@@ -60,7 +64,8 @@ print "You'll be shown a 'key'; enter it below."
 print
 trellopersonalkey = raw_input('Key: ')
 print
-print "OK - One more token! CLick this, copy, paste... you know the drill by now."
+print "OK - One more token! CLick this, copy, paste... you know the"
+print "drill by now."
 print
 print "    https://trello.com/1/authorize?key={0}&name=oscarDesktop&expiration=never&response_type=token&scope=read,write".format(trellopersonalkey)
 trello_token_desktop = raw_input('Token: ')
@@ -81,10 +86,6 @@ trello_grocery_board = m.group(1)
 m = re.search('/b/([^/]+)', trello_db_board_url)
 trello_db_board = m.group(1)
 trello_grocery_list = 'Groceries'
-print "And now create a board called 'Housewares', but you do not have to enter the URL."
-print
-pressenter= raw_input('Press <enter> ')
-
 ######################################## Communication
 print
 print "Oscar can email or text you when it scans something it doesn't recognize. This"
@@ -155,6 +156,7 @@ trello_api = trello.TrelloApi(trello_app_key)
 trello_api.set_token(trello_token)
 # Grocery list
 trello_api.boards.new_list(trello_grocery_board, 'Groceries')
+trello_api.boards.new_list(trello_grocery_board, 'Housewares')
 # oscar_db lists
 for db_list in ['description_rules', 'barcode_rules', 'learning_opportunities']:
     trello_api.boards.new_list(trello_db_board, db_list)

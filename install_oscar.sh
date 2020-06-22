@@ -79,16 +79,23 @@ if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
 fi
 if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
 fi
+echo
+if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
+  else echo "Oscar Desktop WILL NOT be configured." 
+fi
 ########################################  Branch Choice
+echo
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
 echo "to pull from."
+echo
 echo "Valid entries: master"
 echo "               dev"
 echo
-read -p "Type in a branch name, or press <enter> for the default [master]:" gitbranch
+read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
 ######################################## Web port
+echo
 echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
 echo "that is some pretty prime real estate for a TRASH sCANer. You"
 echo "can enter any valid TCP port number here, or press <enter> to"
@@ -130,7 +137,7 @@ echo
 place="/dev/input/"
 usbPlace="${place}${usbPort}"
 echo "Set device to: $usbPlace"
-
+sleep 1
 ######################################## Dependencies
 echo
 echo "We need to install some dependencies and stitch together all the magic."
@@ -138,10 +145,11 @@ echo
 echo "Before we start, you should almost for sure let me strip nodejs and node"
 echo "from the system. But, if you have something else using node on this machine,"
 echo "I'm going to break it now. If you aren't sure, you're fine. Go ahead and hit <enter>."
-echo "There is probably no good reason to say No here... But if you can think of one,"
-echo "feel free..."
+echo "There is probably no good reason to say 'No,' here... But if you can think of a reason,"
+echo "feel free... Either way, this can take upwards of an hour on a Raspberry Pi, since"
+echo "it involves compiling stuff. It only takes about a minute on a decent x86."
 echo
-read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously) [yes]?" yesno
+read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously, don't say 'no') [yes]?" yesno
 if [[ $yesno == "" ]]; then
        yesno='yes'
 	   check_exit_status
@@ -159,10 +167,6 @@ if [[ $yesno == "yES" ]]; then
        yesno='yes'
 fi
 echo
-echo "This can take upwards of an hour on a Raspberry Pi, since it involves"
-echo "compiling stuff. It only takes about a minute on a decent x86."
-echo "Press <enter> when you're ready. Press 'Ctrl+C' to cancel."
-read 
 apt update
 if [[ $yesno == "yes" ]]; then
        echo "Stripping nodejs & npm from system and reinstalling with other dependencies..."
@@ -186,7 +190,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential nodejs npm
+apt -y install sed curl git supervisor build-essential nodejs npm python3-pip
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -256,6 +260,11 @@ rm -f /var/oscar/mergetrelloboards/ttoken.txt
 rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
 
+#Henry-hack
+echo FORCE API KEY VALUES
+trellodesktopkey="14b70ab55f8afb37809ae20d4b29a6c8"
+trellotoken="b63d46821a320fdb8589e6dafaa66aad05d9f61b391c4d10e6464805ec17d6c3"
+
 echo Trello desktop api key: $trellodesktopkey
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
@@ -270,7 +279,7 @@ sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Grocerie
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Housewares\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-sed -i 's|    "Calendrier" : "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 #if [[ $desktopYN == "y" ]]; then
 
