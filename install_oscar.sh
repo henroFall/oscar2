@@ -2,7 +2,7 @@
 rootCheck() {
     if ! [ $(id -u) = 0 ]
     then
-        echo -e "\e[41m I am not root! Run with SUDO. \e[0m"
+        echo -e "\e[41m I am NOT root! Run with SUDO. \e[0m"
         exit 1
     fi
 }
