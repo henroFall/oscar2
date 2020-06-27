@@ -39,7 +39,7 @@ rm -f install_wd.sh
 rootCheck
 apt install wmctrl
 maximize_vert
-user=${SUDO_USER:-${USER}}
+username=${SUDO_USER:-${USER}}
 echo "               ____ "
 echo "   ___________//__\\\\__________"
 echo "  /___________________________\\"
@@ -142,15 +142,19 @@ place="/dev/input/"
 usbPlace="${place}${usbPort}"
 echo "Set device to: $usbPlace"
 sleep 1
-echo
 
 ######################################## Desktop Choice
+echo
+if ! [ -z $XDG_CURRENT_DESKTOP ]; then
 echo "Oscar2 can optionally install a Kitchen-counter"
-echo "Desktop Experience! Do you wish to install the Conky"
-echo "Desktop Lists widget? You will see your Groceries and"
-echo "Housewares lists on your desktop background. Say 'No'"
-echo "if you do not have a GUI installed on this machine and you do"
-echo " not intend to connect a monitor to Oscar."
+echo "Desktop Experience! With it, you will see your Groceries and"
+echo "Housewares lists on your desktop background."
+echo
+echo "I have detected that you do have a GUI enviornment on"
+echo "this instance / machine. However, say 'No' to this prompt"
+echo "if you do not have a GUI installed on this machine or you do"
+echo "not intend to connect a monitor to Oscar, or you just don't"
+echo "want any of the Desktop Experience." 
 echo
 read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
 if [ -z "$desktopYN" ]; then desktopYN='y'
@@ -169,6 +173,10 @@ echo
 if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
   else echo "Oscar Desktop WILL NOT be configured." 
 fi
+else 
+echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
+desktopYN='n'
+fi
 
 ######################################## Dependencies
 echo
@@ -178,7 +186,8 @@ echo "Before we start, you should almost for sure let me strip nodejs and node"
 echo "from the system. But, if you have something else using node on this machine,"
 echo "I'm going to break it now. If you aren't sure, you're fine. Go ahead and hit <enter>."
 echo "There is probably no good reason to say 'No,' here... But if you can think of a reason,"
-echo "feel free... Either way, this can take upwards of an hour on a Raspberry Pi, since"
+echo "go ahead..."
+echo "Either way, this can take upwards of an hour on a Raspberry Pi, since"
 echo "it involves compiling stuff. It only takes about a minute on a decent x86."
 echo
 read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously, don't say 'no') [yes]?" yesno
@@ -306,37 +315,21 @@ sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 
 ######################################## Conky Widgets
-echo
-echo "Now we can optionally install some Conky Desktop Widgets. You'll get your Trello Grocery List, plus"
-echo "the extra Housewares list that we made before as desktop widgets. This way you can always see what's"
-echo "on the list at a glance."
-echo
-read -p "Should we set up the widgets y/n? [y]:" desktopYNc
-if [ -z "$desktopYNc" ]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "Yes" ]]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "YES" ]]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "yES" ]]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "Y" ]]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "Yes" ]]; then desktopYNc='y'
-fi
-if [[ $desktopYNc  == "y" ]]; then
-echo  $user ran the script, installing Conky for $user.
- mkdir /home/$user/Conky
- cp /var/oscar/conky/conkyrc* /home/$user/Conky
+echo  $username ran the script, installing Conky for $username.
+ mkdir /home/$username/Conky
+ cp /var/oscar/conky/conkyrc* /home/$username/Conky
  chmod +x /var/oscar/conky/conky.sh
- cp /var/oscar/conky/oscar-conky.desktop /home/$user/.config/autostart
+ if  ! [ -d -a "/home/$username/.config" ]; then mkdir /home/$username/.config
+ fi
+ if  ! [ -d -a "/home/$username/.config/autostart" ]; then mkdir /home/$username/.config/autostart
+ fi
+ cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart
  echo
  echo "Conky is set up. You will see Conky widgets on your next reboot."
  echo
  echo "If you need to edit their positions, colors, etc., you can do so"
  echo "by editing the contents of the ~/Conky folder."
  echo 
-fi
 
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
@@ -344,5 +337,7 @@ check_exit_status
 sudo chmod +x install_wd.sh 
 check_exit_status
 ./install_wd.sh
+else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
 cleanup
+
