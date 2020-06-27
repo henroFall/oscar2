@@ -24,6 +24,10 @@ check_exit_status() {
 echo
 }
 
+maximize() {
+    wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
+}
+
 cleanup() {
 rm -f /var/oscar/mergetrelloboards/tapp.txt
 rm -f /var/oscar/mergetrelloboards/ttd.txt
@@ -34,6 +38,8 @@ rm -f install_wd.sh
 }
 ####################################################
 rootCheck
+apt install wmctrl
+maximize
 user=${SUDO_USER:-${USER}}
 echo "               ____ "
 echo "   ___________//__\\\\__________"
