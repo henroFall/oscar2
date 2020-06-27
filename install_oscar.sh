@@ -283,6 +283,8 @@ fi
 echo
 cd /var/oscar/web
 sed -i "s/79/$webport/g" /etc/oscar.yaml
+echo
+read -ep "Press <enter> to continue." getpast
 supervisorctl reload
 check_exit_status
 rm -f ~/before.txt
@@ -341,4 +343,6 @@ check_exit_status
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
 cleanup
+echo "All done! Reboot now by typing 'sudo reboot' "
+echo
 

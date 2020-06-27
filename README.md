@@ -13,7 +13,7 @@ To install this version of Oscar, use this command line from a terminal:
 
 `wget -N https://raw.githubusercontent.com/henroFall/oscar2/master/install_oscar.sh && sudo chmod +x install_oscar.sh && sudo -E ./install_oscar.sh`
 
-Follow all prompts and you should be fine. 
+Follow all prompts and you should be fine. Igore all of the Node complaints about old deprecated packages. They work!
 
 The Story of Oscar
 -------------
@@ -35,6 +35,7 @@ So, this is my version of Oscar, dubbed Oscar2, enhanced from that abandoned dan
 What I'll need to do before 2021:
 * Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there.
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
+* Go through each of the Node packages and increment up from the legacy versions being used.
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
 
