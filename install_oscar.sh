@@ -322,17 +322,14 @@ echo  $username ran the script, installing Conky for $username.
  mkdir /home/$username/Conky
  cp /var/oscar/conky/conkyrc* /home/$username/Conky
  chmod +x /var/oscar/conky/conky.sh
- if  ! [ -d -a "/home/$username/.config" ]; then mkdir /home/$username/.config
- fi
- if  ! [ -d -a "/home/$username/.config/autostart" ]; then mkdir /home/$username/.config/autostart
- fi
- cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart
+ cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/
  echo
  echo "Conky is set up. You will see Conky widgets on your next reboot."
  echo
  echo "If you need to edit their positions, colors, etc., you can do so"
  echo "by editing the contents of the ~/Conky folder."
  echo 
+ read -ep "Press <enter> to continue." getpast
 
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
