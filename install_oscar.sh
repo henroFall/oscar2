@@ -78,17 +78,17 @@ echo "Valid entries: master"
 echo "               dev"
 echo
 read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
-if [ -z "$gitbranch" ]; then desktopYN='master'
+if [ -z "$gitbranch" ]; then gitbranch='master'
 fi
-if [[ $gitbranch  == "DEV" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "DEV" ]]; then gitbranch='dev'
 fi
-if [[ $gitbranch  == "dEV" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "dEV" ]]; then gitbranch='dev'
 fi
-if [[ $gitbranch  == "Dev" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "Dev" ]]; then gitbranch='dev'
 fi
-if [[ $gitbranch  == "dEv" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "dEv" ]]; then gitbranch='dev'
 fi
-if [[ $gitbranch  != "dev" ]]; then desktopYN='master'
+if [[ $gitbranch  != "dev" ]]; then gitbranch='master'
 fi
 echo Using branch: $gitbranch .
 
