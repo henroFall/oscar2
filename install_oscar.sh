@@ -78,6 +78,17 @@ echo "Valid entries: master"
 echo "               dev"
 echo
 read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
+if [[ $gitbranch  == "" ]]; then desktopYN='master'
+if [[ $gitbranch  == "DEV" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "dEV" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "Dev" ]]; then desktopYN='dev'
+if [[ $gitbranch  == "dEv" ]]; then desktopYN='dev'
+if [[ $gitbranch  != "dev" ]]; then desktopYN='master'
+echo Using branch: $gitbranch .
+fi
+
+
+
 ######################################## Web port
 echo
 echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
@@ -235,7 +246,6 @@ check_exit_status
 ######################################## Oscar itself
 cd /var
 if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
-#git clone https://github.com/henroFall/oscar2.git oscar
 git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
 check_exit_status
 cd /var/oscar
