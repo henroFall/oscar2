@@ -1,0 +1,110 @@
+######################
+# - Conky settings - #
+######################
+update_interval 30
+total_run_times 0
+cpu_avg_samples 1
+double_buffer yes
+no_buffers yes
+#background yes
+#antialising et font
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont Sans:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+xftalpha 0.9
+#xftalpha 1
+#update each x seconds
+
+
+#run forever
+
+
+#for execbar
+
+#needs compositing enabled in window manager
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+# - There was no Window Class Before
+own_window yes
+own_window_type conky
+#own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_argb_visual yes
+
+alignment tr
+gap_x 1050
+gap_y 15
+minimum_size 150 600
+maximum_width 600
+default_bar_size 80 5
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+default_color white
+default_shade_color black
+default_outline_color white
+
+
+
+
+uppercase no
+#white
+color1          E7FFFF  #white (blue tint)
+color2          FFFFFF # 8DC5D9         #key
+color3          68b1b8  #value
+color4          68b1b8  #bar
+color5          a80022  #red
+color6          496388  #light marine blue
+color7          5A7499  #lighter marine blue
+color8          6d8390  #light grey
+color9          30393f  #dark grey
+TEXT
+
+${color1}Groceries
+${voffset -30}
+${font Sans:size=9}${texeci 30 python3 /home/pi/Downloads/mergetrelloboards2/trello2txt.py /home/pi/Downloads/mergetrelloboards2/conf.json -d /tmp/trello2.txt }
+${font Sans:size=12}${if_match "${texeci 10 sed -n '1p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '1p' ~/tmp/  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '2p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '2p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '3p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '3p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '4p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '4p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '5p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '5p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '6p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '6p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '7p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '7p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '8p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '8p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '9p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '9p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '10p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '10p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '11p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '11p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '12p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '12p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '13p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '13p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '14p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '14p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '15p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '15p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '16p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '16p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '17p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '17p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '18p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '18p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '19p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '19p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '20p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '20p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '21p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '21p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '22p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '22p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '23p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '23p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '24p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '24p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '25p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '25p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '26p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '26p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '27p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '27p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '28p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '28p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '29p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '29p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '30p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '30p' /tmp/trello2.txt  | cut -c 1-70}
+${font Sans:size=12}${if_match "${texeci 10 sed -n '31p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '31p' /tmp/trello2.txt  | cut -c 1-70}
+${color1}${font Sans:size=12}${texeci 10 echo `wc -l /tmp/trello2.txt | cut -d ' ' -f1`-31 | bc -l | sed 's/-.*/0/' | awk '{if ($1!=0){print $1,"more left..."}}'}

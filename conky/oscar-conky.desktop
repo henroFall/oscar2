@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=conky
+Type=Application
+Exec=sh /var/oscar/conky/conky.sh
+Terminal=false
+Comment=system monitoring tool
+Categories=Utility;

@@ -23,9 +23,17 @@ check_exit_status() {
 echo
 }
 
+cleanup() {
+rm -f /var/oscar/mergetrelloboards/tapp.txt
+rm -f /var/oscar/mergetrelloboards/ttd.txt
+rm -f /var/oscar/mergetrelloboards/ttoken.txt
+rm -f /var/oscar/mergetrelloboards/tgb.txt
+rm -f /var/oscar/mergetrelloboards/tgl.txt
+rm -f install_wd.sh
+}
 ####################################################
-
 rootCheck
+user=${SUDO_USER:-${USER}}
 echo "               ____ "
 echo "   ___________//__\\\\__________"
 echo "  /___________________________\\"
@@ -259,8 +267,8 @@ check_exit_status
 rm -f ~/before.txt
 rm -f ~/after.txt
 
-#if [[ $desktopYN == "y" ]]; then
 ######################################## Oscar Desktop
+if [[ $desktopYN == "y" ]]; then
 echo "Installing Oscar Desktop configuration..."
 echo
 trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
@@ -269,21 +277,16 @@ trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
 trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
 
-#Henry-hack
-#echo FORCE API KEY VALUES
-#trellodesktopkey="14b70ab55f8afb37809ae20d4b29a6c8"
-#trellotoken="b63d46821a320fdb8589e6dafaa66aad05d9f61b391c4d10e6464805ec17d6c3"
-
-echo Trello desktop api key: $trellodesktopkey
+echo Loading Trello desktop api key: $trellodesktopkey
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Trello token: $trellotoken
+echo Loading Trello token: $trellotoken
 sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Trello grocery board: $trellogroceryb
+echo Loading Trello grocery board: $trellogroceryb
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Trello grocery list:  $trellogroceryl
+echo Loading Trello grocery list:  $trellogroceryl
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Housewares\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
@@ -291,10 +294,44 @@ check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 
+######################################## Conky Widgets
+echo
+echo "Now we can optionally install some Conky Desktop Widgets. You'll get your Trello Grocery List, plus"
+echo "the extra Housewares list that we made before as desktop widgets. This way you can always see what's"
+echo "on the list at a glance."
+echo
+read -p "Should we set up the widgets y/n? [y]:" desktopYNc
+if [[ $desktopYNc  == "" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "Yes" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "YES" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "yES" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "Y" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "Yes" ]]; then desktopYNc='y'
+fi
+if [[ $desktopYNc  == "y" ]]; then
+echo  $user ran the script, installing Conky for $user.
+ mkdir /home/$user/Conky
+ cp /var/oscar/conky/conkyrc* /home/$user/Conky
+ chmod +x /var/oscar/conky/conky.sh
+ cp /var/oscar/conky/oscar-conky.desktop /home/$user/.config/autostart
+ echo
+ echo "Conky is set up. You will see Conky widgets on your next reboot."
+ echo
+ echo "If you need to edit their positions, colors, etc., you can do so"
+ echo "by editing the contents of the ~/Conky folder."
+ echo 
 fi
 
-rm -f /var/oscar/mergetrelloboards/tapp.txt
-rm -f /var/oscar/mergetrelloboards/ttd.txt
-rm -f /var/oscar/mergetrelloboards/ttoken.txt
-rm -f /var/oscar/mergetrelloboards/tgb.txt
-rm -f /var/oscar/mergetrelloboards/tgl.txt
+######################################## Weather Desktop w/ FireWatch
+wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
+check_exit_status
+sudo chmod +x install_wd.sh 
+check_exit_status
+./install_wd.sh
+
+Cleanup
