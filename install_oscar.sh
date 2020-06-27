@@ -79,16 +79,19 @@ echo "Valid entries: master"
 echo "               dev"
 echo
 read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
-if [[ $gitbranch  == "" ]]; then desktopYN='master'
-if [[ $gitbranch  == "DEV" ]]; then desktopYN='dev'
-if [[ $gitbranch  == "dEV" ]]; then desktopYN='dev'
-if [[ $gitbranch  == "Dev" ]]; then desktopYN='dev'
-if [[ $gitbranch  == "dEv" ]]; then desktopYN='dev'
-if [[ $gitbranch  != "dev" ]]; then desktopYN='master'
-echo Using branch: $gitbranch .
+if [ -z "$gitbranch" ]; then desktopYN='master'
 fi
-
-
+if [[ $gitbranch  == "DEV" ]]; then desktopYN='dev'
+fi
+if [[ $gitbranch  == "dEV" ]]; then desktopYN='dev'
+fi
+if [[ $gitbranch  == "Dev" ]]; then desktopYN='dev'
+fi
+if [[ $gitbranch  == "dEv" ]]; then desktopYN='dev'
+fi
+if [[ $gitbranch  != "dev" ]]; then desktopYN='master'
+fi
+echo Using branch: $gitbranch .
 
 ######################################## Web port
 echo
@@ -145,7 +148,7 @@ echo "if you do not have a GUI installed on this machine and you do"
 echo " not intend to connect a monitor to Oscar."
 echo
 read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
-if [[ $desktopYN  == "" ]]; then desktopYN='y'
+if [ -z "$desktopYN" ]; then desktopYN='y'
 fi
 if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
 fi
@@ -174,7 +177,7 @@ echo "feel free... Either way, this can take upwards of an hour on a Raspberry P
 echo "it involves compiling stuff. It only takes about a minute on a decent x86."
 echo
 read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously, don't say 'no') [yes]?" yesno
-if [[ $yesno == "" ]]; then
+if [ -z "$yesno" ]; then
        yesno='yes'
 	   check_exit_status
 fi	
@@ -304,7 +307,7 @@ echo "the extra Housewares list that we made before as desktop widgets. This way
 echo "on the list at a glance."
 echo
 read -p "Should we set up the widgets y/n? [y]:" desktopYNc
-if [[ $desktopYNc  == "" ]]; then desktopYNc='y'
+if [ -z "$desktopYNc" ]; then desktopYNc='y'
 fi
 if [[ $desktopYNc  == "Yes" ]]; then desktopYNc='y'
 fi
@@ -337,4 +340,4 @@ sudo chmod +x install_wd.sh
 check_exit_status
 ./install_wd.sh
 
-Cleanup
+cleanup
