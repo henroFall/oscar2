@@ -137,20 +137,12 @@ sleep 1
 echo
 
 ######################################## Desktop Choice
-desktopins = $((ls /usr/bin/*session) | grep gnome )
-desktopins 
-
 echo "Oscar2 can optionally install a Kitchen-counter"
-echo "Desktop Experience! With this, you can install"
-echo "Conky with Trello Lists on your desktop, weather"
-echo "widgets, and more, along with the DeskWeather"
-echo "module with FireWatch wallpapers, to always have a"
-echo "reflection of the weather outside right on your monitor's"
-echo "background. Each sub-module will offer its own confirmation"
-echo "and choices, but before we get to all of that, do you overall"
-echo "wish to install the Desktop component foundation? Say 'No'"
+echo "Desktop Experience! Do you wish to install the Conky"
+echo "Desktop Lists widget? You will see your Groceries and"
+echo "Housewares lists on your desktop background. Say 'No'"
 echo "if you do not have a GUI installed on this machine and you do"
-echo " not intend to connect an always-on monitor to Oscar."
+echo " not intend to connect a monitor to Oscar."
 echo
 read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
 if [[ $desktopYN  == "" ]]; then desktopYN='y'
