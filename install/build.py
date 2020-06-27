@@ -60,6 +60,10 @@ print "Now, you'll need your personal app key. Go to this URL:"
 print
 print "    https://trello.com/app-key"
 print
+print "NOTE! If you get a 401 Error and a picture of a sleeping dog telling you"
+print "that you are not logged in, it means that you are not logged in. Just go"
+print "to https://trello.com , log in, then click on https://trello.com/app-key "
+print
 print "You'll be shown a 'key'; enter it below."
 print
 trellopersonalkey = raw_input('Key: ')

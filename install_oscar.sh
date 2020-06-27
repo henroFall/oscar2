@@ -23,8 +23,8 @@ check_exit_status() {
 echo
 }
 
-maximize() {
-    wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
+maximize_vert() {
+    wmctrl -r :ACTIVE: -b toggle,maximized_vert
 }
 
 cleanup() {
@@ -38,7 +38,7 @@ rm -f install_wd.sh
 ####################################################
 rootCheck
 apt install wmctrl
-maximize
+maximize_vert
 user=${SUDO_USER:-${USER}}
 echo "               ____ "
 echo "   ___________//__\\\\__________"
@@ -270,7 +270,7 @@ if [[ $(lsb_release -rs) == "20.04" ]]; then
 python2 ./build.py $usbPlace
 else python ./build.py $usbPlace
 fi
-
+echo
 cd /var/oscar/web
 sed -i "s/79/$webport/g" /etc/oscar.yaml
 supervisorctl reload
@@ -344,5 +344,5 @@ check_exit_status
 sudo chmod +x install_wd.sh 
 check_exit_status
 ./install_wd.sh
-
+fi
 cleanup
