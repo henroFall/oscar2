@@ -94,7 +94,8 @@ trello_grocery_list = 'Groceries'
 print
 print "Oscar can email or text you when it scans something it doesn't recognize. This"
 print "gives you the opportunity to teach Oscar about items you frequently buy."
-print "Please choose whether you want oscar to email or text you by typing 'email' or 'text'."
+print "Please choose whether you want oscar to email or text you by typing 'email'"
+print "or 'text'."
 print
 communication_method = raw_input("Communication method ('email' or 'text'): ")
 while communication_method not in ['email', 'text']:

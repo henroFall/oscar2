@@ -1,5 +1,4 @@
 #!/bin/bash
-
 rootCheck() {
     if ! [ $(id -u) = 0 ]
     then
@@ -147,36 +146,37 @@ sleep 1
 ######################################## Desktop Choice
 echo
 if ! [ -z $XDG_CURRENT_DESKTOP ]; then
-echo "Oscar2 can optionally install a Kitchen-counter"
-echo "Desktop Experience! With it, you will see your Groceries and"
-echo "Housewares lists on your desktop background."
-echo
-echo "I have detected that you do have a GUI enviornment on"
-echo "this instance / machine. However, say 'No' to this prompt"
-echo "if you do not have a GUI installed on this machine or you do"
-echo "not intend to connect a monitor to Oscar, or you just don't"
-echo "want any of the Desktop Experience." 
-echo
-read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
-if [ -z "$desktopYN" ]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "YES" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "yES" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
-fi
-echo
-if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
-  else echo "Oscar Desktop WILL NOT be configured." 
-fi
-else 
-echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
-desktopYN='n'
+ echo "Oscar2 can optionally install a Kitchen-counter"
+ echo "Desktop Experience! With it, you will see your Groceries and"
+ echo "Housewares lists on your desktop background. You can also add"
+ echo "a feature to set custom backgrounds based on the current time"
+ echo "and weather at your location!"
+ echo
+ echo "I have detected that you do have a GUI enviornment on"
+ echo "this instance / machine. However, say 'No' to this prompt"
+ echo "if you don't intend to connect a monitor to Oscar, or you just don't"
+ echo "want any of the Desktop Experience." 
+ echo
+ read -p "Install Oscar Desktop Experience y/n? [y]:" desktopYN
+ if [ -z "$desktopYN" ]; then desktopYN='y'
+ fi
+ if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+ fi
+ if [[ $desktopYN  == "YES" ]]; then desktopYN='y'
+ fi
+ if [[ $desktopYN  == "yES" ]]; then desktopYN='y'
+ fi
+ if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
+ fi
+ if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+ fi
+ echo
+ if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
+   else echo "Oscar Desktop WILL NOT be configured." 
+ fi
+ else 
+ echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
+ desktopYN='n'
 fi
 
 ######################################## Dependencies
@@ -185,13 +185,13 @@ echo "We need to install some dependencies and stitch together all the magic."
 echo
 echo "Before we start, you should almost for sure let me strip nodejs and node"
 echo "from the system. But, if you have something else using node on this machine,"
-echo "I'm going to break it now. If you aren't sure, you're fine. Go ahead and hit <enter>."
-echo "There is probably no good reason to say 'No,' here... But if you can think of a reason,"
-echo "go ahead..."
+echo "I'm going to break it now. If you aren't sure, you're fine. Go ahead and hit"
+echo "<enter> There is probably no good reason to say 'No,' here... But if you"
+echo "can think of a reason, go ahead..."
 echo "Either way, this can take upwards of an hour on a Raspberry Pi, since"
 echo "it involves compiling stuff. It only takes about a minute on a decent x86."
 echo
-read -ep "Is that OK to purge node/nodejs to start clean (push enter now, seriously, don't say 'no') [yes]?" yesno
+read -ep "Is that OK to purge node/nodejs to start clean (just push <enter>) [yes]?" yesno
 if [ -z "$yesno" ]; then
        yesno='yes'
 	   check_exit_status
