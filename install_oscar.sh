@@ -22,7 +22,7 @@ check_exit_status() {
         fi
     fi
 echo
-} 
+}
 
 ####################################################
 
@@ -32,7 +32,7 @@ echo "   ___________//__\\\\__________"
 echo "  /___________________________\\"
 echo "  I___I___I___I___I___I___I___I"
 echo "        < ,wWWWWwwWWWWw, >"
-echo "       <  WW( 0 )( 1 )WW  >"
+echo "       <  WW( 0 )( 0 )WW  >"
 echo "      <      '-'  '-'      >"
 echo "     <    ,._.--\"\"--._.,    >"
 echo "     <   ' \\   .--.   / \`   >"
@@ -59,33 +59,9 @@ echo "Hello! Let's set up Oscar2!"
 echo
 echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
 echo
-read -p "Press <enter> to begin!"
+read -p "Press <enter> to begin, and push <enter> for most of this!"
 echo
-######################################## Desktop Choice
-echo "Oscar2 can install as a service to manage the scanner"
-echo "with no user interface, or I can optionally install"
-echo "the Oscar Desktop components, which creates a Conky"
-echo "desktop widget to display your Grocery list(s)."
-echo
-read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
-if [[ $desktopYN  == "" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "YES" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "yES" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
-fi
-if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
-fi
-echo
-if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
-  else echo "Oscar Desktop WILL NOT be configured." 
-fi
-########################################  Branch Choice
-echo
+######################################## Branch Choice
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
@@ -139,6 +115,42 @@ place="/dev/input/"
 usbPlace="${place}${usbPort}"
 echo "Set device to: $usbPlace"
 sleep 1
+echo
+
+######################################## Desktop Choice
+desktopins = $((ls /usr/bin/*session) | grep gnome )
+desktopins 
+
+echo "Oscar2 can optionally install a Kitchen-counter"
+echo "Desktop Experience! With this, you can install"
+echo "Conky with Trello Lists on your desktop, weather"
+echo "widgets, and more, along with the DeskWeather"
+echo "module with FireWatch wallpapers, to always have a"
+echo "reflection of the weather outside right on your monitor's"
+echo "background. Each sub-module will offer its own confirmation"
+echo "and choices, but before we get to all of that, do you overall"
+echo "wish to install the Desktop component foundation? Say 'No'"
+echo "if you do not have a GUI installed on this machine and you do"
+echo " not intend to connect an always-on monitor to Oscar."
+echo
+read -p "Install Oscar Desktop widget y/n? [y]:" desktopYN
+if [[ $desktopYN  == "" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "YES" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "yES" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+fi
+echo
+if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
+  else echo "Oscar Desktop WILL NOT be configured." 
+fi
+
 ######################################## Dependencies
 echo
 echo "We need to install some dependencies and stitch together all the magic."
@@ -248,23 +260,20 @@ check_exit_status
 rm -f ~/before.txt
 rm -f ~/after.txt
 
+#if [[ $desktopYN == "y" ]]; then
 ######################################## Oscar Desktop
-echo "Installing Oscar Desktop components..."
+echo "Installing Oscar Desktop configuration..."
 echo
 trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
 trellodesktopkey=$(cat /var/oscar/mergetrelloboards/ttd.txt)
 trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
 trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
-rm -f /var/oscar/mergetrelloboards/tapp.txt
-rm -f /var/oscar/mergetrelloboards/ttoken.txt
-rm -f /var/oscar/mergetrelloboards/tgb.txt
-rm -f /var/oscar/mergetrelloboards/tgl.txt
 
 #Henry-hack
-echo FORCE API KEY VALUES
-trellodesktopkey="14b70ab55f8afb37809ae20d4b29a6c8"
-trellotoken="b63d46821a320fdb8589e6dafaa66aad05d9f61b391c4d10e6464805ec17d6c3"
+#echo FORCE API KEY VALUES
+#trellodesktopkey="14b70ab55f8afb37809ae20d4b29a6c8"
+#trellotoken="b63d46821a320fdb8589e6dafaa66aad05d9f61b391c4d10e6464805ec17d6c3"
 
 echo Trello desktop api key: $trellodesktopkey
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
@@ -282,6 +291,11 @@ sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Housewares\" : \"B
 check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-#if [[ $desktopYN == "y" ]]; then
 
-#fi
+fi
+
+rm -f /var/oscar/mergetrelloboards/tapp.txt
+rm -f /var/oscar/mergetrelloboards/ttd.txt
+rm -f /var/oscar/mergetrelloboards/ttoken.txt
+rm -f /var/oscar/mergetrelloboards/tgb.txt
+rm -f /var/oscar/mergetrelloboards/tgl.txt
