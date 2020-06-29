@@ -72,6 +72,7 @@ print "OK - One more token! CLick this, copy, paste... you know the"
 print "drill by now."
 print
 print "    https://trello.com/1/authorize?key={0}&name=oscarDesktop&expiration=never&response_type=token&scope=read,write".format(trellopersonalkey)
+print
 trello_token_desktop = raw_input('Token: ')
 print
 print "Alright, now, we haven't yet found a way to create boards via the Trello"

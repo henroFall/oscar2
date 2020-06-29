@@ -21,7 +21,6 @@ check_exit_status() {
             exit 1
         fi
     fi
-echo
 }
 
 maximize_vert() {
@@ -74,8 +73,9 @@ echo
 echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
 echo
 read -p "Press <enter> to begin, and push <enter> for most of this!"
-echo
 ######################################## Branch Choice
+echo
+echo "######################################## Branch Choice"
 echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
@@ -101,6 +101,8 @@ echo Using branch: $gitbranch .
 
 ######################################## Web port
 echo
+echo "######################################## Web port"
+echo
 echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
 echo "that is some pretty prime real estate for a TRASH sCANer. You"
 echo "can enter any valid TCP port number here, or press <enter> to"
@@ -111,6 +113,8 @@ then webport=8543
 fi
 
 ######################################## Scanner Detect
+echo
+echo "######################################## Scanner Detect"
 echo
 echo "OK! Now, we are now going to attept to detect your USB barcode scanner."
 echo "Be sure it is UNPLUGED, then press <enter>."
@@ -146,6 +150,8 @@ sleep 1
 
 ######################################## Desktop Choice
 echo
+echo "######################################## Desktop Choice"
+echo
 if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  echo "Oscar2 can optionally install a Kitchen-counter"
  echo "Desktop Experience! With it, you will see your Groceries and"
@@ -172,7 +178,8 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
  fi
  echo
- if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured." 
+ if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured."
+   conkyall="conky-all" 
    else echo "Oscar Desktop WILL NOT be configured." 
  fi
  else 
@@ -181,6 +188,8 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
 fi
 
 ######################################## Dependencies
+echo
+echo "######################################## Dependencies"
 echo
 echo "We need to install some dependencies and stitch together all the magic."
 echo
@@ -233,7 +242,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential nodejs npm python3-pip bc jq
+apt -y install sed curl git supervisor build-essential nodejs npm python3-pip bc jq $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -256,6 +265,7 @@ pip3 install jsmin --no-cache-dir
 check_exit_status
 rm -f get-pip.py
 ######################################## Oscar itself
+echo "######################################## Oscar itself"
 cd /var
 if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
 git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
@@ -269,6 +279,8 @@ cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
 check_exit_status
 
 ######################################## Web
+echo
+echo "######################################## Web"
 cd /var/oscar/web
 sed -i "s/80/$webport/g" /var/oscar/web/app.js
 check_exit_status
@@ -281,6 +293,8 @@ check_exit_status
 chmod +x ./build.py
 
 ######################################## Call Build.py
+echo
+echo "######################################## Build"
 if [[ $(lsb_release -rs) == "20.04" ]]; then 
 python2 ./build.py $usbPlace
 else python ./build.py $usbPlace
@@ -296,6 +310,7 @@ rm -f ~/before.txt
 rm -f ~/after.txt
 
 ######################################## Oscar Desktop
+echo "######################################## Oscar Desktop"
 if [[ $desktopYN == "y" ]]; then
 echo "Installing Oscar Desktop configuration..."
 echo
@@ -324,7 +339,7 @@ sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrel
 check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Readying Trello Housewares manual list:  $trellogroceryl
+echo Readying Trello Housewares manual list:  Housewares
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Housewares\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards2/conf.json
@@ -332,6 +347,8 @@ check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 ######################################## Conky Widgets
+echo
+echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
  mkdir /home/$username/Conky
  cp /var/oscar/conky/conkyrc* /home/$username/Conky
