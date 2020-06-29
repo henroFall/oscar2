@@ -323,7 +323,7 @@ sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrel
 check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-echo Readying Trello Housewares list (manual):  $trellogroceryl
+echo Readying Trello Housewares manual list:  $trellogroceryl
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Housewares\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards2/conf.json
