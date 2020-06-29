@@ -232,7 +232,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential nodejs npm python3-pip
+apt -y install sed curl git supervisor build-essential nodejs npm python3-pip bc jq
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -253,7 +253,7 @@ pip3 install requests --no-cache-dir
 check_exit_status
 pip3 install jsmin --no-cache-dir
 check_exit_status
-
+rm -f get-pip.py
 ######################################## Oscar itself
 cd /var
 if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
@@ -262,9 +262,13 @@ check_exit_status
 cd /var/oscar
 git clone https://github.com/henroFall/mergetrelloboards.git
 check_exit_status
+mkdir /var/oscar/mergetrelloboards2
+check_exit_status
+cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
+check_exit_status
 
-cd /var/oscar/web
 ######################################## Web
+cd /var/oscar/web
 sed -i "s/80/$webport/g" /var/oscar/web/app.js
 check_exit_status
 npm install
@@ -300,23 +304,32 @@ trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
 trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
 
-echo Loading Trello desktop api key: $trellodesktopkey
-sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
+echo Loading Trello desktop api key: $trelloappkey
+sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
-echo Loading Trello token: $trellotoken
-sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellotoken/g" /var/oscar/mergetrelloboards/conf.json
+echo Loading Trello token: $trellodesktopkey
+sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 echo Loading Trello grocery board: $trellogroceryb
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 echo Loading Trello grocery list:  $trellogroceryl
-sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",|    \"Housewares\" : \"BY_DATE\",|g' /var/oscar/mergetrelloboards/conf.json
+sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
 check_exit_status
-
+echo Readying Trello Housewares list (manual):  $trellogroceryl
+sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Housewares\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards2/conf.json
+check_exit_status
+sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards2/conf.json
+check_exit_status
+sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
+check_exit_status
 ######################################## Conky Widgets
 echo  $username ran the script, installing Conky for $username.
  mkdir /home/$username/Conky
@@ -342,4 +355,3 @@ fi
 cleanup
 echo "All done! Reboot now by typing 'sudo reboot' "
 echo
-

@@ -59,6 +59,7 @@ ${voffset -350}${time %I}
 ${color2}${voffset -170}${time %M}${color}
 ${voffset -220}${font Droid Sans:size=16}${time %A}
 ${time %B .%d}
-${font Sans:size=9}${texeci 60 python3 /home/pi/Downloads/mergetrelloboards/trello2txt.py /home/pi/Downloads/mergetrelloboards/conf.json -d /tmp/trello.txt }
-${font Sans:size=9}${texeci 900 python3 /home/pi/Downloads/WeatherDesk/WeatherDesk.py -d /home/pi/Documents/weatherdesk_walls -t 4 -o> /dev/null }
+${font Sans:size=9}${texeci 60 python3 /var/oscar/mergetrelloboards2/trello2txt.py /var/oscar/mergetrelloboards2/conf.json -d /tmp/trello2.txt }
+
+#${font Sans:size=9}${texeci 900 python3 /home/pi/Downloads/WeatherDesk/WeatherDesk.py -d /home/pi/Documents/weatherdesk_walls -t 4 -o> /dev/null }
 
