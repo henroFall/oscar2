@@ -37,8 +37,12 @@ rm -f install_wd.sh
 }
 ####################################################
 rootCheck
+if ! [ -z $XDG_CURRENT_DESKTOP ]; then
 apt install wmctrl
+fi
+if ! [ -z $XDG_CURRENT_DESKTOP ]; then
 maximize_vert
+fi
 username=${SUDO_USER:-${USER}}
 echo "               ____ "
 echo "   ___________//__\\\\__________"
