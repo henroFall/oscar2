@@ -5,7 +5,9 @@ just scan the item's barcode on its way into the trash." -danslimmon*
 
 What does Oscar2 do?
 ----------------
-Oscar 2 is awesome. With any modern Debian Linux machine (Raspberry Pi included), you can take that machine, a cheap barcode scanner, a free [Trello](https://www.trello.com) account, and some willpower and turn it into an automatic grocery list! 
+Oscar2 is awesome. With any modern Debian Linux machine (Raspberry Pi included), you can take that machine, a cheap barcode scanner, a free [Trello](https://www.trello.com) account along with a few other bits and pieces.... plus some willpower, and turn it into an automatic grocery list! It might not sound like much, but trust me - it's pretty freaking cool.
+
+Oscar2 takes the brilliance of the original Oscar and adds some cool desktop widgets to a kitchen PC. This completely works on a Raspberry Pi. I moved it onto a NUC to make the web browser more responsive, but YMMV. 
 
 Install Oscar
 -------------
