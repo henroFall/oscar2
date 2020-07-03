@@ -349,10 +349,18 @@ check_exit_status
 echo
 echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
- mkdir /home/$username/Conky
+ mkdir -p /home/$username/Conky
+ check_exit_status
+ if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
+ fi
+ check_exit_status
+ mkdir -p /home/$username/.config/autostart
+ check_exit_status
  cp /var/oscar/conky/conkyrc* /home/$username/Conky
+ check_exit_status
  chmod +x /var/oscar/conky/conky.sh
- cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/
+ cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
+ check_exit_status
  echo
  echo "Conky is set up. You will see Conky widgets on your next reboot."
  echo
