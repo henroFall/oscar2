@@ -73,7 +73,7 @@ color8          6d8390  #light grey
 color9          30393f  #dark grey
 TEXT
 
-${color1}Groceries
+${color1}Household
 ${voffset -30}
 ${font Sans:size=9}${texeci 60 python3 /var/oscar/mergetrelloboards2/trello2txt.py /var/oscar/mergetrelloboards2/conf.json -d /tmp/trello.txt }
 ${font Sans:size=12}${if_match "${texeci 10 sed -n '1p' /tmp/trello.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '1p' ~/tmp/  | cut -c 1-70}

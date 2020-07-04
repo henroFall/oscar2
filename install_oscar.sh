@@ -366,6 +366,10 @@ echo  $username ran the script, installing Conky for $username.
  chmod +x /var/oscar/conky/conky.sh
  cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
  check_exit_status
+ cd /var/oscar/install
+ git clone https://github.com/henroFall/Harmattan.git
+ mkdir -p /home/$username/.harmattan-assets
+ cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmattan-assets/
  echo
  echo "Conky is set up. You will see Conky widgets on your next reboot."
  echo
@@ -383,5 +387,8 @@ check_exit_status
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
 cleanup
-echo "All done! Reboot now by typing 'sudo reboot' "
 echo
+echo "All done! I'm ready to reboot."
+read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
+echo
+sudo reboot
