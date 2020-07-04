@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=ClockScreenlet
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Exec= python -u /usr/share/screenlets/Clock/ClockScreenlet.py
+X-GNOME-Autostart-enabled=true
