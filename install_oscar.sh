@@ -301,8 +301,11 @@ chmod +x ./build.py
 echo
 echo "######################################## Build"
 if [[ $(lsb_release -rs) == "20.04" ]]; then 
+echo "Calling build.py with python2."
 python2 ./build.py $usbPlace
-else python ./build.py $usbPlace
+else 
+echo "Calling build.py with python."
+python ./build.py $usbPlace
 fi
 echo
 cd /var/oscar/web
