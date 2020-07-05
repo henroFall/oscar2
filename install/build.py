@@ -12,9 +12,10 @@ from lib import trellodb
 
 yesno = 'n'
 usb_port=sys.argv[1]
-print "usb port value is"
-print usb_port
-
+scanner_device = usb_port
+if scanner_device == '':
+    scanner_device = '/dev/input/event0'
+print "Scanner Device port value is: ", scanner_device	
 def run_command(command):
     p = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     for line in iter(p.stdout.readline, ''):
@@ -130,14 +131,15 @@ if communication_method == 'email':
     yesno = 'n'
     while yesno != 'y':
         gmail_user = raw_input('GMail Email Address: ')
-        print "You entered ",gmail_user
-        yesno = raw_input('Are you sure y/[n])? ')
         if gmail_user != '':
+		    print "Remember, paste your Gmail app password here, not your actual Gmail password."
             gmail_password = raw_input('GMail Password: ')
             email_dest = raw_input('Destination email (the address you want emailed): ')
         else:
             gmail_password = ''
             email_dest = ''
+	    print "You entered ",gmail_user
+        yesno = raw_input('Are you sure y/[n])? ')
 else:
     ######################################## Twilio
     print
@@ -164,10 +166,6 @@ else:
         # Remove any non-digits from phone numbers
         twilio_src = re.sub('\D', '', twilio_src)
         twilio_dest = re.sub('\D', '', twilio_dest)
-
-    scanner_device = usb_port
-    if scanner_device == '':
-        scanner_device = '/dev/input/event0'
 
 ######################################## Create the appropriate Trello lists
 print

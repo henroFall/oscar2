@@ -40,6 +40,7 @@ What I'll need to do before 2021:
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
 * Go through each of the Node packages and increment up from the legacy versions being used.
 * Add a Cookbook interface of some kind.
+* Add some weather widgets and other stuff back. I was using Screenlets but it seems to be abandoned as well.
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
 
@@ -69,7 +70,7 @@ Getting Started: Software
 -----
 I've struck the original author's text here and invite you now to look above for the command line to use for an automatic install. 
 
-Getting Help (obviously this dude isn't going to reply, but I might. Log an issue up there).
+Getting Help (the original dude - log an issue with Oscar2 up there).
 -----
 I'm [on the Twitters][twitter] if you have a quick question. 
 
@@ -78,6 +79,8 @@ Acknowledgements
 WeatherDesk by bharadwaj-raju is bundled. The original is available at https://gitlab.com/bharadwaj-raju/WeatherDesk. I have not modified the source and pull from that repo at install time.
 
 MergeTrelloBoards, by GustavePate is bundled. The original is available at https://github.com/GustavePate/mergetrelloboards . I have not modified the source and pull from that repo at install time.
+
+Conky, by brndnmtthws is bundled. The original is available at https://github.com/brndnmtthws/conky . I have not modified the source and pull from apt at install time.
 
 The original Oscar, of course, by danslimmon. The original is available at https://github.com/danslimmon/oscar . 
 
