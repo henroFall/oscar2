@@ -128,11 +128,11 @@ if communication_method == 'email':
     print "can always come back and modify Oscar's config file later."
     print
     yesno = 'n'
-	while yesno != 'y':
+    while yesno != 'y':
         gmail_user = raw_input('GMail Email Address: ')
-		print "You entered ",gmail_user
+        print "You entered ",gmail_user
         yesno = raw_input("Are you sure y/[n])? "
-	    if gmail_user != '':
+        if gmail_user != '':
             gmail_password = raw_input('GMail Password: ')
             email_dest = raw_input('Destination email (the address you want emailed): ')
         else:
