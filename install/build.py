@@ -127,6 +127,10 @@ if communication_method == 'email':
     print "If you want to, you can sign up for a GMail account and enter your"
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
+	print
+	print "NOTE: Do not enter your actual Gmail password. Get an app password for"
+	print "Oscar by following the instructions at "
+	print "          https://support.google.com/accounts/answer/185833?hl=en "
     print
     yesno = 'n'
     while yesno != 'y':
@@ -138,7 +142,10 @@ if communication_method == 'email':
         else:
             gmail_password = ''
             email_dest = ''
-        print "You entered ",gmail_user
+        print "You entered ",gmail_user," as your email address,"
+		print "You entered ",gmail_password," as your email password,"
+		print "You entered ",email_dest," as the destination email address."
+		print
         yesno = raw_input('Are you sure y/[n])? ')
 else:
     ######################################## Twilio
