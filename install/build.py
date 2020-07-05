@@ -24,7 +24,7 @@ if os.getuid() != 0:
     print "This script should be run as root on the target device. Aborting."
     print
     sys.exit(1)
-	
+    
 print
 print "You need accounts with a few APIs to use Oscar. Any of the keys are copy/paste"
 print "so I won't prompt you for confirmation. If you do something wrong, just ride out"
@@ -153,7 +153,7 @@ if communication_method == 'email':
         yesno = 'n'
         while yesno != 'y':
             twilio_src = raw_input('Twilio number: ')
-			
+            
             if twilio_src != '':
                 twilio_sid = raw_input('Twilio SID: ')
                 twilio_token = raw_input('Twilio token: ')
