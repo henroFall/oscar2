@@ -1,12 +1,12 @@
 {
   "name": "oscar",
-  "version": "0.1.2",
+  "version": "0.2.3",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.4.4",
+    "express": "4.17.1",
     "express-dot": "*",
     "jade": "*",
     "node-trello": "*",
