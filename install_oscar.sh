@@ -258,7 +258,9 @@ python get-pip.py
 python3 get-pip.py
 fi
 check_exit_status
+echo "Executing PIP2/PIP installers..."
 pip2 install PyYAML --no-cache-dir
+check_exit_status
 pip2 install trello==0.9.1 twilio --no-cache-dir
 check_exit_status
 pip2 install requests --no-cache-dir
