@@ -245,7 +245,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential nodejs npm python3-pip bc jq $conkyall
+apt -y install sed curl git supervisor build-essential software-properties-common nodejs npm python3-pip bc jq $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -254,6 +254,7 @@ if [[ $(lsb_release -rs) == "20.04" ]]; then
 python2 get-pip.py
 else
 python get-pip.py
+python3 get-pip.py
 fi
 check_exit_status
 pip install PyYAML --no-cache-dir trello==0.9.1 twilio
@@ -262,9 +263,9 @@ pip install requests --no-cache-dir
 check_exit_status
 pip install jsmin --no-cache-dir
 check_exit_status
-pip3 install requests --no-cache-dir
+python3 -m pip install requests --no-cache-dir
 check_exit_status
-pip3 install jsmin --no-cache-dir
+python3 -m pip install jsmin --no-cache-dir
 check_exit_status
 rm -f get-pip.py
 ######################################## Oscar itself
