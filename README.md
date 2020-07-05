@@ -7,40 +7,44 @@ What does Oscar2 do?
 ----------------
 Oscar2 is awesome. With any modern Debian Linux machine (Raspberry Pi included), you can take that machine, a cheap barcode scanner, a free [Trello](https://www.trello.com) account along with a few other bits and pieces.... plus some willpower, and turn it into an automatic grocery list! It might not sound like much, but trust me - it's pretty freaking cool.
 
-Oscar2 takes the brilliance of the original Oscar and adds some cool desktop widgets to a kitchen PC. This completely works on a Raspberry Pi. I moved it onto a NUC to make the web browser more responsive, but YMMV. 
+Oscar2 takes the brilliance of the original Oscar and adds some cool desktop widgets to make a more presentable kitchen PC. This completely works on a Raspberry Pi. I moved it onto a NUC to make the OS more responsive when using things like a web browser, but YMMV. 
 
 Install Oscar
 -------------
-To install this version of Oscar, use this command line from a terminal:
+To install this version of Oscar, paste this command line to a terminal on any server or desktop version of Debian Linux (Raspbian and Ubuntu have been tested):
 
 `wget -N https://raw.githubusercontent.com/henroFall/oscar2/master/install_oscar.sh && sudo chmod +x install_oscar.sh && sudo -E ./install_oscar.sh`
 
-Follow all prompts and you should be fine. Igore all of the Node complaints about old deprecated packages. They work!
+Follow all prompts and you should be fine. Igore all of the Node complaints about old deprecated packages. They work, they are secure for what we're doing with them, and I'll deal with that later!
 
 The Story of Oscar
 -------------
 I stumbled across danslimmon's Oscar a few years ago when I was looking for something exactly like it... I thought to myself one day, "There must be some nerd out there who's hooked a barcode scanner to a Raspberry Pi... I wonder if I could do something to put a grocery list into Trello, or something?" On that day I learned there is truly no original thought left...
 
-Our hero, danslimmon, concocted EXACTLY that almost a decade ago before he grew his beard out, wrote a manifesto, and moved into a trailer on the side of a mountain with no internet or toilet paper. ... Well... we can't know that for sure the fate of danslimmon. What we do know is that danslimmon  has gone totally dark on his github and has not responded to issues for quite some time. I made a fork of his project to fix some issues that have cropped up over time as these modules have gone stale, but otherwise left it alone. Until today. 
+Our hero, danslimmon, concocted EXACTLY that almost a decade ago before he grew his beard out, wrote a manifesto, and moved into a trailer on the side of a mountain with no internet or toilet paper. 
+
+...
+
+Well... we can't know for sure the fate of danslimmon. What we do know is that danslimmon  has gone totally dark on this repo and has not responded to issues for quite some time. I made a fork of his project to fix some issues that have cropped up over time as these modules have gone stale, but otherwise left it alone. Until today. 
 
 Today I have decided to put some more horsepower behind my kitchen computer so I might actually have a functional web browser in there. But after 3 or 4 years, who can remember how to manually stitch this all back together? If I'm going to do it one more time, I might as well make it last!
 
-So, this is my version of Oscar, dubbed Oscar2, enhanced from that abandoned danslimmon project. You can find a link to the original spot down below. In addition to the core functionality of Oscar, I've added:
+So, this is my repackaging of Oscar, dubbed Oscar2, picked up from that abandoned danslimmon project. You can find a link to the original spot down below. In addition to the core functionality of Oscar, I've added:
 
 * A complete installation script with all needed updates to make this old dog hunt
 * A routine to detect your barcode scanner port to make this easier when not using a Pi
 * No longer uses TCP port 80, because why? That's prime real estate!
-* Python2 install to work all the way to Ubuntu 20.04 without issues, along with Python3 and pip.
+* Python2 install to work all the way to Ubuntu 20.04 without issues, along with Python3 and the Pips.
 * Trellomerge by GustavePate is bundled. This gives Oscar Desktop the ability to pull your grocery list down and display it as a desktop widget.
 * Conky by brndnmtthws is bundled. This displays your grocery & housewares lists as transparent desktop widgets using the feed from Trellomerge.
 * WeatherDesk by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
 
 What I'll need to do before 2021:
-* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there.
+* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead, and Pip2 dies in Jan 2021.
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
 * Go through each of the Node packages and increment up from the legacy versions being used.
 * Add a Cookbook interface of some kind.
-* Add some weather widgets and other stuff back. I was using Screenlets but it seems to be abandoned as well.
+* Add some weather widgets and other stuff back. I was using Screenlets but it seems to be dead. I'll find some pretty Conky stuff somewhere...
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
 
