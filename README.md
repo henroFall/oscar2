@@ -30,14 +30,16 @@ So, this is my version of Oscar, dubbed Oscar2, enhanced from that abandoned dan
 * A complete installation script with all needed updates to make this old dog hunt
 * A routine to detect your barcode scanner port to make this easier when not using a Pi
 * No longer uses TCP port 80, because why? That's prime real estate!
-* Python2 install to work all the way to Ubuntu 20.04 without issues.
+* Python2 install to work all the way to Ubuntu 20.04 without issues, along with Python3 and pip.
 * Trellomerge by GustavePate is bundled. This gives Oscar Desktop the ability to pull your grocery list down and display it as a desktop widget.
+* Conky by brndnmtthws is bundled. This displays your grocery & housewares lists as transparent desktop widgets using the feed from Trellomerge.
 * WeatherDesk by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
 
 What I'll need to do before 2021:
 * Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there.
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
 * Go through each of the Node packages and increment up from the legacy versions being used.
+* Add a Cookbook interface of some kind.
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
 
