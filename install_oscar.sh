@@ -257,12 +257,12 @@ python get-pip.py
 python3 get-pip.py
 fi
 check_exit_status
-pip install PyYAML --no-cache-dir
-pip install trello==0.9.1 twilio --no-cache-dir
+pip2 install PyYAML --no-cache-dir
+pip2 install trello==0.9.1 twilio --no-cache-dir
 check_exit_status
-pip install requests --no-cache-dir
+pip2 install requests --no-cache-dir
 check_exit_status
-pip install jsmin --no-cache-dir
+pip2 install jsmin --no-cache-dir
 check_exit_status
 python3 -m pip install requests --no-cache-dir
 check_exit_status
