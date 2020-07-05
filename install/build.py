@@ -10,8 +10,9 @@ import re
 import trello
 from lib import trellodb
 
-yesno = 'n'
 usb_port=sys.argv[1]
+print "usb port value is"
+print usb_port
 
 def run_command(command):
     p = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -22,19 +23,11 @@ if os.getuid() != 0:
     print "This script should be run as root on the target device. Aborting."
     print
     sys.exit(1)
-scanner_device = usb_port
-if scanner_device == '':
-    scanner_device = '/dev/input/event0'
-print "Scanner Device port value is: ", scanner_device  
-print
-print "You need accounts with a few APIs to use Oscar. Any of the keys are copy/paste"
-print "so I won't prompt you for confirmation. If you do something wrong, just ride out"
-print "the rest of the script and go edit the config file in /etc/oscar.yaml to fix it."
-print "When we get to the email/sms part and you have to type stuff in, don't worry, I'll"
-print "ask you to confirm your input."
+	
 print
 ######################################## Digit-Eyes
-print "First of all, go to"
+print "You need accounts with a few APIs to use Oscar. First of all,"
+print "go to"
 print
 print "    http://www.digit-eyes.com"
 print
@@ -106,7 +99,6 @@ print "Please choose whether you want oscar to email or text you by typing 'emai
 print "or 'text'."
 print
 communication_method = raw_input("Communication method ('email' or 'text'): ")
-yesno = "n"
 while communication_method not in ['email', 'text']:
     communication_method = raw_input("Please input 'email' or 'text': ")
 gmail_user = ''
@@ -128,18 +120,13 @@ if communication_method == 'email':
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
     print
-    yesno = 'n'
-    while yesno != 'y':
-        gmail_user = raw_input('GMail Email Address: ')
-        if gmail_user != '':
-            print "Remember, paste your Gmail app password here, not your actual Gmail password."
-            gmail_password = raw_input('GMail Password: ')
-            email_dest = raw_input('Destination email (the address you want emailed): ')
-        else:
-            gmail_password = ''
-            email_dest = ''
-        print "You entered ",gmail_user
-        yesno = raw_input('Are you sure y/[n])? ')
+    gmail_user = raw_input('GMail Email Address: ')
+    if gmail_user != '':
+        gmail_password = raw_input('GMail Password: ')
+        email_dest = raw_input('Destination email (the address you want emailed): ')
+    else:
+        gmail_password = ''
+        email_dest = ''
 else:
     ######################################## Twilio
     print
@@ -152,28 +139,25 @@ else:
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
     print
-    yesno = 'n'
-    while yesno != 'y':
-        twilio_src = raw_input('Twilio number: ')
-        if twilio_src != '':
-            twilio_sid = raw_input('Twilio SID: ')
-            twilio_token = raw_input('Twilio token: ')
-            twilio_dest = raw_input('Destination number (the number you want texted): ')
-        else:
-            twilio_sid = ''
-            twilio_token = ''
-            twilio_dest = ''
-        # Remove any non-digits from phone numbers
-        twilio_src = re.sub('\D', '', twilio_src)
-        twilio_dest = re.sub('\D', '', twilio_dest)
+    twilio_src = raw_input('Twilio number: ')
+    if twilio_src != '':
+        twilio_sid = raw_input('Twilio SID: ')
+        twilio_token = raw_input('Twilio token: ')
+        twilio_dest = raw_input('Destination number (the number you want texted): ')
+    else:
+        twilio_sid = ''
+        twilio_token = ''
+        twilio_dest = ''
+    # Remove any non-digits from phone numbers
+    twilio_src = re.sub('\D', '', twilio_src)
+    twilio_dest = re.sub('\D', '', twilio_dest)
+
+scanner_device = usb_port
+if scanner_device == '':
+    scanner_device = '/dev/input/event0'
 
 ######################################## Create the appropriate Trello lists
-print
-print "Creating initial Trello Groceries list and Database items -"
-print "For fun, if your web browser is still open to the oscar_db"
-print "board, you can watch me create some objects. This will take"
-print "up to one minute... Please stand by..."
-
+print "Creating initial Trello Groceries list and Database items..."
 trello_api = trello.TrelloApi(trello_app_key)
 trello_api.set_token(trello_token)
 # Grocery list
@@ -227,9 +211,9 @@ new_rules = [
     {'search_term': 'eggs', 'item': 'eggs'},
     {'search_term': 'chips', 'item': 'chips'},
 ]
+#os.chdir('/var/oscar/lib')
 
 trello_db = trellodb.TrelloDB(trello_api, trello_db_board)
-
 for rule in new_rules:
     trello_db.insert('description_rules', rule)
 ######################################## Oscar configs
