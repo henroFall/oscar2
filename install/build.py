@@ -128,8 +128,8 @@ if communication_method == 'email':
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
     print
-    print "NOTE: Do not enter your actual Gmail password. Get an app password for"
-    print "Oscar by following the instructions at "
+    print "NOTE: Do not enter your actual Gmail password, that will not work.
+    print "Get an app password for Oscar by following the instructions at: "
     print "          https://support.google.com/accounts/answer/185833?hl=en "
     print
     yesno = 'n'
@@ -142,11 +142,12 @@ if communication_method == 'email':
         else:
             gmail_password = ''
             email_dest = ''
+        print
         print "You entered ",gmail_user," as your email address,"
         print "You entered ",gmail_password," as your email password,"
         print "You entered ",email_dest," as the destination email address."
         print
-        yesno = raw_input('Are you sure y/[n])? ')
+        yesno = raw_input('Please verify. Are you sure y/[n])? ')
 else:
     ######################################## Twilio
     print
@@ -240,7 +241,7 @@ trello_db = trellodb.TrelloDB(trello_api, trello_db_board)
 for rule in new_rules:
     trello_db.insert('description_rules', rule)
 ######################################## Oscar configs
-print "Opening file for yaml..."
+print "Opening files for yaml & config..."
 if not os.path.exists('/etc/oscar.yaml'):
     os.mknod('/etc/oscar.yaml')
 

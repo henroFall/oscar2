@@ -382,6 +382,9 @@ echo  $username ran the script, installing Conky for $username.
  echo
  echo "If you need to edit their positions, colors, etc., you can do so"
  echo "by editing the contents of the ~/Conky folder."
+ echo
+ echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
+ echo "      see a lag between scanning an item and when it appears on your desktop."
  echo 
  read -ep "Press <enter> to continue." getpast
 
@@ -396,6 +399,9 @@ fi
 cleanup
 echo
 echo "All done! I'm ready to reboot."
+echo
+echo "Remember - It will take about one minute before your desktop widgets will show any contents."
+echo
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
 sudo reboot
