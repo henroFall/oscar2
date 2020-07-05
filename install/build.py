@@ -15,7 +15,7 @@ usb_port=sys.argv[1]
 scanner_device = usb_port
 if scanner_device == '':
     scanner_device = '/dev/input/event0'
-print "Scanner Device port value is: ", scanner_device	
+print "Scanner Device port value is: ", scanner_device  
 def run_command(command):
     p = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     for line in iter(p.stdout.readline, ''):
@@ -132,13 +132,13 @@ if communication_method == 'email':
     while yesno != 'y':
         gmail_user = raw_input('GMail Email Address: ')
         if gmail_user != '':
-		    print "Remember, paste your Gmail app password here, not your actual Gmail password."
+            print "Remember, paste your Gmail app password here, not your actual Gmail password."
             gmail_password = raw_input('GMail Password: ')
             email_dest = raw_input('Destination email (the address you want emailed): ')
         else:
             gmail_password = ''
             email_dest = ''
-	    print "You entered ",gmail_user
+        print "You entered ",gmail_user
         yesno = raw_input('Are you sure y/[n])? ')
 else:
     ######################################## Twilio
