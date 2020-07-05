@@ -12,10 +12,7 @@ from lib import trellodb
 
 yesno = 'n'
 usb_port=sys.argv[1]
-scanner_device = usb_port
-if scanner_device == '':
-    scanner_device = '/dev/input/event0'
-print "Scanner Device port value is: ", scanner_device  
+
 def run_command(command):
     p = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     for line in iter(p.stdout.readline, ''):
@@ -25,7 +22,10 @@ if os.getuid() != 0:
     print "This script should be run as root on the target device. Aborting."
     print
     sys.exit(1)
-    
+scanner_device = usb_port
+if scanner_device == '':
+    scanner_device = '/dev/input/event0'
+print "Scanner Device port value is: ", scanner_device  
 print
 print "You need accounts with a few APIs to use Oscar. Any of the keys are copy/paste"
 print "so I won't prompt you for confirmation. If you do something wrong, just ride out"
