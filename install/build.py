@@ -25,7 +25,7 @@ if os.getuid() != 0:
 scanner_device = usb_port
 if scanner_device == '':
     scanner_device = '/dev/input/event0'
-print "Scanner Device port value is: ", scanner_device  
+print "Scanner Device port value is: ", scanner_device
 print
 print "You need accounts with a few APIs to use Oscar. Any of the keys are copy/paste"
 print "so I won't prompt you for confirmation. If you do something wrong, just ride out"
@@ -42,7 +42,7 @@ print "and sign up for an account there. This is the database that"
 print "Oscar uses to match barcodes with names of products. When"
 print "you're ready, enter your API credentials. They can be"
 print "found on the \"My Account\" page."
-print 
+print
 print "Want to use openfoodfacts.org? Customise /etc/oscar.yaml to"
 print "set the barcode_api to 'openfoodfacts'"
 print
@@ -127,10 +127,10 @@ if communication_method == 'email':
     print "If you want to, you can sign up for a GMail account and enter your"
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
-	print
-	print "NOTE: Do not enter your actual Gmail password. Get an app password for"
-	print "Oscar by following the instructions at "
-	print "          https://support.google.com/accounts/answer/185833?hl=en "
+    print
+    print "NOTE: Do not enter your actual Gmail password. Get an app password for"
+    print "Oscar by following the instructions at "
+    print "          https://support.google.com/accounts/answer/185833?hl=en "
     print
     yesno = 'n'
     while yesno != 'y':
@@ -143,9 +143,9 @@ if communication_method == 'email':
             gmail_password = ''
             email_dest = ''
         print "You entered ",gmail_user," as your email address,"
-		print "You entered ",gmail_password," as your email password,"
-		print "You entered ",email_dest," as the destination email address."
-		print
+        print "You entered ",gmail_password," as your email password,"
+        print "You entered ",email_dest," as the destination email address."
+        print
         yesno = raw_input('Are you sure y/[n])? ')
 else:
     ######################################## Twilio
@@ -241,7 +241,7 @@ for rule in new_rules:
     trello_db.insert('description_rules', rule)
 ######################################## Oscar configs
 print "Opening file for yaml..."
-if not os.path.exists('/etc/oscar.yaml'): 
+if not os.path.exists('/etc/oscar.yaml'):
     os.mknod('/etc/oscar.yaml')
 
 oscar_yaml = open('/etc/oscar.yaml', 'w+')
