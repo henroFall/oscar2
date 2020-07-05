@@ -138,37 +138,36 @@ if communication_method == 'email':
         else:
             gmail_password = ''
             email_dest = ''
-    else:
-        ######################################## Twilio
-        print
-        print "To enable this functionality using text as the communication method, "
-        print "you need an account with Twilio:"
-        print
-        print "    https://www.twilio.com/"
-        print
-        print "If you want to, you can sign up for a Twilio account and enter your"
-        print "information below. If not, no sweat: just leave the input blank. You"
-        print "can always come back and modify Oscar's config file later."
-        print
-        yesno = 'n'
-        while yesno != 'y':
-            twilio_src = raw_input('Twilio number: ')
-            
-            if twilio_src != '':
-                twilio_sid = raw_input('Twilio SID: ')
-                twilio_token = raw_input('Twilio token: ')
-                twilio_dest = raw_input('Destination number (the number you want texted): ')
-            else:
-                twilio_sid = ''
-                twilio_token = ''
-                twilio_dest = ''
-            # Remove any non-digits from phone numbers
-            twilio_src = re.sub('\D', '', twilio_src)
-            twilio_dest = re.sub('\D', '', twilio_dest)
+else:
+    ######################################## Twilio
+    print
+    print "To enable this functionality using text as the communication method, "
+    print "you need an account with Twilio:"
+    print
+    print "    https://www.twilio.com/"
+    print
+    print "If you want to, you can sign up for a Twilio account and enter your"
+    print "information below. If not, no sweat: just leave the input blank. You"
+    print "can always come back and modify Oscar's config file later."
+    print
+    yesno = 'n'
+    while yesno != 'y':
+        twilio_src = raw_input('Twilio number: ')
+        if twilio_src != '':
+            twilio_sid = raw_input('Twilio SID: ')
+            twilio_token = raw_input('Twilio token: ')
+            twilio_dest = raw_input('Destination number (the number you want texted): ')
+        else:
+            twilio_sid = ''
+            twilio_token = ''
+            twilio_dest = ''
+        # Remove any non-digits from phone numbers
+        twilio_src = re.sub('\D', '', twilio_src)
+        twilio_dest = re.sub('\D', '', twilio_dest)
 
-        scanner_device = usb_port
-        if scanner_device == '':
-            scanner_device = '/dev/input/event0'
+    scanner_device = usb_port
+    if scanner_device == '':
+        scanner_device = '/dev/input/event0'
 
 ######################################## Create the appropriate Trello lists
 print
