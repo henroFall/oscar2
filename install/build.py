@@ -128,7 +128,7 @@ if communication_method == 'email':
     print "information below. If not, no sweat: just leave the input blank. You"
     print "can always come back and modify Oscar's config file later."
     print
-    print "NOTE: Do not enter your actual Gmail password, that will not work.
+    print "NOTE: Do not enter your actual Gmail password, that will not work."
     print "Get an app password for Oscar by following the instructions at: "
     print "          https://support.google.com/accounts/answer/185833?hl=en "
     print
