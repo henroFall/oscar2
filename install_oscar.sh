@@ -330,7 +330,8 @@ trellodesktopkey=$(cat /var/oscar/mergetrelloboards/ttd.txt)
 trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
 trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
 trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
-
+sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
 echo Loading Trello desktop api key: $trelloappkey
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
 sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards2/conf.json
@@ -377,6 +378,11 @@ echo  $username ran the script, installing Conky for $username.
  git clone https://github.com/henroFall/Harmattan.git
  mkdir -p /home/$username/.harmattan-assets
  cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmattan-assets/
+ #This code works, but commented out for now as I space the widgets from the right side and that should work universally.
+ #DIMENSIONS= $(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+ #width=$(echo $DIMENSIONS | sed -r 's/x.*//')
+ #echo Screen width detected at $width pixels.
+ #echo Skewing Conky Widgets from right side of screen accordingly...
  echo
  echo "Conky is set up. You will see Conky widgets on your next reboot."
  echo
