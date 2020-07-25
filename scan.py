@@ -23,9 +23,12 @@ from lib import conf
 
 def parse_scanner_data(scanner_data):
     upc_chars = []
+	print 'Parsing Scanner Data...'
     for i in range(0, len(scanner_data), 16):
         chunk = scanner_data[i:i+16]
-
+        print '-Chunk'
+		print i
+		print chunk
         # The chunks we care about will match
         # __  __  __  __  __  __  __  __  01  00  __  00  00  00  00  00
         if chunk[8:10] != '\x01\x00' or chunk[11:] != '\x00\x00\x00\x00\x00':
@@ -33,7 +36,8 @@ def parse_scanner_data(scanner_data):
 
         digit_int = struct.unpack('>h', chunk[9:11])[0]
         upc_chars.append(str((digit_int - 1) % 10))
-
+        print 'upc_chars'
+		print upc_chars
     return ''.join(upc_chars)
 
 
@@ -225,6 +229,7 @@ trello_db = trellodb.TrelloDB(trello_api, conf.get()['trello_db_board'])
 f = open(conf.get()['scanner_device'], 'rb')
 while True:
     print 'Waiting for scanner data'
+	print scanner_device
 
     # Wait for binary data from the scanner and then read it
     scan_complete = False
