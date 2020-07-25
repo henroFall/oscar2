@@ -6,3 +6,4 @@
 	  - Moved web server default port away from 80 (to 8543) & allow user to specify. 
       - Added a routine to the installer to try to help detect the barcode device ID.
         Event0 is not a good default for Ubuntu.
+      - Changed behavior with unrecognized bar codes. No rules required, any description is added to the list.

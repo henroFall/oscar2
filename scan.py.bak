@@ -265,7 +265,7 @@ while True:
         desc = u.get_description(barcode)
         print "Received description '{0}' for barcode {1}".format(desc, unicode(barcode))
     except CodeInvalid:
-        print "Barcode {0} not recognized as a UPC; creating learning opportunity".format(unicode(barcode))
+        print "Barcode {0} not recognized as a UPC; creating learning opportunity".format(unicode(barcode)).encode('utf-8')
         try:
             opp = create_barcode_opp(trello_db, barcode, desc)
         except:
@@ -287,12 +287,7 @@ while True:
     desc_rule = match_description_rule(trello_db, desc)
     if desc_rule is not None:
         add_grocery_item(trello_api, desc_rule['item'])
-    elif len(desc)>0: 
-        add_grocery_item(trello_api, desc)  
-        print "Got a description but there is no matching Description Rule for '{0}'".format(desc)
-        print "   Saving to list with internet description."
-    elif len(desc)<1: 
-        print "No matching Description Rule for '{0}'".format(desc)
-        print "   Sending notification to a human."
-        notify_no_rule(desc, barcode)
         continue
+
+    print "Don't know what to add for product description '{0}'".format(desc)
+    notify_no_rule(desc, barcode)
