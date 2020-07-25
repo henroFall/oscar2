@@ -39,10 +39,10 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 own_window_argb_visual yes
 
 alignment tr
-gap_x 1050
+gap_x 500
 gap_y 15
 minimum_size 150 600
-maximum_width 600
+maximum_width 500
 default_bar_size 80 5
 
 #########################
@@ -74,7 +74,7 @@ color9          30393f  #dark grey
 TEXT
 
 ${color1}Groceries
-${voffset -30}
+${voffset -40}
 ${font Sans:size=9}${texeci 30 python3 /var/oscar/mergetrelloboards/trello2txt.py /var/oscar/mergetrelloboards/conf.json -d /tmp/trello2.txt }
 ${font Sans:size=12}${if_match "${texeci 10 sed -n '1p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '1p' ~/tmp/  | cut -c 1-70}
 ${font Sans:size=12}${if_match "${texeci 10 sed -n '2p' /tmp/trello2.txt  | cut -c 1-1}" == "!"}${color5}${else}${color2}${endif}${texeci 10 sed -n '2p' /tmp/trello2.txt  | cut -c 1-70}

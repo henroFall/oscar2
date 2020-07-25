@@ -343,6 +343,8 @@ check_exit_status
 echo Loading Trello grocery board: $trellogroceryb
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
 sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards2/conf.json
+sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
+sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
 echo Loading Trello grocery list:  $trellogroceryl
 sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
