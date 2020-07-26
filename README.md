@@ -86,6 +86,10 @@ MergeTrelloBoards, by GustavePate is bundled. The original is available at https
 
 Conky, by brndnmtthws is bundled. The original is available at https://github.com/brndnmtthws/conky . I have not modified the source and pull from apt at install time.
 
+Help on using EvDev, from:
+https://stackoverflow.com/questions/19732978/how-can-i-get-a-string-from-hid-device-in-python-with-evdev
+
+
 The original Oscar, of course, by danslimmon. The original is available at https://github.com/danslimmon/oscar . 
 
 The original author gave shoutouts to [CloCkWeRX](https://github.com/CloCkWeRX) for picking up his slack

@@ -19,9 +19,6 @@ import smtplib
 
 from lib import trellodb
 from lib import conf
-
-#thanks to https://stackoverflow.com/questions/19732978/how-can-i-get-a-string-from-hid-device-in-python-with-evdev
-
 from evdev import InputDevice, categorize, ecodes  
 
 scancodes = {
@@ -73,46 +70,7 @@ def readBarcode(devicePath):
                 if(data.scancode == 28):
                     return(x)
 
-
-CHARMAP_LOWERCASE = {4: 'a', 5: 'b', 6: 'c', 7: 'd', 8: 'e', 9: 'f', 10: 'g', 11: 'h', 12: 'i', 13: 'j', 14: 'k',
-                     15: 'l', 16: 'm', 17: 'n', 18: 'o', 19: 'p', 20: 'q', 21: 'r', 22: 's', 23: 't', 24: 'u', 25: 'v',
-                     26: 'w', 27: 'x', 28: 'y', 29: 'z', 30: '1', 31: '2', 32: '3', 33: '4', 34: '5', 35: '6', 36: '7',
-                     37: '8', 38: '9', 39: '0', 44: ' ', 45: '-', 46: '=', 47: '[', 48: ']', 49: '\\', 51: ';',
-                     52: '\'', 53: '~', 54: ',', 55: '.', 56: '/'}
-CHARMAP_UPPERCASE = {4: 'A', 5: 'B', 6: 'C', 7: 'D', 8: 'E', 9: 'F', 10: 'G', 11: 'H', 12: 'I', 13: 'J', 14: 'K',
-                     15: 'L', 16: 'M', 17: 'N', 18: 'O', 19: 'P', 20: 'Q', 21: 'R', 22: 'S', 23: 'T', 24: 'U', 25: 'V',
-                     26: 'W', 27: 'X', 28: 'Y', 29: 'Z', 30: '!', 31: '@', 32: '#', 33: '$', 34: '%', 35: '^', 36: '&',
-                     37: '*', 38: '(', 39: ')', 44: ' ', 45: '_', 46: '+', 47: '{', 48: '}', 49: '|', 51: ':', 52: '"',
-                     53: '~', 54: '<', 55: '>', 56: '?'}
-CR_CHAR = 40
-SHIFT_CHAR = 2
-
-def barcode_reader():
-    barcode_string_output = ''
-    # barcode can have a 'shift' character; this switches the character set
-    # from the lower to upper case variant for the next character only.
-    CHARMAP = CHARMAP_LOWERCASE
-    with open('/dev/hidraw3', 'rb') as fp:
-        while True:
-            # step through returned character codes, ignore zeroes
-            print '1'
-            for char_code in [element for element in fp.read(8) if element > 0]:
-                if char_code == CR_CHAR:
-                    print '2'
-                    # all barcodes end with a carriage return
-                    return barcode_string_output
-                if char_code == SHIFT_CHAR:
-                    print '3'
-                    # use uppercase character set next time
-                    CHARMAP = CHARMAP_UPPERCASE
-                else:
-                    # if the charcode isn't recognized, add ?
-                    print '4'
-                    barcode_string_output += CHARMAP.get(char_code, '?')
-                    # reset to lowercase character map
-                    CHARMAP = CHARMAP_LOWERCASE
-
-def parse_scanner_data(scanner_data):
+'''def parse_scanner_data(scanner_data):
     upc_chars = []
     print 'Parsing Scanner Data...'
     for i in range(0, len(scanner_data), 16):
@@ -129,7 +87,7 @@ def parse_scanner_data(scanner_data):
         upc_chars.append(str((digit_int - 1) % 10))
         print 'upc_chars'
         print upc_chars
-    return ''.join(upc_chars)
+    return ''.join(upc_chars)'''
 
 
 class CodeNotFound(Exception): pass
@@ -276,7 +234,6 @@ def send_via_email(msg, subject):
 
 def match_barcode_rule(trello_db, barcode):
     """Finds a barcode rule matching the given barcode.
-
        Returns the rule if it exists, otherwise returns None."""
     rules = trello_db.get_all('barcode_rules')
     for r in rules:
@@ -287,7 +244,6 @@ def match_barcode_rule(trello_db, barcode):
 
 def match_description_rule(trello_db, desc):
     """Finds a description rule matching the given product description.
-
        Returns the rule if it exists, otherwise returns None."""
     rules = trello_db.get_all('description_rules')
     for r in rules:
@@ -316,12 +272,11 @@ def add_grocery_item(trello_api, item):
 trello_api = trello.TrelloApi(conf.get()['trello_app_key'])
 trello_api.set_token(conf.get()['trello_token'])
 trello_db = trellodb.TrelloDB(trello_api, conf.get()['trello_db_board'])
-
-f = open(conf.get()['scanner_device'], 'rb')
-
+# f = open(conf.get()['scanner_device'], 'rb')
+deviceLoc=conf.get()['scanner_device']
 while True:
-    print 'Waiting for scanner data'
-    print f
+    print 'Waiting for scanner data at:'
+    print deviceLoc
     '''# Wait for binary data from the scanner and then read it
     scan_complete = False
     scanner_data = ''
@@ -353,9 +308,9 @@ while True:
     print barcode
     print barcode_string_output
     print "Scanned barcode '{0}'".format(barcode) '''
-    barcode = readBarcode("/dev/input/event8")
-    print "barcode"
-    print barcode
+
+    barcode = readBarcode("deviceLoc")
+    print "Scanned barcode '{0}'".format(barcode)
     # Match against barcode rules
     barcode_rule = match_barcode_rule(trello_db, barcode)
     if barcode_rule is not None:
