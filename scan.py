@@ -272,11 +272,11 @@ def add_grocery_item(trello_api, item):
 trello_api = trello.TrelloApi(conf.get()['trello_app_key'])
 trello_api.set_token(conf.get()['trello_token'])
 trello_db = trellodb.TrelloDB(trello_api, conf.get()['trello_db_board'])
-# f = open(conf.get()['scanner_device'], 'rb')
 deviceLoc=conf.get()['scanner_device']
+# f = open(conf.get()['scanner_device'], 'rb')
+
 while True:
-    print 'Waiting for scanner data at:'
-    print deviceLoc
+    print 'Waiting for scanner data from: '.format(deviceLoc)
     '''# Wait for binary data from the scanner and then read it
     scan_complete = False
     scanner_data = ''
@@ -311,6 +311,7 @@ while True:
 
     barcode = readBarcode("deviceLoc")
     print "Scanned barcode '{0}'".format(barcode)
+
     # Match against barcode rules
     barcode_rule = match_barcode_rule(trello_db, barcode)
     if barcode_rule is not None:

@@ -34,6 +34,7 @@ rm -f /var/oscar/mergetrelloboards/ttoken.txt
 rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
 rm -f install_wd.sh
+apt autoremove
 }
 ####################################################
 rootCheck
@@ -409,6 +410,10 @@ echo
 echo "All done! I'm ready to reboot."
 echo
 echo "Remember - It will take about one minute before your desktop widgets will show any contents."
+echo
+echo "Also, remember that the logs are at:"
+print '    /var/lib/supervisor/log/oscar_scan.log'
+print '    /var/lib/supervisor/log/oscar_web.log'
 echo
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
