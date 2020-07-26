@@ -412,8 +412,8 @@ echo
 echo "Remember - It will take about one minute before your desktop widgets will show any contents."
 echo
 echo "Also, remember that the logs are at:"
-print '    /var/lib/supervisor/log/oscar_scan.log'
-print '    /var/lib/supervisor/log/oscar_web.log'
+echo "    /var/lib/supervisor/log/oscar_scan.log"
+echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
