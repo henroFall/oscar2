@@ -20,6 +20,60 @@ import smtplib
 from lib import trellodb
 from lib import conf
 
+#thanks to https://stackoverflow.com/questions/19732978/how-can-i-get-a-string-from-hid-device-in-python-with-evdev
+
+from evdev import InputDevice, categorize, ecodes  
+
+scancodes = {
+    # Scancode: ASCIICode
+    0: None, 1: u'ESC', 2: u'1', 3: u'2', 4: u'3', 5: u'4', 6: u'5', 7: u'6', 8: u'7', 9: u'8',
+    10: u'9', 11: u'0', 12: u'-', 13: u'=', 14: u'BKSP', 15: u'TAB', 16: u'q', 17: u'w', 18: u'e', 19: u'r',
+    20: u't', 21: u'y', 22: u'u', 23: u'i', 24: u'o', 25: u'p', 26: u'[', 27: u']', 28: u'CRLF', 29: u'LCTRL',
+    30: u'a', 31: u's', 32: u'd', 33: u'f', 34: u'g', 35: u'h', 36: u'j', 37: u'k', 38: u'l', 39: u';',
+    40: u'"', 41: u'`', 42: u'LSHFT', 43: u'\\', 44: u'z', 45: u'x', 46: u'c', 47: u'v', 48: u'b', 49: u'n',
+    50: u'm', 51: u',', 52: u'.', 53: u'/', 54: u'RSHFT', 56: u'LALT', 57: u' ', 100: u'RALT'
+}
+
+capscodes = {
+    0: None, 1: u'ESC', 2: u'!', 3: u'@', 4: u'#', 5: u'$', 6: u'%', 7: u'^', 8: u'&', 9: u'*',
+    10: u'(', 11: u')', 12: u'_', 13: u'+', 14: u'BKSP', 15: u'TAB', 16: u'Q', 17: u'W', 18: u'E', 19: u'R',
+    20: u'T', 21: u'Y', 22: u'U', 23: u'I', 24: u'O', 25: u'P', 26: u'{', 27: u'}', 28: u'CRLF', 29: u'LCTRL',
+    30: u'A', 31: u'S', 32: u'D', 33: u'F', 34: u'G', 35: u'H', 36: u'J', 37: u'K', 38: u'L', 39: u':',
+    40: u'\'', 41: u'~', 42: u'LSHFT', 43: u'|', 44: u'Z', 45: u'X', 46: u'C', 47: u'V', 48: u'B', 49: u'N',
+    50: u'M', 51: u'<', 52: u'>', 53: u'?', 54: u'RSHFT', 56: u'LALT',  57: u' ', 100: u'RALT'
+}
+
+def readBarcode(devicePath):
+
+    dev = InputDevice(devicePath)
+    dev.grab() # grab provides exclusive access to the device
+
+    x = ''
+    caps = False
+
+    for event in dev.read_loop():
+        if event.type == ecodes.EV_KEY:
+            data = categorize(event)  # Save the event temporarily to introspect it
+            if data.scancode == 42:
+                if data.keystate == 1:
+                    caps = True
+                if data.keystate == 0:
+                    caps = False
+
+            if data.keystate == 1:  # Down events only
+                if caps:
+                    key_lookup = u'{}'.format(capscodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
+                else:
+                    key_lookup = u'{}'.format(scancodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
+
+
+                if (data.scancode != 42) and (data.scancode != 28):
+                    x += key_lookup
+
+                if(data.scancode == 28):
+                    return(x)
+
+
 CHARMAP_LOWERCASE = {4: 'a', 5: 'b', 6: 'c', 7: 'd', 8: 'e', 9: 'f', 10: 'g', 11: 'h', 12: 'i', 13: 'j', 14: 'k',
                      15: 'l', 16: 'm', 17: 'n', 18: 'o', 19: 'p', 20: 'q', 21: 'r', 22: 's', 23: 't', 24: 'u', 25: 'v',
                      26: 'w', 27: 'x', 28: 'y', 29: 'z', 30: '1', 31: '2', 32: '3', 33: '4', 34: '5', 35: '6', 36: '7',
@@ -38,18 +92,22 @@ def barcode_reader():
     # barcode can have a 'shift' character; this switches the character set
     # from the lower to upper case variant for the next character only.
     CHARMAP = CHARMAP_LOWERCASE
-    with open('/dev/hidraw0', 'rb') as fp:
+    with open('/dev/hidraw3', 'rb') as fp:
         while True:
             # step through returned character codes, ignore zeroes
+            print '1'
             for char_code in [element for element in fp.read(8) if element > 0]:
                 if char_code == CR_CHAR:
+                    print '2'
                     # all barcodes end with a carriage return
                     return barcode_string_output
                 if char_code == SHIFT_CHAR:
+                    print '3'
                     # use uppercase character set next time
                     CHARMAP = CHARMAP_UPPERCASE
                 else:
                     # if the charcode isn't recognized, add ?
+                    print '4'
                     barcode_string_output += CHARMAP.get(char_code, '?')
                     # reset to lowercase character map
                     CHARMAP = CHARMAP_LOWERCASE
@@ -260,20 +318,24 @@ trello_api.set_token(conf.get()['trello_token'])
 trello_db = trellodb.TrelloDB(trello_api, conf.get()['trello_db_board'])
 
 f = open(conf.get()['scanner_device'], 'rb')
+
 while True:
     print 'Waiting for scanner data'
-    print scanner_device
-
-    # Wait for binary data from the scanner and then read it
+    print f
+    '''# Wait for binary data from the scanner and then read it
     scan_complete = False
     scanner_data = ''
     while True:
         rlist, _wlist, _elist = select.select([f], [], [], 0.1)
         if rlist != []:
+            print rlist
             new_data = ''
             while not new_data.endswith('\x01\x00\x1c\x00\x01\x00\x00\x00'):
                 new_data = rlist[0].read(16)
+                print new_data
                 scanner_data += new_data
+                print scanner_data
+                print
             # There are 4 more keystrokes sent after the one we matched against,
             # so we flush out that buffer before proceeding:
             [rlist[0].read(16) for i in range(4)]
@@ -289,8 +351,11 @@ while True:
     barcode = barcode_reader()
     print 'barcode after:'
     print barcode
-    print "Scanned barcode '{0}'".format(barcode)
-
+    print barcode_string_output
+    print "Scanned barcode '{0}'".format(barcode) '''
+    barcode = readBarcode("/dev/input/event8")
+    print "barcode"
+    print barcode
     # Match against barcode rules
     barcode_rule = match_barcode_rule(trello_db, barcode)
     if barcode_rule is not None:
