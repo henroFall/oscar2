@@ -34,7 +34,7 @@ print "When we get to the email/sms part and you have to type stuff in, don't wo
 print "ask you to confirm your input."
 print
 ######################################## Digit-Eyes
-"""print "First of all, go to"
+print "First of all, go to"
 print
 print "    http://www.digit-eyes.com"
 print
@@ -47,17 +47,13 @@ print "Want to use openfoodfacts.org? Customise /etc/oscar.yaml to"
 print "set the barcode_api to 'openfoodfacts'"
 print
 digiteyes_app_key = raw_input('App Key ("K" Code): ')
-digiteyes_auth_key = raw_input('Authorization Key ("M" Code): ')"""
-digiteyes_app_key = "123"
-digiteyes_auth_key = "abc"
+digiteyes_auth_key = raw_input('Authorization Key ("M" Code): ')
 
 ######################################## Trello
 trello_app_key = '95be613d21fcfa29f3580cc3ea4314cf'
 print
-"""
+
 print "You'll also need a Trello account. You can sign up at:"
-"""
-print "You'll need a Trello account. You can sign up at:"
 print
 print "    https://trello.com"
 print
@@ -277,7 +273,7 @@ digiteyes_app_key: '{digiteyes_app_key}'
 digiteyes_auth_key: '{digiteyes_auth_key}'
 
 # possible values: 'digiteyes', 'openfoodfacts' or 'zeroapi'
-barcode_api: openfoodfacts
+barcode_api: digiteyes
 '''.format(**locals()))
 oscar_yaml.close()
 

@@ -4,8 +4,11 @@
 	  - Merged update to danslimmon Issue #56, use of an EOL node version caused installer to fail.
 	  - Merged update to danslimmon Issue #57, ASCII encode issue. Found and fixed by roopkeed. 
 	  - Moved web server default port away from 80 (to 8543) & allow user to specify. 
+	  - Using openfoodfacts by default now
 0.2.4 - Major revisions published - it more mostly works now!
       - Added a routine to the installer to try to help detect the barcode device ID.
         Event0 is not a good default for Ubuntu.
       - Changed behavior with unrecognized bar codes. No rules required, any description is added to the list.
 	  - Replaced bar code scanner routine as the parse does not work well when not on a Pi
+0.2.5 - Conky tasks tweaked (reduced resource usage)
+      - Using digiteyes by default - best UPC source

@@ -1,21 +1,27 @@
 
-# oscar2 with Desktop Experience for the Kitchen 
+# oscar2 with the optional Desktop Experience for the Kitchen 
 *"Oscar automatically adds things to your grocery list when you run out. You
 just scan the item's barcode on its way into the trash." -danslimmon* 
 
 What does Oscar2 do?
 ----------------
-Oscar2 is awesome. With any modern Debian Linux machine (Raspberry Pi included), you can take that machine, a cheap barcode scanner, a free [Trello](https://www.trello.com) account along with a few other bits and pieces.... plus some willpower, and turn it into an automatic grocery list! It might not sound like much, but trust me - it's pretty freaking cool.
+Oscar is awesome. I didn't make it. I didn't make any of this stuff. I just got tired of manually putting it all together on my kitchen boxes as I upgraded them, and thought that maybe someone else out there in the world might like this.
 
-Oscar2 takes the brilliance of the original Oscar and adds some cool desktop widgets to make a more presentable kitchen PC. This completely works on a Raspberry Pi. I moved it onto a NUC to make the OS more responsive when using things like a web browser, but YMMV. 
+With any modern (circa 2020) Debian Linux machine (Raspberry Pi included), you can take that machine, a cheap barcode scanner, a free [Trello](https://www.trello.com) account along with a few other bits and pieces.... plus some willpower, and turn it into an automatic grocery list! It might not sound like much, but trust me - it's pretty freaking cool.
+
+Here's a video about it, from Dan, the original author:
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=9_MNOOgFDg4" target="_blank">
+<img src="http://img.youtube.com/vi/9_MNOOgFDg4/0.jpg" alt="Oscar Demo" width="240" height="180" border="10" />
+</a>
 
 Install Oscar
 -------------
-To install this version of Oscar, paste this command line to a terminal on any server or desktop version of Debian Linux (Raspbian and Ubuntu have been tested):
+To install this version of Oscar, paste this command line to a terminal on any server or desktop version of Debian Linux. Raspbian, Ubuntu 18.04, and Ubuntu 20.04 have been tested. Ubuntu 18.04 is recomended for 
 
 `wget -N https://raw.githubusercontent.com/henroFall/oscar2/master/install_oscar.sh && sudo chmod +x install_oscar.sh && sudo -E ./install_oscar.sh`
 
-Follow all prompts and you should be fine. Igore all of the Node complaints about old deprecated packages. They work, they are secure for what we're doing with them, and I'll deal with that later!
+Follow all prompts and you should be fine. Ignore all of the Node complaints about old deprecated packages. They work, they are secure for what we're doing with them, and I'll deal with that later!
 
 The Story of Oscar
 -------------
@@ -27,17 +33,19 @@ Our hero, danslimmon, concocted EXACTLY that almost a decade ago before he grew 
 
 Well... we can't know for sure the fate of danslimmon. What we do know is that danslimmon  has gone totally dark on this repo and has not responded to issues for quite some time. I made a fork of his project to fix some issues that have cropped up over time as these modules have gone stale, but otherwise left it alone. Until today. 
 
-Today I have decided to put some more horsepower behind my kitchen computer so I might actually have a functional web browser in there. But after 3 or 4 years, who can remember how to manually stitch this all back together? If I'm going to do it one more time, I might as well make it last!
+Today I have decided to put some more horsepower behind my kitchen computer so I might actually have a functional web browser in there. But after 3 or 4 years, who can remember how to manually stitch this all back together? Plus, I tripped over Ubuntu and Intel right away.
 
-So, this is my repackaging of Oscar, dubbed Oscar2, picked up from that abandoned danslimmon project. You can find a link to the original spot down below. In addition to the core functionality of Oscar, I've added:
+So, this is my repackaging of Oscar, dubbed Oscar2, picked up from that abandoned danslimmon project. You can find a link to the original spot down below. In addition to the core functionality of Oscar, I've put in all of the extra dodads I use on my display. What we've got now is:
 
 * A complete installation script with all needed updates to make this old dog hunt
-* A routine to detect your barcode scanner port to make this easier when not using a Pi
-* No longer uses TCP port 80, because why? That's prime real estate!
-* Python2 install to work all the way to Ubuntu 20.04 without issues, along with Python3 and the Pips.
-* Trellomerge by GustavePate is bundled. This gives Oscar Desktop the ability to pull your grocery list down and display it as a desktop widget.
-* Conky by brndnmtthws is bundled. This displays your grocery & housewares lists as transparent desktop widgets using the feed from Trellomerge.
-* WeatherDesk by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
+* A routine to detect your barcode scanner port to make this easier when not using a Pi (/dev/input/eventwhatnow?)
+* No longer uses TCP port 80, because why? That's prime real estate! User definable port now.
+* Python2 install when needed so we're good all the way through Ubuntu 20.04 without issues, along with Python3 and the Pips.
+* [Trellomerge][trellomerge] by GustavePate is bundled. This gives Oscar Desktop the ability to pull your grocery list down and display it as a desktop widget.
+* [Conky][conky] by brndnmtthws is bundled. This displays your grocery & housewares lists as transparent desktop widgets using the feed from Trellomerge.
+* [WeatherDesk][weatherdesk] by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
+* [Harmattan][harmattan] by zagortenay333 is bundled. This is a Conky theme that I use pieces of. 
+
 
 What I'll need to do before 2021:
 * Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead, and Pip2 dies in Jan 2021.
@@ -86,6 +94,10 @@ MergeTrelloBoards, by GustavePate is bundled. The original is available at https
 
 Conky, by brndnmtthws is bundled. The original is available at https://github.com/brndnmtthws/conky . I have not modified the source and pull from apt at install time.
 
+WeatherDesk, by bharadwaj-raju is bundled. I call a seperate installer from my github, but I have not modified the source and pull from that repo at install time.
+
+Harmattan, by zagortenay333 is bundled. I have not modified the source and pull from that repo at install time.
+
 Help on using EvDev, from:
 https://stackoverflow.com/questions/19732978/how-can-i-get-a-string-from-hid-device-in-python-with-evdev
 
@@ -96,5 +108,8 @@ The original author gave shoutouts to [CloCkWeRX](https://github.com/CloCkWeRX) 
 
 [raspberry-pi]: http://www.raspberrypi.org/
 [raspbian]: http://www.raspbian.org/
-[scanner-amazon]: http://www.amazon.com/gp/product/B0085707Z8/ref=oh_details_o03_s00_i03?ie=UTF8&psc=1
-
+[scanner-amazon]: https://smile.amazon.com/Embedded-Barcode-Scanner-Alacrity-Portable/dp/B07D78LFWK/ref=sr_1_9?dchild=1&keywords=alacrity+barcode+scanner&qid=1596255508&sr=8-9
+[trellomerge]: https://github.com/GustavePate/mergetrelloboards
+[conky]: [https://github.com/brndnmtthws/conky]
+[weatherdesk]: https://gitlab.com/bharadwaj-raju/WeatherDesk
+[harmattan]: https://github.com/zagortenay333/Harmattan
