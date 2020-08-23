@@ -342,43 +342,44 @@ oscarDesktopInstall() {
 ######################################## Oscar Desktop
 echo "######################################## Oscar Desktop"
 if [[ $desktopYN == "y" ]]; then
-echo "Installing Oscar Desktop configuration..."
-echo
-trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
-trellodesktopkey=$(cat /var/oscar/mergetrelloboards/ttd.txt)
-trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
-trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
-trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
-sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
-echo Loading Trello desktop api key: $trelloappkey
-sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
-echo Loading Trello token: $trellodesktopkey
-sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
-echo Loading Trello grocery board: $trellogroceryb
-sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards2/conf.json
-sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
-sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
-echo Loading Trello grocery list:  $trellogroceryl
-sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
-check_exit_status
-echo Readying Trello Housewares manual list:  Housewares
-sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Housewares\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
-sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
-sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
-check_exit_status
+  echo "Installing Oscar Desktop configuration..."
+  echo
+  trelloappkey=$(cat /var/oscar/mergetrelloboards/tapp.txt)
+  trellodesktopkey=$(cat /var/oscar/mergetrelloboards/ttd.txt)
+  trellotoken=$(cat /var/oscar/mergetrelloboards/ttoken.txt)
+  trellogroceryb=$(cat /var/oscar/mergetrelloboards/tgb.txt)
+  trellogroceryl=$(cat /var/oscar/mergetrelloboards/tgl.txt)
+  sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
+  sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
+  echo Loading Trello desktop api key: $trelloappkey
+  sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards/conf.json
+  sed -i "s/64252214ed1b10024ee8742f8db14a6b/$trelloappkey/g" /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+  echo Loading Trello token: $trellodesktopkey
+  sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards/conf.json
+  sed -i "s/172df2e4d4004f66525c74a4945212992301b16508ab087fe6f681d14a457f0e/$trellodesktopkey/g" /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+  echo Loading Trello grocery board: $trellogroceryb
+  sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards/conf.json
+  sed -i "s/GKuapt0N/$trellogroceryb/g" /var/oscar/mergetrelloboards2/conf.json
+  sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards/conf.json
+  sed -i "s/: 10/: 30/g" /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+  echo Loading Trello grocery list:  $trellogroceryl
+  sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Groceries\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards/conf.json
+  check_exit_status
+  sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards/conf.json
+  check_exit_status
+  sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards/conf.json
+  check_exit_status
+  echo Readying Trello Housewares manual list:  Housewares
+  sed -i 's|    "Q1: Important / Urgent / En attente" : "BY_COLOR",|    \"Housewares\" : \"BY_DATE\"|g' /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+  sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+  sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
+  check_exit_status
+fi
 }
 
 conkyWidgetsInstall() {
