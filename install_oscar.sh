@@ -481,8 +481,8 @@ webPort
 scannerDetect
 desktopChoice
 dependencies
-webInstall
 oscarInstall
+webInstall
 callBuild
 oscarDesktopInstall
 conkyWidgetsInstall
