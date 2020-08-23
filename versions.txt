@@ -12,3 +12,4 @@
 	  - Replaced bar code scanner routine as the parse does not work well when not on a Pi
 0.2.5 - Conky tasks tweaked (reduced resource usage)
       - Using digiteyes by default - best UPC source
+0.2.6 - Changed Installer to be modular, supports 2nd+ runs to fix /dev mapping

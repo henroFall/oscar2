@@ -34,89 +34,10 @@ rm -f /var/oscar/mergetrelloboards/ttoken.txt
 rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
 rm -f install_wd.sh
-apt autoremove
+apt -y autoremove
 }
-####################################################
-rootCheck
-if ! [ -z $XDG_CURRENT_DESKTOP ]; then
-apt install wmctrl
-fi
-if ! [ -z $XDG_CURRENT_DESKTOP ]; then
-maximize_vert
-fi
-username=${SUDO_USER:-${USER}}
-echo "               ____ "
-echo "   ___________//__\\\\__________"
-echo "  /___________________________\\"
-echo "  I___I___I___I___I___I___I___I"
-echo "        < ,wWWWWwwWWWWw, >"
-echo "       <  WW( 0 )( 0 )WW  >"
-echo "      <      '-'  '-'      >"
-echo "     <    ,._.--\"\"--._.,    >"
-echo "     <   ' \\   .--.   / \`   >"
-echo "      <     './__\\_\\.'     >"
-echo "    ___<.-.____________.-.>___"
-echo "   (___/   \\__________/   \\___)"
-echo "    |  \\,_,/          \\,_,/  |"
-echo "  .-|/^\\ /^\\ /^\\ /^\\ /^\\ /^\\ |-."
-echo " / (|/\\| | | | | | | | | | /\\|) \\"
-echo " '.___/| | | | | | | | | | \\___.'"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    || | | | | | | | | | | | |"
-echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
-echo "    |                        |"
-echo
-echo "Hello! Let's set up Oscar2!"
-echo
-echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
-echo
-read -p "Press <enter> to begin, and push <enter> for most of this!"
-######################################## Branch Choice
-echo
-echo "######################################## Branch Choice"
-echo "Oscar2 is going to pull a fresh copy from Github once we get started."
-echo "You should, unless you know better, pull from the master branch."
-echo "Push <enter> here to do that, or optionally type in the name of a branch"
-echo "to pull from."
-echo
-echo "Valid entries: master"
-echo "               dev"
-echo
-read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
-if [ -z "$gitbranch" ]; then gitbranch='master'
-fi
-if [[ $gitbranch  == "DEV" ]]; then gitbranch='dev'
-fi
-if [[ $gitbranch  == "dEV" ]]; then gitbranch='dev'
-fi
-if [[ $gitbranch  == "Dev" ]]; then gitbranch='dev'
-fi
-if [[ $gitbranch  == "dEv" ]]; then gitbranch='dev'
-fi
-if [[ $gitbranch  != "dev" ]]; then gitbranch='master'
-fi
-echo Using branch: $gitbranch .
 
-######################################## Web port
-echo
-echo "######################################## Web port"
-echo
-echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
-echo "that is some pretty prime real estate for a TRASH sCANer. You"
-echo "can enter any valid TCP port number here, or press <enter> to"
-echo "use 8543, the default."
-read -p "Port number [8543]:" webport
-if [ -z "$webport" ]
-then webport=8543
-fi
-
+scannerDetect() {
 ######################################## Scanner Detect
 echo
 echo "######################################## Scanner Detect"
@@ -152,7 +73,9 @@ place="/dev/input/"
 usbPlace="${place}${usbPort}"
 echo "Set device to: $usbPlace"
 sleep 1
+}
 
+desktopChoice() {
 ######################################## Desktop Choice
 echo
 echo "######################################## Desktop Choice"
@@ -191,7 +114,93 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
  desktopYN='n'
 fi
+}
 
+welcome() {
+if ! [ -z $XDG_CURRENT_DESKTOP ]; then
+apt install wmctrl
+fi
+if ! [ -z $XDG_CURRENT_DESKTOP ]; then
+maximize_vert
+fi
+username=${SUDO_USER:-${USER}}
+echo "               ____ "
+echo "   ___________//__\\\\__________"
+echo "  /___________________________\\"
+echo "  I___I___I___I___I___I___I___I"
+echo "        < ,wWWWWwwWWWWw, >"
+echo "       <  WW( 0 )( 0 )WW  >"
+echo "      <      '-'  '-'      >"
+echo "     <    ,._.--\"\"--._.,    >"
+echo "     <   ' \\   .--.   / \`   >"
+echo "      <     './__\\_\\.'     >"
+echo "    ___<.-.____________.-.>___"
+echo "   (___/   \\__________/   \\___)"
+echo "    |  \\,_,/          \\,_,/  |"
+echo "  .-|/^\\ /^\\ /^\\ /^\\ /^\\ /^\\ |-."
+echo " / (|/\\| | | | | | | | | | /\\|) \\"
+echo " '.___/| | | | | | | | | | \\___.'"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    || | | | | | | | | | | | |"
+echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
+echo "    |                        |"
+echo
+echo "Hello! Let's set up Oscar2!"
+echo
+echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
+}
+
+branchChoice() {
+######################################## Branch Choice
+echo
+echo "######################################## Branch Choice"
+echo "Oscar2 is going to pull a fresh copy from Github once we get started."
+echo "You should, unless you know better, pull from the master branch."
+echo "Push <enter> here to do that, or optionally type in the name of a branch"
+echo "to pull from."
+echo
+echo "Valid entries: master"
+echo "               dev"
+echo
+read -p "Type in a branch name, or press <enter> for the default [master]: " gitbranch
+if [ -z "$gitbranch" ]; then gitbranch='master'
+fi
+if [[ $gitbranch  == "DEV" ]]; then gitbranch='dev'
+fi
+if [[ $gitbranch  == "dEV" ]]; then gitbranch='dev'
+fi
+if [[ $gitbranch  == "Dev" ]]; then gitbranch='dev'
+fi
+if [[ $gitbranch  == "dEv" ]]; then gitbranch='dev'
+fi
+if [[ $gitbranch  != "dev" ]]; then gitbranch='master'
+fi
+echo Using branch: $gitbranch .
+}
+
+webPort() {
+######################################## Web port
+echo
+echo "######################################## Web port"
+echo
+echo "Oscar2 needs a TCP port for a web server. I can use port 80, but"
+echo "that is some pretty prime real estate for a TRASH sCANer. You"
+echo "can enter any valid TCP port number here, or press <enter> to"
+echo "use 8543, the default."
+read -p "Port number [8543]:" webport
+if [ -z "$webport" ]
+then webport=8543
+fi
+}
+
+dependencies() {
 ######################################## Dependencies
 echo
 echo "######################################## Dependencies"
@@ -273,20 +282,9 @@ check_exit_status
 python3 -m pip install jsmin --no-cache-dir
 check_exit_status
 rm -f get-pip.py
-######################################## Oscar itself
-echo "######################################## Oscar itself"
-cd /var
-if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
-git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
-check_exit_status
-cd /var/oscar
-git clone https://github.com/henroFall/mergetrelloboards.git
-check_exit_status
-mkdir /var/oscar/mergetrelloboards2
-check_exit_status
-cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
-check_exit_status
+}
 
+webInstall() {
 ######################################## Web
 echo
 echo "######################################## Web"
@@ -300,7 +298,25 @@ check_exit_status
 cd /var/oscar/install
 check_exit_status
 chmod +x ./build.py
+}
 
+oscarInstall() {
+######################################## Oscar itself
+echo "######################################## Oscar itself"
+cd /var
+if [ -d "/var/oscar" ]; then rm -Rf /var/oscar; fi
+git clone -b $gitbranch https://github.com/henroFall/oscar2.git oscar
+check_exit_status
+cd /var/oscar
+git clone https://github.com/henroFall/mergetrelloboards.git
+check_exit_status
+mkdir /var/oscar/mergetrelloboards2
+check_exit_status
+cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
+check_exit_status
+}
+
+callBuild() {
 ######################################## Call Build.py
 echo
 echo "######################################## Build"
@@ -320,7 +336,9 @@ supervisorctl reload
 check_exit_status
 rm -f ~/before.txt
 rm -f ~/after.txt
+}
 
+oscarDesktopInstall() {
 ######################################## Oscar Desktop
 echo "######################################## Oscar Desktop"
 if [[ $desktopYN == "y" ]]; then
@@ -361,6 +379,9 @@ sed -i 's|    "Q2: Important / Pas urgent": "BY_COLOR",||g' /var/oscar/mergetrel
 check_exit_status
 sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
 check_exit_status
+}
+
+conkyWidgetsInstall() {
 ######################################## Conky Widgets
 echo
 echo "######################################## Conky"
@@ -396,7 +417,9 @@ echo  $username ran the script, installing Conky for $username.
  echo "      see a lag between scanning an item and when it appears on your desktop."
  echo 
  read -ep "Press <enter> to continue." getpast
+}
 
+wdFirewatchInstall() {
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
 check_exit_status
@@ -415,6 +438,50 @@ echo "Also, remember that the logs are at:"
 echo "    /var/lib/supervisor/log/oscar_scan.log"
 echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
+echo "If the scanner quits working, maybe the device ID changed. Re-run this installer to fix that."
+}
+
+rebootIt() {
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
 sudo reboot
+}
+
+checkInstalled() {
+installed=0
+if [ -d "/var/oscar" ]; then 
+installed=1
+fi
+echo
+if [ $installed == 1 ]; then
+  echo "Oscar is already installed. Do you just want to try to fix the device port (scanner quit working)?"
+  read -p "Enter y to fix the device port, or anything else to run the full installer again [y]: " fixport
+  if [ $fixport == "Y" ]; then fixport="y"
+  fi
+  if [ $fixport == "y" ]; then
+    scannerDetect
+	sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
+	rebootIt
+	else echo "Re-running Installer is not yet supported."
+	rebootIt
+  fi
+fi
+read -p "Press <enter> to begin, and push <enter> for most of this!"
+}
+
+####################################################
+rootCheck
+welcome
+checkInstalled
+branchChoice
+webPort
+scannerDetect
+desktopChoice
+dependencies
+webInstall
+oscarInstall
+callBuild
+oscarDesktopInstall
+conkyWidgetsInstall
+wdFirewatchInstall
+rebootIt

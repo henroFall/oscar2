@@ -40,7 +40,7 @@ own_window_argb_visual yes
 
 alignment tr
 gap_x 200
-gap_y 15
+gap_y 150
 minimum_size 150 600
 maximum_width 200
 default_bar_size 80 5
