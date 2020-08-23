@@ -384,43 +384,46 @@ fi
 
 conkyWidgetsInstall() {
 ######################################## Conky Widgets
+if [[ $desktopYN == "y" ]]; then
 echo
 echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
- mkdir -p /home/$username/Conky
- check_exit_status
- if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
- fi
- check_exit_status
- mkdir -p /home/$username/.config/autostart
- check_exit_status
- cp /var/oscar/conky/conkyrc* /home/$username/Conky
- check_exit_status
- chmod +x /var/oscar/conky/conky.sh
- cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
- check_exit_status
- cd /var/oscar/install
- git clone https://github.com/henroFall/Harmattan.git
- mkdir -p /home/$username/.harmattan-assets
- cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmattan-assets/
- #This code works, but commented out for now as I space the widgets from the right side and that should work universally.
- #DIMENSIONS= $(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
- #width=$(echo $DIMENSIONS | sed -r 's/x.*//')
- #echo Screen width detected at $width pixels.
- #echo Skewing Conky Widgets from right side of screen accordingly...
- echo
- echo "Conky is set up. You will see Conky widgets on your next reboot."
- echo
- echo "If you need to edit their positions, colors, etc., you can do so"
- echo "by editing the contents of the ~/Conky folder."
- echo
- echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
- echo "      see a lag between scanning an item and when it appears on your desktop."
- echo 
- read -ep "Press <enter> to continue." getpast
+mkdir -p /home/$username/Conky
+check_exit_status
+if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
+fi
+check_exit_status
+mkdir -p /home/$username/.config/autostart
+check_exit_status
+cp /var/oscar/conky/conkyrc* /home/$username/Conky
+check_exit_status
+chmod +x /var/oscar/conky/conky.sh
+cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
+check_exit_status
+cd /var/oscar/install
+git clone https://github.com/henroFall/Harmattan.git
+mkdir -p /home/$username/.harmattan-assets
+cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmattan-assets/
+#This code works, but commented out for now as I space the widgets from the right side and that should work universally.
+#DIMENSIONS= $(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+#width=$(echo $DIMENSIONS | sed -r 's/x.*//')
+#echo Screen width detected at $width pixels.
+#echo Skewing Conky Widgets from right side of screen accordingly...
+echo
+echo "Conky is set up. You will see Conky widgets on your next reboot."
+echo
+echo "If you need to edit their positions, colors, etc., you can do so"
+echo "by editing the contents of the ~/Conky folder."
+echo
+echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
+echo "      see a lag between scanning an item and when it appears on your desktop."
+echo 
+read -ep "Press <enter> to continue." getpast
+fi
 }
 
 wdFirewatchInstall() {
+if [[ $desktopYN == "y" ]]; then
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
 check_exit_status
@@ -429,7 +432,9 @@ check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
-cleanup
+}
+
+rebootIt() {
 echo
 echo "All done! I'm ready to reboot."
 echo
@@ -440,9 +445,6 @@ echo "    /var/lib/supervisor/log/oscar_scan.log"
 echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
 echo "If the scanner quits working, maybe the device ID changed. Re-run this installer to fix that."
-}
-
-rebootIt() {
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
 sudo reboot
@@ -485,4 +487,5 @@ callBuild
 oscarDesktopInstall
 conkyWidgetsInstall
 wdFirewatchInstall
+cleanup
 rebootIt
