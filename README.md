@@ -3,7 +3,7 @@
 *"Oscar automatically adds things to your grocery list when you run out. You
 just scan the item's barcode on its way into the trash." -danslimmon* 
 
-![My Oscar Desktop](mydesktop.png?raw=true "My Oscar Desktop")
+![My Oscar Desktop](https://raw.githubusercontent.com/henroFall/oscar2/master/mydesktop.PNG "My Oscar Desktop")
 
 What does Oscar2 do?
 ----------------
