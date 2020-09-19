@@ -49,14 +49,14 @@ echo "Standby..."
 sleep 2
 rm -f ~/before.txt
 rm -f ~/after.txt
-ls -1 /dev/input > ~/before.txt
+ls -1 /dev/input/by-id > ~/before.txt
 sleep 1
 echo
 echo "Now, please PLUG IT IN, then press <enter>."
 read
 echo "Standby..."
 sleep 2
-ls -1 /dev/input > ~/after.txt
+ls -1 /dev/input/by-id > ~/after.txt
 usbPort=$(comm -13  ~/before.txt ~/after.txt)
 if [ -z "$usbPort" ]
 then
@@ -68,8 +68,12 @@ then
 else
       echo "I see a new device attached to $usbPort, so we are going to use that."
 fi
+if [ $usbPort == "event0" ]
+then
+      place="/dev/input/"
+else place="/dev/input/by-id/"
+fi
 echo
-place="/dev/input/"
 usbPlace="${place}${usbPort}"
 echo "Set device to: $usbPlace"
 sleep 1
