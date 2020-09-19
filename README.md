@@ -3,6 +3,8 @@
 *"Oscar automatically adds things to your grocery list when you run out. You
 just scan the item's barcode on its way into the trash." -danslimmon* 
 
+![My Oscar Desktop](mydesktop.png)
+
 What does Oscar2 do?
 ----------------
 Oscar is awesome. I didn't make it. I didn't make any of this stuff. I just got tired of manually putting it all together on my kitchen boxes as I upgraded them, and thought that maybe someone else out there in the world might like this.
