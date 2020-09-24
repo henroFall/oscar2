@@ -34,7 +34,7 @@ echo "######################################## Scanner Detect"
 echo
 echo "OK! Now, we are now going to attept to detect your USB barcode scanner."
 echo "Be sure it is UNPLUGED, then press <enter>."
-read -p
+read
 echo "Standby..."
 sleep 2
 rm -f ~/before.txt
@@ -43,7 +43,7 @@ ls -1 /dev/input/by-id > ~/before.txt
 sleep 1
 echo
 echo "Now, please PLUG IT IN, then press <enter>."
-read -p
+read
 echo "Standby..."
 sleep 2
 ls -1 /dev/input/by-id > ~/after.txt
