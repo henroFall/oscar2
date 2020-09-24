@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Gis Weather
+Exec= sh /var/oscar/cario-dock/gis.sh
+Type=Application
+Terminal=false
+Icon=/usr/share/gis-weather/icon.png
+Comment=Weather widget

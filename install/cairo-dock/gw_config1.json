@@ -1,0 +1,268 @@
+{
+    "always_on_top": false, 
+    "angel": 0, 
+    "app_indicator_fix_size": false, 
+    "app_indicator_size": 22, 
+    "app_lang": "auto", 
+    "appid": "", 
+    "bg_custom": "\u041d\u0435\u0442", 
+    "bg_height": 145, 
+    "bg_left": 0, 
+    "bg_top": 0, 
+    "bg_width": -1, 
+    "block_add_info_left": 70, 
+    "block_h_offset": -5, 
+    "block_icons_left": 49, 
+    "block_icons_top": 30, 
+    "block_moonrise": {
+        "align": "right", 
+        "font_size": 9, 
+        "show": true, 
+        "x": 30, 
+        "y": 100
+    }, 
+    "block_now_left": -125, 
+    "block_sunrise": {
+        "align": "left", 
+        "font_size": 9, 
+        "show": true, 
+        "x": 30, 
+        "y": 100
+    }, 
+    "block_today_left": -310, 
+    "block_today_top": 0, 
+    "block_tomorrow_left": 180, 
+    "block_tomorrow_top": 0, 
+    "block_wind_direct_left": -170, 
+    "block_wind_direct_small_left": 0, 
+    "block_wind_direct_small_top": 0, 
+    "check_for_updates": 2, 
+    "city_id": "xxxxx", 
+    "city_list_gismeteo": [
+        "xxxxx;yyyyy"
+    ], 
+    "city_name_attr": {
+        "align": "left", 
+        "font_size": 11, 
+        "font_weight": " Normal", 
+        "show": true, 
+        "x": 164, 
+        "y": -18
+    }, 
+    "city_name_custom": "", 
+    "color_bg": [
+        1, 
+        1, 
+        1, 
+        0
+    ], 
+    "color_high_wind": [
+        0, 
+        0, 
+        0.6, 
+        1
+    ], 
+    "color_scheme_number": 0, 
+    "color_shadow": [
+        0.0, 
+        0.6399938963912413, 
+        1.0, 
+        0.17265583276112
+    ], 
+    "color_text": [
+        0.9058823529411765, 
+        1.0, 
+        1.0, 
+        1.0
+    ], 
+    "color_text_week": [
+        0.07913328755626764, 
+        1.0, 
+        0.0, 
+        0.47841611352712293
+    ], 
+    "custom_text1_attr": {
+        "align": "left", 
+        "font_size": 9, 
+        "font_weight": " Bold", 
+        "show": true, 
+        "text": "Now", 
+        "x": 40, 
+        "y": 3
+    }, 
+    "date_separator": "/", 
+    "day_date_attr": {
+        "align": "center", 
+        "font_size": 9, 
+        "font_weight": " Bold", 
+        "show": true, 
+        "x": 0, 
+        "y": -2
+    }, 
+    "day_date_fmt": "{day}", 
+    "day_icon_attr": {
+        "size": 36, 
+        "x": 22, 
+        "y": 16
+    }, 
+    "day_left": 0, 
+    "day_top": -75, 
+    "delay_start_time": 0, 
+    "desc_style": 0, 
+    "draw_shadow": true, 
+    "fix_BadDrawable": true, 
+    "fix_position": true, 
+    "font": "Droid Sans Fallback", 
+    "height_adjustment": 0, 
+    "height_fix": -180, 
+    "high_wind": 10, 
+    "icon_now_attr": {
+        "show": true, 
+        "size": 36, 
+        "x": 1200, 
+        "y": 21
+    }, 
+    "icons_menu_name": "default", 
+    "icons_name": "VClouds", 
+    "indicator_color_shadow": [
+        1, 
+        1, 
+        1, 
+        0.7
+    ], 
+    "indicator_color_text": [
+        0, 
+        0, 
+        0, 
+        1
+    ], 
+    "indicator_draw_shadow": true, 
+    "indicator_font": "Sans", 
+    "indicator_font_size": 9, 
+    "indicator_icons_name": "default", 
+    "indicator_is_appindicator": 1, 
+    "indicator_top": 0, 
+    "indicator_width": 30, 
+    "instances_count": 1, 
+    "margin": 20, 
+    "max_days": 6, 
+    "max_try_show": 60, 
+    "n": 6, 
+    "opacity": 1.0, 
+    "pipe1": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/pipe1", 
+        "text": "{t_now}"
+    }, 
+    "pipe2": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/pipe2", 
+        "text": "{t_now}"
+    }, 
+    "pipe3": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/pipe3", 
+        "text": "{t_now}"
+    }, 
+    "preset_number": 5, 
+    "press_units": 1, 
+    "r": 0, 
+    "save_cur_data_path": "", 
+    "save_cur_icon": false, 
+    "save_cur_temp": false, 
+    "save_cur_temp_add_scale": false, 
+    "save_cur_temp_to_pipe": true, 
+    "save_weather": false, 
+    "save_weather_fmt": "", 
+    "save_weather_path": "", 
+    "scale": 1.0, 
+    "service": "Gismeteo", 
+    "show_bg_png": false, 
+    "show_block_add_info": false, 
+    "show_block_today": false, 
+    "show_block_tomorrow": false, 
+    "show_block_wind_direct": false, 
+    "show_chance_of_rain": true, 
+    "show_indicator": 0, 
+    "show_indicator_text": true, 
+    "show_splash_screen": 2, 
+    "show_time_receive": false, 
+    "splash_block_top": 0, 
+    "splash_icon_top": 68, 
+    "splash_version_top": -10, 
+    "sticky": true, 
+    "swap_d_and_m": true, 
+    "t_attr": {
+        "align": "center", 
+        "font_size": 10, 
+        "font_weight": " Normal", 
+        "show": true, 
+        "x": 0, 
+        "y": 55
+    }, 
+    "t_feel": true, 
+    "t_fmt": "{t_night}/{t_day}", 
+    "t_now_attr": {
+        "align": "center", 
+        "font_size": 10, 
+        "font_weight": " Normal", 
+        "show": true, 
+        "x": 1248, 
+        "y": 60
+    }, 
+    "t_now_fmt": "{t_now}", 
+    "t_scale": 1, 
+    "text_attr": {
+        "align": "left", 
+        "font_size": 7, 
+        "show": false, 
+        "x": 0, 
+        "y": 55
+    }, 
+    "text_file1": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/text_file1", 
+        "text": "{t_now}"
+    }, 
+    "text_file2": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/text_file2", 
+        "text": "{t_now}"
+    }, 
+    "text_file3": {
+        "active": false, 
+        "path": "/home/nuc/.config/gis-weather/text_file3", 
+        "text": "{t_now}"
+    }, 
+    "text_now_attr": {
+        "align": "center", 
+        "font_size": 10, 
+        "font_weight": " Normal", 
+        "show": false, 
+        "x": 1161, 
+        "y": 9
+    }, 
+    "time_of_day_gradient": true, 
+    "tooltip_fmt": "", 
+    "tooltip_show": true, 
+    "type_hint": 0, 
+    "upd_time": 60, 
+    "weather_lang": "en", 
+    "weather_menu": false, 
+    "weather_menu_n": 3, 
+    "weekend": "Sat, Sun", 
+    "width_fix": 20, 
+    "wind_attr": {
+        "align": "left", 
+        "font_size": 8, 
+        "font_weight": " Normal", 
+        "show": false, 
+        "x": 0, 
+        "y": 50
+    }, 
+    "wind_direct_small": false, 
+    "wind_fmt": "{wind_direct}, {wind_speed}", 
+    "wind_units": 2, 
+    "x_pos": 1380, 
+    "y_pos": 14
+}

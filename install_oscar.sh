@@ -27,16 +27,6 @@ maximize_vert() {
     wmctrl -r :ACTIVE: -b toggle,maximized_vert
 }
 
-cleanup() {
-rm -f /var/oscar/mergetrelloboards/tapp.txt
-rm -f /var/oscar/mergetrelloboards/ttd.txt
-rm -f /var/oscar/mergetrelloboards/ttoken.txt
-rm -f /var/oscar/mergetrelloboards/tgb.txt
-rm -f /var/oscar/mergetrelloboards/tgl.txt
-rm -f install_wd.sh
-apt -y autoremove
-}
-
 scannerDetect() {
 ######################################## Scanner Detect
 echo
@@ -44,7 +34,7 @@ echo "######################################## Scanner Detect"
 echo
 echo "OK! Now, we are now going to attept to detect your USB barcode scanner."
 echo "Be sure it is UNPLUGED, then press <enter>."
-read
+read -p
 echo "Standby..."
 sleep 2
 rm -f ~/before.txt
@@ -53,7 +43,7 @@ ls -1 /dev/input/by-id > ~/before.txt
 sleep 1
 echo
 echo "Now, please PLUG IT IN, then press <enter>."
-read
+read -p
 echo "Standby..."
 sleep 2
 ls -1 /dev/input/by-id > ~/after.txt
@@ -65,13 +55,13 @@ then
           echo "another OS that defaults to event0 for the device input." 
           echo "Using event0..."
           usbPort="event0"
-else
+ else
       echo "I see a new device attached to $usbPort, so we are going to use that."
 fi
 if [ $usbPort == "event0" ]
 then
       place="/dev/input/"
-else place="/dev/input/by-id/"
+ else place="/dev/input/by-id/"
 fi
 echo
 usbPlace="${place}${usbPort}"
@@ -260,7 +250,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential software-properties-common nodejs npm python3-pip bc jq python-evdev $conkyall
+apt -y install gzip sed curl git supervisor build-essential software-properties-common nodejs npm python3-pip bc jq python-evdev $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -335,7 +325,7 @@ echo
 cd /var/oscar/web
 sed -i "s/79/$webport/g" /etc/oscar.yaml
 echo
-read -ep "Press <enter> to continue." getpast
+read -p "Press <enter> to continue."
 supervisorctl reload
 check_exit_status
 rm -f ~/before.txt
@@ -397,7 +387,8 @@ check_exit_status
 if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
 fi
 check_exit_status
-mkdir -p /home/$username/.config/autostart
+if ! [ -d -a "/home/$username/.config/autostart" ]; then mkdir -p /home/$username/.config/autostart
+fi
 check_exit_status
 cp /var/oscar/conky/conkyrc* /home/$username/Conky
 check_exit_status
@@ -413,6 +404,7 @@ cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmatta
 #width=$(echo $DIMENSIONS | sed -r 's/x.*//')
 #echo Screen width detected at $width pixels.
 #echo Skewing Conky Widgets from right side of screen accordingly...
+check_exit_status
 echo
 echo "Conky is set up. You will see Conky widgets on your next reboot."
 echo
@@ -422,7 +414,7 @@ echo
 echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
 echo "      see a lag between scanning an item and when it appears on your desktop."
 echo 
-read -ep "Press <enter> to continue." getpast
+read -p "Press <enter> to continue." 
 fi
 }
 
@@ -436,6 +428,81 @@ check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
+}
+
+carioDockInstall() {
+if [[ $desktopYN == "y" ]]; then
+echo "Installing Cario-Desktop"
+echo
+sudo apt -y install xcompmgr cairo-dock cairo-dock-plug-ins
+if ! [ -d -a "/home/$username/.config/cairo-dock" ]; then mkdir -p /home/$username/.config/cairo-dock
+fi
+cd /home/$username/.config/cairo-dock
+check_exit_status
+echo "Applying Cario-Desktop Theme for Oscar Desktop..."
+echo
+gunzip -d /var/oscar/install/cairo-dock/oscar.tar.gz
+check_exit_status
+fi
+}
+
+gisWeatherInstall() {
+echo "Installing gis-weather..."
+echo
+if ! [ -d -a "/home/$username/Downloads" ]; then mkdir -p /home/$username/Downloads
+fi
+check_exit_status
+cd /home/$username/Downloads
+if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -r /home/$username/Downloads/gis-weather
+fi
+check_exit_status
+git clone https://github.com/RingOV/gis-weather.git
+cd gis-weather/scripts
+python3 build_deb.py
+cd ../DEB
+sudo dpkg -i *.deb
+cd /home/$username/Downloads
+rm -r /home/$username/Downloads/gis-weather
+echo
+echo "Gis-weather installed. I need to know your location."
+echo "Click here and launch a web browser to go to https://www.gismeteo.com/ ."
+echo "Choose your city and copy the city code to enter it below."
+echo "for example, https://www.gismeteo.com/weather-miami-14221 makes your city code = 14221."
+echo "You would then enter 14221 below."
+echo "Click https://www.gismeteo.com/ , find your city code, and enter it here: "
+weathercode=""
+while [[ ! $weathercode =~ ^[0-9]{8} ]]; do
+    read -p weathercode
+done
+echo
+read -p "Now, please enter a plain text name for the city, such as Miami ." weatherword
+weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
+#L8tr: weathericonpath=$(echo "$weatherpath" | sed "s_gis-weather.py/icon.png")
+if ! [ -d -a "/home/$username/.config/gis-weather" ]; then mkdir -p /home/$username/.config/gis-weather
+fi
+cp /var/oscar/install/cairo-dock/gw_config1.json /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s_xxxxx_$weathercode_g" /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s_yyyyy_$weathercword_g" /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s_/usr/share/gis-weather/gis-weather.py_$weatherpath_g" /var/oscar/cario-dock/gis.sh
+#L8tr: sed -i "s_/usr/share/gis-weather/icon.png_$weathericonpath_g" /var/oscar/install/cairo-dock/gis-weather.desktop
+cp /var/oscar/install/cairo-dock/gis-weather.desktop /home/$username/.config/autostart/gis-weather.desktop
+echo "Gis-weather configured to run at startup..."
+echo
+sleep 1
+}
+
+cleanup() {
+rm -f /var/oscar/mergetrelloboards/tapp.txt
+rm -f /var/oscar/mergetrelloboards/ttd.txt
+rm -f /var/oscar/mergetrelloboards/ttoken.txt
+rm -f /var/oscar/mergetrelloboards/tgb.txt
+rm -f /var/oscar/mergetrelloboards/tgl.txt
+rm -f install_wd.sh
+apt -y autoremove
+}
+
+fixOwner() {
+chown -R $username:$username /home/$username
 }
 
 rebootIt() {
@@ -492,4 +559,5 @@ oscarDesktopInstall
 conkyWidgetsInstall
 wdFirewatchInstall
 cleanup
+fixOwner
 rebootIt
