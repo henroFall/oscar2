@@ -374,6 +374,7 @@ if [[ $desktopYN == "y" ]]; then
   sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
   check_exit_status
 fi
+sleep 2
 }
 
 conkyWidgetsInstall() {
@@ -428,6 +429,7 @@ check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
+sleep 2
 }
 
 carioDockInstall() {
@@ -444,6 +446,7 @@ echo
 gunzip -d /var/oscar/install/cairo-dock/oscar.tar.gz
 check_exit_status
 fi
+sleep 2
 }
 
 gisWeatherInstall() {
@@ -457,6 +460,7 @@ if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -r /home/$username
 fi
 check_exit_status
 git clone https://github.com/RingOV/gis-weather.git
+check_exit_status
 cd gis-weather/scripts
 python3 build_deb.py
 cd ../DEB
@@ -481,14 +485,20 @@ weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
 if ! [ -d -a "/home/$username/.config/gis-weather" ]; then mkdir -p /home/$username/.config/gis-weather
 fi
 cp /var/oscar/install/cairo-dock/gw_config1.json /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
 sed -i "s_xxxxx_$weathercode_g" /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
 sed -i "s_yyyyy_$weathercword_g" /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
 sed -i "s_/usr/share/gis-weather/gis-weather.py_$weatherpath_g" /var/oscar/cario-dock/gis.sh
+check_exit_status
 #L8tr: sed -i "s_/usr/share/gis-weather/icon.png_$weathericonpath_g" /var/oscar/install/cairo-dock/gis-weather.desktop
+#check_exit_status
 cp /var/oscar/install/cairo-dock/gis-weather.desktop /home/$username/.config/autostart/gis-weather.desktop
+check_exit_status
 echo "Gis-weather configured to run at startup..."
 echo
-sleep 1
+sleep 2
 }
 
 cleanup() {
@@ -499,6 +509,7 @@ rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
 rm -f install_wd.sh
 apt -y autoremove
+sleep 2
 }
 
 fixOwner() {
@@ -557,6 +568,7 @@ webInstall
 callBuild
 oscarDesktopInstall
 conkyWidgetsInstall
+gisWeatherInstall
 wdFirewatchInstall
 cleanup
 fixOwner
