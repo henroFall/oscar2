@@ -401,7 +401,7 @@ check_exit_status
 cp /var/oscar/conky/conkyrc* /home/$username/Conky
 check_exit_status
 chmod +x /var/oscar/conky/conky.sh
-cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
+cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/
 check_exit_status
 cd /var/oscar/install
 git clone https://github.com/henroFall/Harmattan.git
@@ -463,7 +463,7 @@ if ! [ -d -a "/home/$username/Downloads" ]; then mkdir -p /home/$username/Downlo
 fi
 check_exit_status
 cd /home/$username/Downloads
-if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -r /home/$username/Downloads/gis-weather
+if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -Rf /home/$username/Downloads/gis-weather
 fi
 check_exit_status
 git clone https://github.com/RingOV/gis-weather.git
@@ -473,18 +473,18 @@ python3 build_deb.py
 cd ../DEB
 sudo dpkg -i *.deb
 cd /home/$username/Downloads
-rm -r /home/$username/Downloads/gis-weather
+rm -Rf /home/$username/Downloads/gis-weather
 echo
 echo "Gis-weather installed. I need to know your location."
 echo "Click here and launch a web browser to go to https://www.gismeteo.com/ ."
 echo "Choose your city and copy the city code to enter it below."
 echo "for example, https://www.gismeteo.com/weather-miami-14221 makes your city code = 14221."
 echo "You would then enter 14221 below."
-echo "Click https://www.gismeteo.com/ , find your city code, and enter it here: "
+#echo "Click https://www.gismeteo.com/ , find your city code, and enter it here: "
 weathercode=""
-while [[ ! $weathercode =~ ^[0-9]{8} ]]; do
-    read -p weathercode
-done
+#while [[ ! $weathercode =~ ^[0-9]{8} ]]; do
+    read -p " " weathercode
+#done
 echo
 read -p "Now, please enter a plain text name for the city, such as Miami ." weatherword
 weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
