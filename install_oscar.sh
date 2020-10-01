@@ -315,22 +315,26 @@ callBuild() {
 ######################################## Call Build.py
 echo
 echo "######################################## Build"
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
-echo "Calling build.py with python2."
-python2 ./build.py $usbPlace
-else 
-echo "Calling build.py with python."
-python ./build.py $usbPlace
+if ! [[ $1 == 'noapi' ]]; then
+  if [[ $(lsb_release -rs) == "20.04" ]]; then 
+  echo "Calling build.py with python2."
+  python2 ./build.py $usbPlace
+  else 
+  echo "Calling build.py with python."
+  python ./build.py $usbPlace
+  fi
+  echo
+  cd /var/oscar/web
+  sed -i "s/79/$webport/g" /etc/oscar.yaml
+  echo
+  read -p "Press <enter> to continue."
+  supervisorctl reload
+  check_exit_status
+  rm -f ~/before.txt
+  rm -f ~/after.txt
+  else
+  echo "BYPASSING API BUILD SCRIPT. NO LINKS TO TRELLO WILL BE MADE."
 fi
-echo
-cd /var/oscar/web
-sed -i "s/79/$webport/g" /etc/oscar.yaml
-echo
-read -p "Press <enter> to continue."
-supervisorctl reload
-check_exit_status
-rm -f ~/before.txt
-rm -f ~/after.txt
 }
 
 oscarDesktopInstall() {
@@ -556,21 +560,21 @@ read -p "Press <enter> to begin, and push <enter> for most of this!"
 }
 
 ####################################################
-rootCheck
-welcome
-checkInstalled
-branchChoice
-webPort
-scannerDetect
-desktopChoice
-dependencies
-oscarInstall
-webInstall
-callBuild
-oscarDesktopInstall
-conkyWidgetsInstall
-gisWeatherInstall
-wdFirewatchInstall
-cleanup
-fixOwner
-rebootIt
+rootCheck $@
+welcome $@
+checkInstalled $@
+branchChoice $@
+webPort $@
+scannerDetect $@
+desktopChoice $@
+dependencies $@
+oscarInstall $@
+webInstall $@
+callBuild $@
+oscarDesktopInstall $@
+conkyWidgetsInstall $@
+gisWeatherInstall $@
+wdFirewatchInstall $@
+cleanup $@
+fixOwner $@
+rebootIt $@
