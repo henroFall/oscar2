@@ -146,8 +146,8 @@ echo "    || | | | | | | | | | | | |"
 echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
 echo "    |                        |"
 echo
-if [[ $1 == 'noapi' ]]; then
-echo "noapi FLAG IS SET - BUILD.PY WILL NOT RUN."
+if [[ $1 == '--noapi' ]]; then
+echo "--noapi FLAG IS SET - BUILD.PY WILL NOT RUN."
 fi
 echo "Hello! Let's set up Oscar2!"
 echo
@@ -317,7 +317,7 @@ callBuild() {
 ######################################## Call Build.py
 echo
 echo "######################################## Build"
-if ! [[ $1 == 'noapi' ]]; then
+if ! [[ $1 == '--noapi' ]]; then
   if [[ $(lsb_release -rs) == "20.04" ]]; then 
   echo "Calling build.py with python2."
   python2 ./build.py $usbPlace
