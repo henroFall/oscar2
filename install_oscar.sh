@@ -6,7 +6,6 @@ rootCheck() {
         echo -e "\e[41m I am NOT root! Run with SUDO. \e[0m"
         exit 1
     fi
-	
 }
 
 check_exit_status() {
