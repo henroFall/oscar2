@@ -147,6 +147,9 @@ echo "    || | | | | | | | | | | | |"
 echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
 echo "    |                        |"
 echo
+if [[ $1 == 'noapi' ]]; then
+echo "noapi FLAG IS SET - BUILD.PY WILL NOT RUN."
+fi
 echo "Hello! Let's set up Oscar2!"
 echo
 echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
