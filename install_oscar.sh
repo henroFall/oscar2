@@ -487,8 +487,12 @@ check_exit_status
 cd gis-weather/scripts
 python3 build_deb.py
 cd ../DEB
+fixOwner
 dpkg -i *.deb
 cd /home/$username/Downloads
+
+read -p "PUSH <ENTER>"
+
 rm -Rf /home/$username/Downloads/gis-weather
 echo
 echo "Gis-weather installed. I need to know your location."
