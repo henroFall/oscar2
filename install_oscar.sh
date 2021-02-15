@@ -1,4 +1,5 @@
 #!/bin/bash
+
 rootCheck() {
     if ! [ $(id -u) = 0 ]
     then
