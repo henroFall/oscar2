@@ -448,7 +448,6 @@ echo "Also, remember that the logs are at:"
 echo "    /var/lib/supervisor/log/oscar_scan.log"
 echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
-echo "If the scanner quits working, maybe the device ID changed. Re-run this installer to fix that."
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
 sudo reboot
@@ -469,8 +468,8 @@ if [ $installed == 1 ]; then
     scannerDetect
 	sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
 	rebootIt
-	else echo "Re-running Installer is not yet supported."
-	rebootIt
+	else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
+	read -p "Press <enter>:" hitit
   fi
 fi
 read -p "Press <enter> to begin, and push <enter> for most of this!"

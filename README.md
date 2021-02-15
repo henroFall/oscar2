@@ -49,12 +49,12 @@ So, this is my repackaging of Oscar, dubbed Oscar2, picked up from that abandone
 * [Harmattan][harmattan] by zagortenay333 is bundled. This is a Conky theme that I use pieces of. 
 
 
-What I'll need to do before 2021:
+What I'll need to do soon enough:
 * You'll see Conky using fancy clock and penguin widgets along with GisWeather on my screenshot. I still need to tweak and bundle those.
-* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead, and Pip2 dies in Jan 2021.
+* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead. O got PIP working again in Feb 2021 but...
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
 * Go through each of the Node packages and increment up from the legacy versions being used.
-* Add a Cookbook interface of some kind.
+* Add a Cookbook interface.
 * Add some weather widgets and other stuff back. I was using Screenlets but it seems to be dead. I'll find some pretty Conky stuff somewhere...
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
