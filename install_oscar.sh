@@ -38,6 +38,10 @@ apt -y autoremove
 sleep 2
 }
 
+fixOwner() {
+chown -R $username:$username /home/$username
+}
+
 scannerDetect() {
 ######################################## Scanner Detect
 echo
@@ -268,7 +272,7 @@ else
        apt -y install python
        check_exit_status
 fi
-apt -y install gzip sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
+apt -y install unzip sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -465,7 +469,7 @@ cd /home/$username/.config/cairo-dock
 check_exit_status
 echo "Applying Cario-Desktop Theme for Oscar Desktop..."
 echo
-gunzip -d /var/oscar/install/cairo-dock/oscar.tar.gz
+unzip /var/oscar/install/cairo-dock/oscar.zip
 check_exit_status
 fi
 sleep 2
@@ -541,21 +545,7 @@ sudo reboot
 checkInstalled() {
 installed=0
 if [ -d "/var/oscar" ]; then
-installed=1
-fi
-echo
-if [ $installed == 1 ]; then
-  echo "Oscar is already installed. Do you just want to try to fix the device port (scanner quit working)?"
-  read -p "Enter y to fix the device port, or anything else to run the full installer again [y]: " fixport
-  if [ $fixport == "Y" ]; then fixport="y"
-  fi
-  if [ $fixport == "y" ]; then
-    scannerDetect
-    sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
-    rebootIt
-    else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
-    read -p "Press <enter>:" hitit
-  fi
+rm -R /var/oscar
 fi
 read -p "Press <enter> to begin, and push <enter> for most of this!"
 }
