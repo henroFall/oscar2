@@ -22,30 +22,6 @@ check_exit_status() {
     fi
 }
 
-function killService() {
-    service=$1
-    systemctl stop $service
-    systemctl kill --kill-who=all $service
-}
-
-function disableTimers() {
-    systemctl disable apt-daily.timer
-    systemctl disable apt-daily-upgrade.timer
-}
-
-function enableTimers() {
-    systemctl enable apt-daily.timer
-    systemctl enable apt-daily-upgrade.timer
-}
-
-function killServices() {
-    killService unattended-upgrades.service
-    killService apt-daily.service
-    killService apt-daily-upgrade.service
-	echo "Stopped autoupdate services to avoid conflicts... Stand by..."
-	sleep 5
-}
-
 maximize_vert() {
     wmctrl -r :ACTIVE: -b toggle,maximized_vert
 }
@@ -581,8 +557,6 @@ branchChoice $@
 webPort $@
 scannerDetect $@
 desktopChoice $@
-disableTimers $@
-killServices $@
 dependencies $@
 oscarInstall $@
 webInstall $@
@@ -594,5 +568,4 @@ carioDockInstall $@
 wdFirewatchInstall $@
 cleanup $@
 fixOwner $@
-enableTimers $@
 rebootIt $@
