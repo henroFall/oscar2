@@ -62,7 +62,7 @@ if [ -z "$usbPort" ]
 then
       echo
       echo "I didn't see anything change, so we will assume this is Raspbian or"
-          echo "another OS that defaults to event0 for the device input." 
+          echo "another OS that defaults to event0 for the device input."
           echo "Using event0..."
           usbPort="event0"
  else
@@ -94,7 +94,7 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  echo "I have detected that you do have a GUI enviornment on"
  echo "this instance / machine. However, say 'No' to this prompt"
  echo "if you don't intend to connect a monitor to Oscar, or you just don't"
- echo "want any of the Desktop Experience." 
+ echo "want any of the Desktop Experience."
  echo
  read -p "Install Oscar Desktop Experience y/n? [y]:" desktopYN
  if [ -z "$desktopYN" ]; then desktopYN='y'
@@ -111,10 +111,10 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  fi
  echo
  if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured."
-   conkyall="conky-all" 
-   else echo "Oscar Desktop WILL NOT be configured." 
+   conkyall="conky-all"
+   else echo "Oscar Desktop WILL NOT be configured."
  fi
- else 
+ else
  echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
  desktopYN='n'
 fi
@@ -228,8 +228,8 @@ echo
 read -ep "Is that OK to purge node/nodejs to start clean (just push <enter>) [yes]?" yesno
 if [ -z "$yesno" ]; then
        yesno='yes'
-	   check_exit_status
-fi	
+       check_exit_status
+fi
 if [[ $yesno == "y" ]]; then
        yesno='yes'
 fi
@@ -246,32 +246,32 @@ echo
 apt update
 if [[ $yesno == "yes" ]]; then
        echo "Stripping nodejs & npm from system and reinstalling with other dependencies..."
-	   check_exit_status
-	   apt remove -y npm
-	   check_exit_status
-	   apt remove -y nodejs-legacy
-	   check_exit_status
-	   apt remove -y nodejs
-	   check_exit_status
-	   rm /usr/bin/node
+       check_exit_status
+       apt remove -y npm
+       check_exit_status
+       apt remove -y nodejs-legacy
+       check_exit_status
+       apt remove -y nodejs
+       check_exit_status
+       rm /usr/bin/node
 fi
 echo
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
+if [[ $(lsb_release -rs) == "20.04" ]]; then
 
        echo "Ubuntu 20.04 detected, installing package: python2."
        apt -y install python2
-	   check_exit_status
+       check_exit_status
 else
        echo "$(lsb_release -rs) detected. Installing package: python."
-	   apt -y install python
-	   check_exit_status
+       apt -y install python
+       check_exit_status
 fi
 apt -y install gzip sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
 
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
+if [[ $(lsb_release -rs) == "20.04" ]]; then
 python2 get-pip.py
 else
 python get-pip.py
@@ -332,10 +332,10 @@ callBuild() {
 echo
 echo "######################################## Build"
 if ! [[ $1 == 'noapi' ]]; then
-  if [[ $(lsb_release -rs) == "20.04" ]]; then 
+  if [[ $(lsb_release -rs) == "20.04" ]]; then
   echo "Calling build.py with python2."
   python2 ./build.py $usbPlace
-  else 
+  else
   echo "Calling build.py with python."
   python ./build.py $usbPlace
   fi
@@ -406,7 +406,7 @@ echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
 mkdir -p /home/$username/Conky
 check_exit_status
-mkdir -p /home/$username/.config 
+mkdir -p /home/$username/.config
 check_exit_status
 mkdir -p /home/$username/.config/autostart
 check_exit_status
@@ -433,7 +433,7 @@ echo "by editing the contents of the ~/Conky folder."
 echo
 echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
 echo "      see a lag between scanning an item and when it appears on your desktop."
-echo 
+echo
 read -p "Press <enter> to continue."
 fi
 }
@@ -443,7 +443,7 @@ if [[ $desktopYN == "y" ]]; then
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
 check_exit_status
-sudo chmod +x install_wd.sh 
+sudo chmod +x install_wd.sh
 check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
@@ -536,7 +536,7 @@ sudo reboot
 
 checkInstalled() {
 installed=0
-if [ -d "/var/oscar" ]; then 
+if [ -d "/var/oscar" ]; then
 installed=1
 fi
 echo
@@ -547,10 +547,10 @@ if [ $installed == 1 ]; then
   fi
   if [ $fixport == "y" ]; then
     scannerDetect
-	sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
-	rebootIt
-	else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
-	read -p "Press <enter>:" hitit
+    sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
+    rebootIt
+    else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
+    read -p "Press <enter>:" hitit
   fi
 fi
 read -p "Press <enter> to begin, and push <enter> for most of this!"
