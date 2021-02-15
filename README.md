@@ -1,5 +1,5 @@
-
-# oscar2 with the optional Desktop Experience for the Kitchen 
+ 
+# Oscar2 & the optional Desktop Experience for the Kitchen 
 *"Oscar automatically adds things to your grocery list when you run out. You
 just scan the item's barcode on its way into the trash." -danslimmon* 
 
@@ -45,16 +45,18 @@ So, this is my repackaging of Oscar, dubbed Oscar2, picked up from that abandone
 * Python2 install when needed so we're good all the way through Ubuntu 20.04 without issues, along with Python3 and the Pips.
 * [Trellomerge][trellomerge] by GustavePate is bundled. This gives Oscar Desktop the ability to pull your grocery list down and display it as a desktop widget.
 * [Conky][conky] by brndnmtthws is bundled. This displays your grocery & housewares lists as transparent desktop widgets using the feed from Trellomerge.
-* [WeatherDesk][weatherdesk] by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
 * [Harmattan][harmattan] by zagortenay333 is bundled. This is a Conky theme that I use pieces of. 
+* [WeatherDesk][weatherdesk] by bharadwaj-raju is bundled. This gives the Kitchen display dynamic wallpaper based on current time of day and weather!
+* [Gix-Dock/Cairo-Dock][cairodock] originally by Fabounet is bundled. This is a neat toolbar that I mosly use for the giant analog clock widget.
+* [Gis-Weather][gisweather] by RingOV. This is a really nice looking weather widget.
 
 
-What I'll need to do soon enough:
+What I'll need to do before 2021:
 * You'll see Conky using fancy clock and penguin widgets along with GisWeather on my screenshot. I still need to tweak and bundle those.
-* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead. O got PIP working again in Feb 2021 but...
+* Oscar3! Port Oscar to Python3 - I am still using Python2 because the Trello modules are stuck there. But Python2 is dead, and Pip2 dies in Jan 2021.
 * I want a fresh set of southbound APIs to decouple from Trello. Trello is fine but there are better options for shared grocery list apps that could receive instructions from Oscar. 
 * Go through each of the Node packages and increment up from the legacy versions being used.
-* Add a Cookbook interface.
+* Add a Cookbook interface of some kind.
 * Add some weather widgets and other stuff back. I was using Screenlets but it seems to be dead. I'll find some pretty Conky stuff somewhere...
 * Overall cleanup and refactor to leave this for the ages before I grow my beard out.
  
@@ -116,3 +118,5 @@ The original author gave shoutouts to [CloCkWeRX](https://github.com/CloCkWeRX) 
 [conky]: [https://github.com/brndnmtthws/conky]
 [weatherdesk]: https://gitlab.com/bharadwaj-raju/WeatherDesk
 [harmattan]: https://github.com/zagortenay333/Harmattan
+[cairodock]: http://glx-dock.org/
+[gisweather]: https://github.com/RingOV/gis-weather
