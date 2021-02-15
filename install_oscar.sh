@@ -23,6 +23,34 @@ check_exit_status() {
     fi
 }
 
+function killService() {
+    service=$1
+    sudo systemctl stop $service
+    sudo systemctl kill --kill-who=all $service
+
+    # Wait until the status of the service is either exited or killed.
+    while ! (sudo systemctl status "$service" | grep -q "Main.*code=\(exited\|killed\)")
+    do
+        sleep 10
+    done
+}
+
+function disableTimers() {
+    sudo systemctl disable apt-daily.timer
+    sudo systemctl disable apt-daily-upgrade.timer
+}
+
+function enableTimers() {
+    sudo systemctl enable apt-daily.timer
+    sudo systemctl enable apt-daily-upgrade.timer
+}
+
+function killServices() {
+    killService unattended-upgrades.service
+    killService apt-daily.service
+    killService apt-daily-upgrade.service
+}
+
 maximize_vert() {
     wmctrl -r :ACTIVE: -b toggle,maximized_vert
 }
@@ -558,6 +586,8 @@ branchChoice $@
 webPort $@
 scannerDetect $@
 desktopChoice $@
+disableTimers $@
+killServices $@
 dependencies $@
 oscarInstall $@
 webInstall $@
@@ -569,4 +599,5 @@ carioDockInstall $@
 wdFirewatchInstall $@
 cleanup $@
 fixOwner $@
+enableTimers $@
 rebootIt $@
