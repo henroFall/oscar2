@@ -326,7 +326,7 @@ check_exit_status
 cd /var/oscar
 git clone https://github.com/henroFall/mergetrelloboards.git
 check_exit_status
-mkdir /var/oscar/mergetrelloboards2
+mkdir -p /var/oscar/mergetrelloboards2
 check_exit_status
 cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
 check_exit_status
@@ -462,8 +462,7 @@ if [[ $desktopYN == "y" ]]; then
 echo "Installing Cario-Desktop"
 echo
 sudo apt -y install xcompmgr cairo-dock cairo-dock-plug-ins
-if ! [ -d -a "/home/$username/.config/cairo-dock" ]; then mkdir -p /home/$username/.config/cairo-dock
-fi
+mkdir -p /home/$username/.config/cairo-dock
 cd /home/$username/.config/cairo-dock
 check_exit_status
 echo "Applying Cario-Desktop Theme for Oscar Desktop..."
@@ -477,8 +476,7 @@ sleep 2
 gisWeatherInstall() {
 echo "Installing gis-weather..."
 echo
-if ! [ -d -a "/home/$username/Downloads" ]; then mkdir -p /home/$username/Downloads
-fi
+mkdir -p /home/$username/Downloads
 check_exit_status
 cd /home/$username/Downloads
 if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -Rf /home/$username/Downloads/gis-weather
@@ -504,16 +502,15 @@ weathercode=""
     read -p " " weathercode
 #done
 echo
-read -p "Now, please enter a plain text name for the city, such as Miami ." weatherword
+read -p "Now, please enter a plain text name for the city, such as Miami: " weatherword
 weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
 #L8tr: weathericonpath=$(echo "$weatherpath" | sed "s_gis-weather.py/icon.png")
-if ! [ -d -a "/home/$username/.config/gis-weather" ]; then mkdir -p /home/$username/.config/gis-weather
-fi
+mkdir -p /home/$username/.config/gis-weather
 cp /var/oscar/install/cairo-dock/gw_config1.json /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
 sed -i "s_xxxxx_$weathercode_g" /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
-sed -i "s_yyyyy_$weathercword_g" /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s_yyyyy_$weatherword_g" /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
 sed -i "s_/usr/share/gis-weather/gis-weather.py_$weatherpath_g" /var/oscar/cario-dock/gis.sh
 check_exit_status
