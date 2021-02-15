@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Gis Weather
+Exec= python3 "/usr/share/gis-weather/gis-weather.py" 
+Type=Application
+Terminal=false
+Icon=/usr/share/gis-weather/icon.png
+Comment=Weather widget

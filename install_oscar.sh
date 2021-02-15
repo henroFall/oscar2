@@ -1,4 +1,5 @@
 #!/bin/bash
+
 rootCheck() {
     if ! [ $(id -u) = 0 ]
     then
@@ -10,7 +11,7 @@ rootCheck() {
 check_exit_status() {
     if [ $? -ne 0 ]
     then
-        echo -e "\e[41m ERROR: PROCESS FAILED!"
+        echo -e "\e[41m ERROR: PROCESS FAILED! \e[0m"
         echo
         read -p "The last command exited with an error. Exit script? (yes/no)" answer
         if [ "$answer" == "yes" ]
@@ -34,6 +35,11 @@ rm -f /var/oscar/mergetrelloboards/tgb.txt
 rm -f /var/oscar/mergetrelloboards/tgl.txt
 rm -f install_wd.sh
 apt -y autoremove
+sleep 2
+}
+
+fixOwner() {
+chown -R $username:$username /home/$username
 }
 
 scannerDetect() {
@@ -61,16 +67,16 @@ if [ -z "$usbPort" ]
 then
       echo
       echo "I didn't see anything change, so we will assume this is Raspbian or"
-          echo "another OS that defaults to event0 for the device input." 
+          echo "another OS that defaults to event0 for the device input."
           echo "Using event0..."
           usbPort="event0"
-else
+ else
       echo "I see a new device attached to $usbPort, so we are going to use that."
 fi
 if [ $usbPort == "event0" ]
 then
       place="/dev/input/"
-else place="/dev/input/by-id/"
+ else place="/dev/input/by-id/"
 fi
 echo
 usbPlace="${place}${usbPort}"
@@ -93,7 +99,7 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  echo "I have detected that you do have a GUI enviornment on"
  echo "this instance / machine. However, say 'No' to this prompt"
  echo "if you don't intend to connect a monitor to Oscar, or you just don't"
- echo "want any of the Desktop Experience." 
+ echo "want any of the Desktop Experience."
  echo
  read -p "Install Oscar Desktop Experience y/n? [y]:" desktopYN
  if [ -z "$desktopYN" ]; then desktopYN='y'
@@ -110,10 +116,10 @@ if ! [ -z $XDG_CURRENT_DESKTOP ]; then
  fi
  echo
  if [[ $desktopYN  == "y" ]]; then echo "Oscar Desktop WILL be configured."
-   conkyall="conky-all" 
-   else echo "Oscar Desktop WILL NOT be configured." 
+   conkyall="conky-all"
+   else echo "Oscar Desktop WILL NOT be configured."
  fi
- else 
+ else
  echo "I have detected no desktop enviornment, so we are skipping the Desktop Experience install."
  desktopYN='n'
 fi
@@ -155,9 +161,12 @@ echo "    || | | | | | | | | | | | |"
 echo "    |\\_/ \\_/ \\_/ \\_/ \\_/ \\_/ |"
 echo "    |                        |"
 echo
+if [[ $1 == 'noapi' ]]; then
+echo "--noapi FLAG IS SET - BUILD.PY WILL NOT RUN."
+fi
 echo "Hello! Let's set up Oscar2!"
 echo
-echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
+echo "This script is tested on Raspbian & Ubuntu 18.04. Ubuntu 20.04 was not tested with the latest changes bur it's uglier."
 }
 
 branchChoice() {
@@ -168,6 +177,10 @@ echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
 echo "to pull from."
+echo " "
+echo "Please be sure you pull the installer script from the proper branch."
+echo "For example, if you plan to select dev now, you should ensure you pulled"
+echo "the Oscar installer from the /dev folder and not from /master."
 echo
 echo "Valid entries: master"
 echo "               dev"
@@ -221,8 +234,8 @@ echo
 read -ep "Is that OK to purge node/nodejs to start clean (just push <enter>) [yes]?" yesno
 if [ -z "$yesno" ]; then
        yesno='yes'
-	   check_exit_status
-fi	
+       check_exit_status
+fi
 if [[ $yesno == "y" ]]; then
        yesno='yes'
 fi
@@ -239,32 +252,32 @@ echo
 apt update
 if [[ $yesno == "yes" ]]; then
        echo "Stripping nodejs & npm from system and reinstalling with other dependencies..."
-	   check_exit_status
-	   apt remove -y npm
-	   check_exit_status
-	   apt remove -y nodejs-legacy
-	   check_exit_status
-	   apt remove -y nodejs
-	   check_exit_status
-	   rm /usr/bin/node
+       check_exit_status
+       apt remove -y npm
+       check_exit_status
+       apt remove -y nodejs-legacy
+       check_exit_status
+       apt remove -y nodejs
+       check_exit_status
+       rm /usr/bin/node
 fi
 echo
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
+if [[ $(lsb_release -rs) == "20.04" ]]; then
 
        echo "Ubuntu 20.04 detected, installing package: python2."
        apt -y install python2
-	   check_exit_status
+       check_exit_status
 else
        echo "$(lsb_release -rs) detected. Installing package: python."
-	   apt -y install python
-	   check_exit_status
+       apt -y install python
+       check_exit_status
 fi
-apt -y install sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
+apt -y install unzip sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
 
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
+if [[ $(lsb_release -rs) == "20.04" ]]; then
 python2 get-pip.py
 else
 python get-pip.py
@@ -284,6 +297,7 @@ python3 -m pip install requests --no-cache-dir
 check_exit_status
 python3 -m pip install jsmin --no-cache-dir
 check_exit_status
+echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issue with a path not being writable."
 rm -f get-pip.py
 }
 
@@ -313,7 +327,7 @@ check_exit_status
 cd /var/oscar
 git clone https://github.com/henroFall/mergetrelloboards.git
 check_exit_status
-mkdir /var/oscar/mergetrelloboards2
+mkdir -p /var/oscar/mergetrelloboards2
 check_exit_status
 cp -R /var/oscar/mergetrelloboards/* /var/oscar/mergetrelloboards2/
 check_exit_status
@@ -322,23 +336,29 @@ check_exit_status
 callBuild() {
 ######################################## Call Build.py
 echo
+echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issue with a path not being writable."
+echo
 echo "######################################## Build"
-if [[ $(lsb_release -rs) == "20.04" ]]; then 
-echo "Calling build.py with python2."
-python2 ./build.py $usbPlace
-else 
-echo "Calling build.py with python."
-python ./build.py $usbPlace
+if ! [[ $1 == 'noapi' ]]; then
+  if [[ $(lsb_release -rs) == "20.04" ]]; then
+  echo "Calling build.py with python2."
+  python2 ./build.py $usbPlace
+  else
+  echo "Calling build.py with python."
+  python ./build.py $usbPlace
+  fi
+  echo
+  cd /var/oscar/web
+  sed -i "s/79/$webport/g" /etc/oscar.yaml
+  echo
+  read -p "Press <enter> to continue."
+  supervisorctl reload
+  check_exit_status
+  rm -f ~/before.txt
+  rm -f ~/after.txt
+  else
+  echo "BYPASSING API BUILD SCRIPT. NO LINKS TO TRELLO WILL BE MADE."
 fi
-echo
-cd /var/oscar/web
-sed -i "s/79/$webport/g" /etc/oscar.yaml
-echo
-read -ep "Press <enter> to continue." getpast
-supervisorctl reload
-check_exit_status
-rm -f ~/before.txt
-rm -f ~/after.txt
 }
 
 oscarDesktopInstall() {
@@ -383,6 +403,7 @@ if [[ $desktopYN == "y" ]]; then
   sed -i 's|    "Calendrier": "BY_DATE"||g' /var/oscar/mergetrelloboards2/conf.json
   check_exit_status
 fi
+sleep 2
 }
 
 conkyWidgetsInstall() {
@@ -393,8 +414,7 @@ echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
 mkdir -p /home/$username/Conky
 check_exit_status
-if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
-fi
+mkdir -p /home/$username/.config
 check_exit_status
 mkdir -p /home/$username/.config/autostart
 check_exit_status
@@ -412,6 +432,7 @@ cp -r /var/oscar/install/Harmattan/.harmattan-assets/* /home/$username/.harmatta
 #width=$(echo $DIMENSIONS | sed -r 's/x.*//')
 #echo Screen width detected at $width pixels.
 #echo Skewing Conky Widgets from right side of screen accordingly...
+check_exit_status
 echo
 echo "Conky is set up. You will see Conky widgets on your next reboot."
 echo
@@ -420,8 +441,8 @@ echo "by editing the contents of the ~/Conky folder."
 echo
 echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
 echo "      see a lag between scanning an item and when it appears on your desktop."
-echo 
-read -ep "Press <enter> to continue." getpast
+echo
+read -p "Press <enter> to continue."
 fi
 }
 
@@ -430,11 +451,78 @@ if [[ $desktopYN == "y" ]]; then
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
 check_exit_status
-sudo chmod +x install_wd.sh 
+chmod +x install_wd.sh
 check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
+}
+
+carioDockInstall() {
+if [[ $desktopYN == "y" ]]; then
+echo "Installing Cario-Desktop"
+echo
+apt -y install xcompmgr cairo-dock cairo-dock-plug-ins
+mkdir -p /home/$username/.config/cairo-dock
+cd /home/$username/.config/cairo-dock
+check_exit_status
+echo "Applying Cario-Desktop Theme for Oscar Desktop..."
+echo
+unzip /var/oscar/install/cairo-dock/oscar.zip
+check_exit_status
+fi
+sleep 2
+}
+
+gisWeatherInstall() {
+echo "Installing gis-weather..."
+echo
+mkdir -p /home/$username/Downloads
+check_exit_status
+cd /home/$username/Downloads
+if [ -d -a "/home/$username/Downloads/gis-weather" ]; then rm -Rf /home/$username/Downloads/gis-weather
+fi
+check_exit_status
+git clone https://github.com/RingOV/gis-weather.git
+check_exit_status
+cd gis-weather/scripts
+python3 build_deb.py
+cd ../DEB
+fixOwner
+dpkg -i *.deb
+cd /home/$username/Downloads
+rm -Rf /home/$username/Downloads/gis-weather
+echo
+echo "Gis-weather installed. I need to know your location."
+echo "Click here and launch a web browser to go to https://www.gismeteo.com/ ."
+echo "Choose your city and copy the city code to enter it below."
+echo "for example, https://www.gismeteo.com/weather-miami-14221 makes your city code = 14221."
+echo "You would then enter 14221 now."
+#echo "Click https://www.gismeteo.com/ , find your city code, and enter it here: "
+weathercode=""
+#while [[ ! $weathercode =~ ^[0-9]{8} ]]; do
+    read -p "Enter weather code number: " weathercode
+#done
+echo
+read -p "Now, please enter a plain text name for the city, such as Miami: " weatherword
+weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
+#L8tr: weathericonpath=$(echo "$weatherpath" | ?sed "s_gis-weather.py/icon.png")?
+mkdir -p /home/$username/.config/gis-weather
+cp /var/oscar/install/cairo-dock/gw_config1.json /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
+sed -i "s/xxxxx/$weathercode/g" /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
+sed -i "s|yyyyy|$weatherword|g" /home/$username/.config/gis-weather/gw_config1.json
+check_exit_status
+sed -i "s|/usr/share/gis-weather/gis-weather.py|$weatherpath|g" /var/oscar/cario-dock/gis.sh
+check_exit_status
+#L8tr: sed -i "s_/usr/share/gis-weather/icon.png_$weathericonpath_g" /var/oscar/install/cairo-dock/gis-weather.desktop
+#check_exit_status
+cp /var/oscar/install/cairo-dock/gis-weather.desktop /home/$username/.config/autostart/gis-weather.desktop
+check_exit_status
+echo "Gis-weather configured to run at startup..."
+echo
+sleep 2
 }
 
 rebootIt() {
@@ -449,45 +537,34 @@ echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
-sudo reboot
+reboot
 }
 
 checkInstalled() {
 installed=0
-if [ -d "/var/oscar" ]; then 
-installed=1
-fi
-echo
-if [ $installed == 1 ]; then
-  echo "Oscar is already installed. Do you just want to try to fix the device port (scanner quit working)?"
-  read -p "Enter y to fix the device port, or anything else to run the full installer again [y]: " fixport
-  if [ $fixport == "Y" ]; then fixport="y"
-  fi
-  if [ $fixport == "y" ]; then
-    scannerDetect
-	sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
-	rebootIt
-	else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
-	read -p "Press <enter>:" hitit
-  fi
+if [ -d "/var/oscar" ]; then
+rm -R /var/oscar
 fi
 read -p "Press <enter> to begin, and push <enter> for most of this!"
 }
 
 ####################################################
-rootCheck
-welcome
-checkInstalled
-branchChoice
-webPort
-scannerDetect
-desktopChoice
-dependencies
-oscarInstall
-webInstall
-callBuild
-oscarDesktopInstall
-conkyWidgetsInstall
-wdFirewatchInstall
-cleanup
-rebootIt
+rootCheck $@
+welcome $@
+checkInstalled $@
+branchChoice $@
+webPort $@
+scannerDetect $@
+desktopChoice $@
+dependencies $@
+oscarInstall $@
+webInstall $@
+callBuild $@
+oscarDesktopInstall $@
+conkyWidgetsInstall $@
+gisWeatherInstall $@
+carioDockInstall $@
+wdFirewatchInstall $@
+cleanup $@
+fixOwner $@
+rebootIt $@

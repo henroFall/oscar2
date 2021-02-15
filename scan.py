@@ -218,7 +218,7 @@ def send_via_twilio(msg):
 
 def send_via_email(msg, subject):
     to = conf.get()['email_dest']
-    '''gmail_user = conf.get()['gmail_user']
+    gmail_user = conf.get()['gmail_user']
     gmail_pwd = conf.get()['gmail_password']
     smtpserver = smtplib.SMTP("smtp.gmail.com",587)
     smtpserver.ehlo()
@@ -230,7 +230,7 @@ def send_via_email(msg, subject):
     message = header + '\n ' + msg +' \n\n'
     smtpserver.sendmail(gmail_user, to, message)
     print 'Email sent.'
-    smtpserver.close()'''
+    smtpserver.close()
 
 def match_barcode_rule(trello_db, barcode):
     """Finds a barcode rule matching the given barcode.

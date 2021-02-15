@@ -19,65 +19,13 @@ import smtplib
 
 from lib import trellodb
 from lib import conf
-from evdev import InputDevice, categorize, ecodes  
-
-scancodes = {
-    # Scancode: ASCIICode
-    0: None, 1: u'ESC', 2: u'1', 3: u'2', 4: u'3', 5: u'4', 6: u'5', 7: u'6', 8: u'7', 9: u'8',
-    10: u'9', 11: u'0', 12: u'-', 13: u'=', 14: u'BKSP', 15: u'TAB', 16: u'q', 17: u'w', 18: u'e', 19: u'r',
-    20: u't', 21: u'y', 22: u'u', 23: u'i', 24: u'o', 25: u'p', 26: u'[', 27: u']', 28: u'CRLF', 29: u'LCTRL',
-    30: u'a', 31: u's', 32: u'd', 33: u'f', 34: u'g', 35: u'h', 36: u'j', 37: u'k', 38: u'l', 39: u';',
-    40: u'"', 41: u'`', 42: u'LSHFT', 43: u'\\', 44: u'z', 45: u'x', 46: u'c', 47: u'v', 48: u'b', 49: u'n',
-    50: u'm', 51: u',', 52: u'.', 53: u'/', 54: u'RSHFT', 56: u'LALT', 57: u' ', 100: u'RALT'
-}
-
-capscodes = {
-    0: None, 1: u'ESC', 2: u'!', 3: u'@', 4: u'#', 5: u'$', 6: u'%', 7: u'^', 8: u'&', 9: u'*',
-    10: u'(', 11: u')', 12: u'_', 13: u'+', 14: u'BKSP', 15: u'TAB', 16: u'Q', 17: u'W', 18: u'E', 19: u'R',
-    20: u'T', 21: u'Y', 22: u'U', 23: u'I', 24: u'O', 25: u'P', 26: u'{', 27: u'}', 28: u'CRLF', 29: u'LCTRL',
-    30: u'A', 31: u'S', 32: u'D', 33: u'F', 34: u'G', 35: u'H', 36: u'J', 37: u'K', 38: u'L', 39: u':',
-    40: u'\'', 41: u'~', 42: u'LSHFT', 43: u'|', 44: u'Z', 45: u'X', 46: u'C', 47: u'V', 48: u'B', 49: u'N',
-    50: u'M', 51: u'<', 52: u'>', 53: u'?', 54: u'RSHFT', 56: u'LALT',  57: u' ', 100: u'RALT'
-}
-
-def readBarcode(devicePath):
-
-    dev = InputDevice(devicePath)
-    dev.grab() # grab provides exclusive access to the device
-
-    x = ''
-    caps = False
-
-    for event in dev.read_loop():
-        if event.type == ecodes.EV_KEY:
-            data = categorize(event)  # Save the event temporarily to introspect it
-            if data.scancode == 42:
-                if data.keystate == 1:
-                    caps = True
-                if data.keystate == 0:
-                    caps = False
-
-            if data.keystate == 1:  # Down events only
-                if caps:
-                    key_lookup = u'{}'.format(capscodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
-                else:
-                    key_lookup = u'{}'.format(scancodes.get(data.scancode)) or u'UNKNOWN:[{}]'.format(data.scancode)  # Lookup or return UNKNOWN:XX
 
 
-                if (data.scancode != 42) and (data.scancode != 28):
-                    x += key_lookup
-
-                if(data.scancode == 28):
-                    return(x)
-
-'''def parse_scanner_data(scanner_data):
+def parse_scanner_data(scanner_data):
     upc_chars = []
-    print 'Parsing Scanner Data...'
     for i in range(0, len(scanner_data), 16):
         chunk = scanner_data[i:i+16]
-        print '-Chunk'
-        print i
-        print chunk
+
         # The chunks we care about will match
         # __  __  __  __  __  __  __  __  01  00  __  00  00  00  00  00
         if chunk[8:10] != '\x01\x00' or chunk[11:] != '\x00\x00\x00\x00\x00':
@@ -85,9 +33,8 @@ def readBarcode(devicePath):
 
         digit_int = struct.unpack('>h', chunk[9:11])[0]
         upc_chars.append(str((digit_int - 1) % 10))
-        print 'upc_chars'
-        print upc_chars
-    return ''.join(upc_chars)'''
+
+    return ''.join(upc_chars)
 
 
 class CodeNotFound(Exception): pass
@@ -234,6 +181,7 @@ def send_via_email(msg, subject):
 
 def match_barcode_rule(trello_db, barcode):
     """Finds a barcode rule matching the given barcode.
+
        Returns the rule if it exists, otherwise returns None."""
     rules = trello_db.get_all('barcode_rules')
     for r in rules:
@@ -244,6 +192,7 @@ def match_barcode_rule(trello_db, barcode):
 
 def match_description_rule(trello_db, desc):
     """Finds a description rule matching the given product description.
+
        Returns the rule if it exists, otherwise returns None."""
     rules = trello_db.get_all('description_rules')
     for r in rules:
@@ -272,27 +221,21 @@ def add_grocery_item(trello_api, item):
 trello_api = trello.TrelloApi(conf.get()['trello_app_key'])
 trello_api.set_token(conf.get()['trello_token'])
 trello_db = trellodb.TrelloDB(trello_api, conf.get()['trello_db_board'])
-devicePath = conf.get()['scanner_device']
-print "devicePath"
-print devicePath
-# f = open(conf.get()['scanner_device'], 'rb')
 
+f = open(conf.get()['scanner_device'], 'rb')
 while True:
-    print 'Waiting for scanner data from: '.format(devicePath)
-    '''# Wait for binary data from the scanner and then read it
+    print 'Waiting for scanner data'
+
+    # Wait for binary data from the scanner and then read it
     scan_complete = False
     scanner_data = ''
     while True:
         rlist, _wlist, _elist = select.select([f], [], [], 0.1)
         if rlist != []:
-            print rlist
             new_data = ''
             while not new_data.endswith('\x01\x00\x1c\x00\x01\x00\x00\x00'):
                 new_data = rlist[0].read(16)
-                print new_data
                 scanner_data += new_data
-                print scanner_data
-                print
             # There are 4 more keystrokes sent after the one we matched against,
             # so we flush out that buffer before proceeding:
             [rlist[0].read(16) for i in range(4)]
@@ -302,17 +245,8 @@ while True:
 
     # Parse the binary data as a barcode
     barcode = parse_scanner_data(scanner_data)
-    print 'barcode before:'
-    print barcode
-    print 'Calling barcode_reader'
-    barcode = barcode_reader()
-    print 'barcode after:'
-    print barcode
-    print barcode_string_output
-    print "Scanned barcode '{0}'".format(barcode) '''
-    barcode = readBarcode(devicePath)
-    print "Scanned barcode: "
-    print barcode
+    print "Scanned barcode '{0}'".format(barcode)
+
     # Match against barcode rules
     barcode_rule = match_barcode_rule(trello_db, barcode)
     if barcode_rule is not None:
@@ -331,7 +265,7 @@ while True:
         desc = u.get_description(barcode)
         print "Received description '{0}' for barcode {1}".format(desc, unicode(barcode))
     except CodeInvalid:
-        print "Barcode {0} not recognized as a UPC; creating learning opportunity".format(unicode(barcode))
+        print "Barcode {0} not recognized as a UPC; creating learning opportunity".format(unicode(barcode)).encode('utf-8')
         try:
             opp = create_barcode_opp(trello_db, barcode, desc)
         except:
@@ -353,12 +287,7 @@ while True:
     desc_rule = match_description_rule(trello_db, desc)
     if desc_rule is not None:
         add_grocery_item(trello_api, desc_rule['item'])
-    elif len(desc)>0: 
-        add_grocery_item(trello_api, desc)  
-        print "Got a description but there is no matching Description Rule for '{0}'".format(desc)
-        print "   Saving to list with internet description."
-    elif len(desc)<1: 
-        print "No matching Description Rule for '{0}'".format(desc)
-        print "   Sending notification to a human."
-        notify_no_rule(desc, barcode)
         continue
+
+    print "Don't know what to add for product description '{0}'".format(desc)
+    notify_no_rule(desc, barcode)
