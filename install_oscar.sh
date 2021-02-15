@@ -450,7 +450,7 @@ if [[ $desktopYN == "y" ]]; then
 ######################################## Weather Desktop w/ FireWatch
 wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh
 check_exit_status
-sudo chmod +x install_wd.sh
+chmod +x install_wd.sh
 check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
@@ -461,7 +461,7 @@ carioDockInstall() {
 if [[ $desktopYN == "y" ]]; then
 echo "Installing Cario-Desktop"
 echo
-sudo apt -y install xcompmgr cairo-dock cairo-dock-plug-ins
+apt -y install xcompmgr cairo-dock cairo-dock-plug-ins
 mkdir -p /home/$username/.config/cairo-dock
 cd /home/$username/.config/cairo-dock
 check_exit_status
@@ -487,7 +487,7 @@ check_exit_status
 cd gis-weather/scripts
 python3 build_deb.py
 cd ../DEB
-sudo dpkg -i *.deb
+dpkg -i *.deb
 cd /home/$username/Downloads
 rm -Rf /home/$username/Downloads/gis-weather
 echo
@@ -535,7 +535,7 @@ echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
-sudo reboot
+reboot
 }
 
 checkInstalled() {
