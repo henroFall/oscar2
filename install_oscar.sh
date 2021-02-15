@@ -11,7 +11,7 @@ rootCheck() {
 check_exit_status() {
     if [ $? -ne 0 ]
     then
-        echo -e "\e[41m ERROR: PROCESS FAILED!"
+        echo -e "\e[41m ERROR: PROCESS FAILED! \e[0m"
         echo
         read -p "The last command exited with an error. Exit script? (yes/no)" answer
         if [ "$answer" == "yes" ]
@@ -173,6 +173,9 @@ echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
 echo "to pull from."
+echo "Please be sure you pull the installer script from the proper branch."
+echo "For example, if you plan to select dev now, you should ensure you pulled"
+echo "the Oscar installer from the /dev folder and not from /master."
 echo
 echo "Valid entries: master"
 echo "               dev"
@@ -289,6 +292,7 @@ python3 -m pip install requests --no-cache-dir
 check_exit_status
 python3 -m pip install jsmin --no-cache-dir
 check_exit_status
+echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issuue with a path not being writable."
 rm -f get-pip.py
 }
 
@@ -403,11 +407,9 @@ echo "######################################## Conky"
 echo  $username ran the script, installing Conky for $username.
 mkdir -p /home/$username/Conky
 check_exit_status
-if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
-fi
+mkdir -p /home/$username/.config 
 check_exit_status
-if ! [ -d -a "/home/$username/.config/autostart" ]; then mkdir -p /home/$username/.config/autostart
-fi
+mkdir -p /home/$username/.config/autostart
 check_exit_status
 cp /var/oscar/conky/conkyrc* /home/$username/Conky
 check_exit_status
@@ -447,6 +449,8 @@ check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
+}
+
 carioDockInstall() {
 if [[ $desktopYN == "y" ]]; then
 echo "Installing Cario-Desktop"
@@ -514,7 +518,6 @@ check_exit_status
 echo "Gis-weather configured to run at startup..."
 echo
 sleep 2
-}
 }
 
 rebootIt() {
