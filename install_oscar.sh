@@ -6,7 +6,6 @@ rootCheck() {
         echo -e "\e[41m I am NOT root! Run with SUDO. \e[0m"
         exit 1
     fi
-    
 }
 
 check_exit_status() {
@@ -26,6 +25,17 @@ check_exit_status() {
 
 maximize_vert() {
     wmctrl -r :ACTIVE: -b toggle,maximized_vert
+}
+
+cleanup() {
+rm -f /var/oscar/mergetrelloboards/tapp.txt
+rm -f /var/oscar/mergetrelloboards/ttd.txt
+rm -f /var/oscar/mergetrelloboards/ttoken.txt
+rm -f /var/oscar/mergetrelloboards/tgb.txt
+rm -f /var/oscar/mergetrelloboards/tgl.txt
+rm -f install_wd.sh
+apt -y autoremove
+sleep 2
 }
 
 scannerDetect() {
@@ -254,7 +264,7 @@ else
 	   apt -y install python
 	   check_exit_status
 fi
-apt -y install gzip sed curl git supervisor build-essential software-properties-common nodejs npm python3-pip bc jq python-evdev $conkyall
+apt -y install gzip sed curl git supervisor build-essential software-properties-common nodejs npm python-pip python3-pip bc jq python-evdev $conkyall
 check_exit_status
 curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
 check_exit_status
@@ -402,7 +412,7 @@ check_exit_status
 cp /var/oscar/conky/conkyrc* /home/$username/Conky
 check_exit_status
 chmod +x /var/oscar/conky/conky.sh
-cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/
+cp /var/oscar/conky/oscar-conky.desktop /home/$username/.config/autostart/oscar-conky.desktop
 check_exit_status
 cd /var/oscar/install
 git clone https://github.com/henroFall/Harmattan.git
@@ -423,7 +433,7 @@ echo
 echo "NOTE: The Conky widgets poll and update every 60 seconds. Therefore, you will"
 echo "      see a lag between scanning an item and when it appears on your desktop."
 echo 
-read -p "Press <enter> to continue." 
+read -p "Press <enter> to continue."
 fi
 }
 
@@ -437,9 +447,6 @@ check_exit_status
 ./install_wd.sh
 else echo "Skipped Oscar Desktop configuration; Oscar2 will run in headless mode..."
 fi
-sleep 2
-}
-
 carioDockInstall() {
 if [[ $desktopYN == "y" ]]; then
 echo "Installing Cario-Desktop"
@@ -508,20 +515,6 @@ echo "Gis-weather configured to run at startup..."
 echo
 sleep 2
 }
-
-cleanup() {
-rm -f /var/oscar/mergetrelloboards/tapp.txt
-rm -f /var/oscar/mergetrelloboards/ttd.txt
-rm -f /var/oscar/mergetrelloboards/ttoken.txt
-rm -f /var/oscar/mergetrelloboards/tgb.txt
-rm -f /var/oscar/mergetrelloboards/tgl.txt
-rm -f install_wd.sh
-apt -y autoremove
-sleep 2
-}
-
-fixOwner() {
-chown -R $username:$username /home/$username
 }
 
 rebootIt() {
@@ -534,7 +527,6 @@ echo "Also, remember that the logs are at:"
 echo "    /var/lib/supervisor/log/oscar_scan.log"
 echo "    /var/lib/supervisor/log/oscar_web.log"
 echo
-echo "If the scanner quits working, maybe the device ID changed. Re-run this installer to fix that."
 read -p "PRESS <ENTER> TO REBOOT NOW." enditalreadyomg
 echo
 sudo reboot
@@ -555,8 +547,8 @@ if [ $installed == 1 ]; then
     scannerDetect
 	sudo sed -i 's/^scanner_device: .*$/scanner_device: $usbPlace/' /etc/oscar.yaml
 	rebootIt
-	else echo "Re-running Installer is not yet supported."
-	rebootIt
+	else echo "Re-running Installer is not yet supported, but since we're here I guess you can give it a shot."
+	read -p "Press <enter>:" hitit
   fi
 fi
 read -p "Press <enter> to begin, and push <enter> for most of this!"
@@ -577,6 +569,7 @@ callBuild $@
 oscarDesktopInstall $@
 conkyWidgetsInstall $@
 gisWeatherInstall $@
+carioDockInstall $@
 wdFirewatchInstall $@
 cleanup $@
 fixOwner $@
