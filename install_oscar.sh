@@ -495,24 +495,24 @@ echo "Gis-weather installed. I need to know your location."
 echo "Click here and launch a web browser to go to https://www.gismeteo.com/ ."
 echo "Choose your city and copy the city code to enter it below."
 echo "for example, https://www.gismeteo.com/weather-miami-14221 makes your city code = 14221."
-echo "You would then enter 14221 below."
+echo "You would then enter 14221 now."
 #echo "Click https://www.gismeteo.com/ , find your city code, and enter it here: "
 weathercode=""
 #while [[ ! $weathercode =~ ^[0-9]{8} ]]; do
-    read -p " " weathercode
+    read -p "Enter weather code number: " weathercode
 #done
 echo
 read -p "Now, please enter a plain text name for the city, such as Miami: " weatherword
 weatherpath=`find / -type f -name "gis-weather.py" -print 2>/dev/null`
-#L8tr: weathericonpath=$(echo "$weatherpath" | sed "s_gis-weather.py/icon.png")
+#L8tr: weathericonpath=$(echo "$weatherpath" | ?sed "s_gis-weather.py/icon.png")?
 mkdir -p /home/$username/.config/gis-weather
 cp /var/oscar/install/cairo-dock/gw_config1.json /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
-sed -i "s_xxxxx_$weathercode_g" /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s/xxxxx/$weathercode/g" /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
-sed -i "s_yyyyy_$weatherword_g" /home/$username/.config/gis-weather/gw_config1.json
+sed -i "s|yyyyy|$weatherword|g" /home/$username/.config/gis-weather/gw_config1.json
 check_exit_status
-sed -i "s_/usr/share/gis-weather/gis-weather.py_$weatherpath_g" /var/oscar/cario-dock/gis.sh
+sed -i "s|/usr/share/gis-weather/gis-weather.py|$weatherpath|g" /var/oscar/cario-dock/gis.sh
 check_exit_status
 #L8tr: sed -i "s_/usr/share/gis-weather/icon.png_$weathericonpath_g" /var/oscar/install/cairo-dock/gis-weather.desktop
 #check_exit_status
