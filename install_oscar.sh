@@ -1,4 +1,5 @@
 #!/bin/bash
+
 rootCheck() {
     if ! [ $(id -u) = 0 ]
     then
@@ -172,6 +173,7 @@ echo "Oscar2 is going to pull a fresh copy from Github once we get started."
 echo "You should, unless you know better, pull from the master branch."
 echo "Push <enter> here to do that, or optionally type in the name of a branch"
 echo "to pull from."
+echo " "
 echo "Please be sure you pull the installer script from the proper branch."
 echo "For example, if you plan to select dev now, you should ensure you pulled"
 echo "the Oscar installer from the /dev folder and not from /master."
