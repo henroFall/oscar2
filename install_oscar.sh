@@ -291,7 +291,7 @@ python3 -m pip install requests --no-cache-dir
 check_exit_status
 python3 -m pip install jsmin --no-cache-dir
 check_exit_status
-echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issuue with a path not being writable."
+echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issue with a path not being writable."
 rm -f get-pip.py
 }
 
@@ -329,6 +329,8 @@ check_exit_status
 
 callBuild() {
 ######################################## Call Build.py
+echo
+echo "IGNORE any SYNTAX ERRORS or Yellow Text indicating an issue with a path not being writable."
 echo
 echo "######################################## Build"
 if ! [[ $1 == 'noapi' ]]; then
