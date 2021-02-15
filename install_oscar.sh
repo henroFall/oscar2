@@ -165,7 +165,7 @@ echo "--noapi FLAG IS SET - BUILD.PY WILL NOT RUN."
 fi
 echo "Hello! Let's set up Oscar2!"
 echo
-echo "This script is tested on Raspbian, Ubuntu 20.04 & 18.04."
+echo "This script is tested on Raspbian & Ubuntu 18.04. Ubuntu 20.04 was not tested with the latest changes bur it's uglier."
 }
 
 branchChoice() {
@@ -490,9 +490,6 @@ cd ../DEB
 fixOwner
 dpkg -i *.deb
 cd /home/$username/Downloads
-
-read -p "PUSH <ENTER>"
-
 rm -Rf /home/$username/Downloads/gis-weather
 echo
 echo "Gis-weather installed. I need to know your location."
