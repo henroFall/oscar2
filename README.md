@@ -19,7 +19,7 @@ Here's a video about it, from Dan, the original author:
 
 Install Oscar
 -------------
-To install this version of Oscar, paste this command line to a terminal on any server or desktop version of Debian Linux. Raspbian, Ubuntu 18.04, and Ubuntu 20.04 have been tested. Ubuntu 18.04 is recomended for 
+To install this version of Oscar, paste this command line to a terminal on any server or desktop version of Debian Linux. Raspbian, Ubuntu 18.04, and Ubuntu 20.04 have been tested. Ubuntu 18.04 is recomended for visual purposes. The taskbar is just prettier and hides better, IMO.
 
 `wget -N https://raw.githubusercontent.com/henroFall/oscar2/master/install_oscar.sh && sudo chmod +x install_oscar.sh && sudo -E ./install_oscar.sh`
 
